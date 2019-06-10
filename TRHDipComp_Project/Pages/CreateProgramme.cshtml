@@ -1,0 +1,78 @@
+﻿@page
+@model TRHDipComp_Project.Pages.CreateProgrammeModel
+@{
+    ViewData["Title"] = "CreateProgramme";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+}
+
+<h2>Create Programme</h2>
+<form method="post" class="form-horizontal">
+
+    <div asp-validation-summary="All">
+        <br />
+        <div class="form-group">
+            <label asp-for=Programme.ProgrammeID class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=Programme.ProgrammeID class="form-control">
+                <span asp-validation-for=Programme.ProgrammeID></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <label asp-for=Programme.ProgrammeName class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=Programme.ProgrammeName class="form-control">
+                <span asp-validation-for=Programme.ProgrammeName></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=Programme.ProgrammeDescription class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=Programme.ProgrammeDescription class="form-control">
+                <span asp-validation-for=Programme.ProgrammeDescription></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=Programme.ProgrammeQQILevel class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=Programme.ProgrammeQQILevel class="form-control">
+                <span asp-validation-for=Programme.ProgrammeQQILevel></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=Programme.ProgrammeCredits class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=Programme.ProgrammeCredits class="form-control">
+                <span asp-validation-for=Programme.ProgrammeCredits></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=Programme.ProgrammeCost class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=Programme.ProgrammeCost class="form-control">
+                <span asp-validation-for=Programme.ProgrammeCost></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <button type="submit" class="btn btn-primary">Enter details</button>
+    </div>
+</form>
+

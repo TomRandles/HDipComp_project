@@ -1,7 +1,7 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Student Data Management app";
+    ViewData["Title"] = "Student Results Management application";
 }
 
 <style>
@@ -24,11 +24,14 @@
     }
 </style>
 
-<div class="container text-center">
-    <h1>Student Data Management app</h1>
+<div id="header1">
+    <h1>Student Results Management application</h1>
     <br />
-
+    <div id="header2">
+        <a asp-page="RegisterStudent">Register Student</a>
+    </div>
 </div>
+
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
@@ -38,36 +41,35 @@
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img src="~/images/BusinessStudies.png" alt="Business Studies" class="img-responsive center-block" />
-            <div>
-                <br />
-                <br />
-                <p class="text-center">
-                    Business courses at ITG prepare students for various business related employments to include <br />
-                    work in commercial and public sector organisations and accountancy related areas.
-                </p>
-                <br />
-
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/Hairdressing&Beauty.png" alt="Hair Dressing & Beauty" class="img-responsive center-block" />
-            <div>
-                <br />
-                <br />
-                <p class="text-center">
-                    Learn current trends, techniques and innovations in a creative work and learning environment.
+            <img src="~/images/Art&Design.png" alt="ASP.NET" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    Learn how to build ASP.NET apps that can run anywhere.
+                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
+                        Learn More
+                    </a>
                 </p>
             </div>
         </div>
         <div class="item">
-            <img src="~/images/Art&Design.png" alt="Art & Design" class="img-responsive center-block" />
-            <div>
-                <br />
-                <br />
-                <p class="text-center">
-                    ITG Art and Design courses offer a multi-dimensional learning experience which gives you the <br />
-                    opportunity to develop your art and design concepts and ideas.
+            <img src="~/images/Art&Design.png" alt="Visual Studio" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    There are powerful new features in Visual Studio for building modern web apps.
+                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
+                        Learn More
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="~/images/Art&Design.png" alt="Microsoft Azure" class="img-responsive" />
+            <div class="carousel-caption" role="option">
+                <p>
+                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
+                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
+                        Learn More
+                    </a>
                 </p>
             </div>
         </div>
@@ -81,38 +83,6 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="RegisterStudent">Register Student</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="CreateProgramme">Create Programme</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="ListProgrammes">List Programmes</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="ListStudents">List Students</a>
-    </div>
-</div>
-
-<br />
-<br />
-<p>@Model.Message</p>
 
 @*
     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

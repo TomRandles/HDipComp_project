@@ -1,0 +1,31 @@
+﻿@page
+@model TRHDipComp_Project.Pages.ListStudentsModel
+@{
+    ViewData["Title"] = "ListStudents";
+}
+
+<h2>List Students</h2>
+
+@{
+    <h3>details of all current Students at ITG </h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Student name</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var par in Model.StudentList)
+            {
+                <tr>
+                    <td>@par.StudentID </td>
+                    <td>@par.FirstName @par.SurName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-page="/Index">Home</a>
+}

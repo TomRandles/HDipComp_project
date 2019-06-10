@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TRHDipComp_Project.Models;
 
 namespace TRHDipComp_Project
 {
@@ -33,6 +35,9 @@ namespace TRHDipComp_Project
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Add Db context to services
+            services.AddDbContext<CollegeDbContext>(options => options.UseInMemoryDatabase("tempCollegeDB"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

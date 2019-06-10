@@ -1,0 +1,63 @@
+﻿@page  "{id}"
+@model TRHDipComp_Project.Pages.ShowStudentDetailsModel
+@{
+    ViewData["Title"] = "ShowStudentDetails";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Show Student Details</h2>
+@if (RouteData.Values["id"] != null)
+{
+    @RouteData.Values["id"]
+}
+else
+{
+    <h2>Routing page, no ID routed </h2>
+}
+
+@{
+    <div class="container">
+        <h3>Student details</h3>
+        <table class="table table-bordered" >
+            <thead>
+                <tr>
+                    <th>Student name</th>
+                    <th>Address</th>
+                    <th>Mobile phone</th>
+                    <th>Email</th>
+                    <th>Student date of birth</th>
+                    <th>Student PPS</th>
+                    <th>Student gender</th>
+                    <th>Full or part time</th>
+                    <th>Programme of study</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.Student.FirstName @Model.Student.SurName</td>
+                    <td>@Model.Student.AddressOne <br /> @Model.Student.AddressTwo <br /> @Model.Student.Town <br /> @Model.Student.County </td>
+                    <td>@Model.Student.MobilePhoneNumber</td>
+                    <td>@Model.Student.EmailAddress</td>
+                    <td>@Model.Student.DateOfBirth</td>
+                    <td>@Model.Student.StudentPPS</td>
+                    <td>@Model.Student.GenderType</td>
+                    <td>@Model.Student.FullOrPartTime</td>
+                    <td>@Model.Student.StudentProgrammeID</td>
+
+                    @*
+            Revisit
+        <td><a asp-page="/EditStudentDetails" asp-route-id="@Model.Student.StudentID">Edit Student</a></td>
+        <td><a asp-page="/DeleteStudent" asp-route-id="@Model.Student.StudentID">Delete Student</a></td>
+                    *@
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+<br />
+
+<a asp-page="/Index">Home</a>

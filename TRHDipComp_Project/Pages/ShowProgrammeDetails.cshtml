@@ -1,0 +1,60 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Pages.ShowProgrammeDetailsModel
+@{
+    ViewData["Title"] = "ShowProgrammeDetails";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>ShowProgrammeDetails</h2>
+
+@if (RouteData.Values["id"] != null)
+{
+    @RouteData.Values["id"]
+}
+else
+{
+    <h2>Routing page, no ID routed </h2>
+}
+
+@{
+    <div class="container">
+        <h3>Programme details</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Programme ID</th>
+                    <th>Programme Name</th>
+                    <th>Programme Description</th>
+                    <th>Programme QQI Level</th>
+                    <th>Programme Credits</th>
+                    <th>Programme Cost</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.Programme.ProgrammeID</td>
+                    <td>@Model.Programme.ProgrammeName</td>
+                    <td>@Model.Programme.ProgrammeDescription</td>
+                    <td>@Model.Programme.ProgrammeQQILevel</td>
+                    <td>@Model.Programme.ProgrammeCredits</td>
+                    <td>@Model.Programme.ProgrammeCost</td>
+                   
+                    @*
+                            Revisit
+                        <td><a asp-page="/EditProgrammeDetails" asp-route-id="@Model.Programme.ProgrammeID">Edit Programme</a></td>
+                        <td><a asp-page="/DeleteProgramme" asp-route-id="@Model.Programme.ProgrammeID">Delete Programme</a></td>
+                    *@
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+<br />
+
+<a asp-page="/Index">Home</a>
+
+
