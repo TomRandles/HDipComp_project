@@ -1,7 +1,7 @@
 ﻿@page  "{id}"
 @model TRHDipComp_Project.Pages.ShowStudentDetailsModel
 @{
-    ViewData["Title"] = "ShowStudentDetails";
+    ViewData["Title"] = "Show Student Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
@@ -46,12 +46,8 @@ else
                     <td>@Model.Student.GenderType</td>
                     <td>@Model.Student.FullOrPartTime</td>
                     <td>@Model.Student.StudentProgrammeID</td>
-
-                    @*
-            Revisit
-        <td><a asp-page="/EditStudentDetails" asp-route-id="@Model.Student.StudentID">Edit Student</a></td>
-        <td><a asp-page="/DeleteStudent" asp-route-id="@Model.Student.StudentID">Delete Student</a></td>
-                    *@
+                    <td><a asp-page="/UpdateStudentDetails" asp-route-id="@Model.Student.StudentID">Update student</a></td>
+                    <td><a asp-page="/DeleteStudent" asp-route-id="@Model.Student.StudentID">Delete student</a></td>
                 </tr>
 
             </tbody>

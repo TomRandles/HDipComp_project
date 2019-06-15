@@ -1,0 +1,53 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Pages.ShowModuleDetailsModel
+@{
+    ViewData["Title"] = "ShowModuleDetails";
+}
+
+<h2>Show Module Details</h2>
+
+@if (RouteData.Values["id"] != null)
+{
+    @RouteData.Values["id"]
+}
+else
+{
+    <h2>Routing page, no ID routed </h2>
+}
+
+@{
+    <div class="container">
+        <h3>Module details</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Module ID</th>
+                    <th>Module Name</th>
+                    <th>Module Description</th>
+                    <th>Module Credits</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.Module.ModuleID</td>
+                    <td>@Model.Module.ModuleName</td>
+                    <td>@Model.Module.ModuleDescription</td>
+                    <td>@Model.Module.ModuleCredits</td>
+
+                    @*
+                            Revisit
+                        <td><a asp-page="/EditModuleDetails" asp-route-id="@Model.Module.ModuleID">Edit Module</a></td>
+                        <td><a asp-page="/DeleteModule" asp-route-id="@Model.Module.ModuleID">Delete Module</a></td>
+                    *@
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+<br />
+
+<a asp-page="/Index">Home</a>

@@ -1,11 +1,11 @@
 ﻿@page "{id}"
 @model TRHDipComp_Project.Pages.ShowProgrammeDetailsModel
 @{
-    ViewData["Title"] = "ShowProgrammeDetails";
+    ViewData["Title"] = "Show Programme Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>ShowProgrammeDetails</h2>
+<h2>Show Programme Details</h2>
 
 @if (RouteData.Values["id"] != null)
 {
@@ -28,8 +28,8 @@ else
                     <th>Programme QQI Level</th>
                     <th>Programme Credits</th>
                     <th>Programme Cost</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Update Programme</th>
+                    <th>Delete Programme</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,13 +40,9 @@ else
                     <td>@Model.Programme.ProgrammeDescription</td>
                     <td>@Model.Programme.ProgrammeQQILevel</td>
                     <td>@Model.Programme.ProgrammeCredits</td>
-                    <td>@Model.Programme.ProgrammeCost</td>
-                   
-                    @*
-                            Revisit
-                        <td><a asp-page="/EditProgrammeDetails" asp-route-id="@Model.Programme.ProgrammeID">Edit Programme</a></td>
-                        <td><a asp-page="/DeleteProgramme" asp-route-id="@Model.Programme.ProgrammeID">Delete Programme</a></td>
-                    *@
+                    <td>@Model.Programme.ProgrammeCost</td>                    
+                    <td><a asp-page="/UpdateProgrammeDetails" asp-route-id="@Model.Programme.ProgrammeID">Edit Programme</a></td>
+                    <td><a asp-page="/DeleteProgramme" asp-route-id="@Model.Programme.ProgrammeID">Delete Programme</a></td>
                 </tr>
 
             </tbody>
@@ -56,5 +52,3 @@ else
 <br />
 
 <a asp-page="/Index">Home</a>
-
-

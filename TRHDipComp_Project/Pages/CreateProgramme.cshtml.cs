@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using TRHDipComp_Project.Models;
 
 namespace TRHDipComp_Project.Pages
@@ -16,13 +17,10 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public Programme Programme { get; set; } = new Programme();
 
+
         public CreateProgrammeModel(CollegeDbContext db)
         {
             _db = db;
-        }
-        public void OnGet()
-        {
-
         }
 
         public async Task<IActionResult> OnPostAsync()

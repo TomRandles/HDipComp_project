@@ -2,27 +2,8 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Student Data Management app";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-<style>
-
-    #header1 {
-        background-color: khaki;
-        text-align: center;
-        width: 1100px;
-        height: 50px;
-        text-shadow: 2px 3px #eadddd;
-        margin-bottom: 10px;
-        margin-top: 10px;
-    }
-
-    #header2 {
-        color: blue;
-        text-align: center;
-        width: 200px;
-        height: 40px;
-    }
-</style>
 
 <div class="container text-center">
     <h1>Student Data Management app</h1>
@@ -89,12 +70,21 @@
     </div>
 </div>
 
+
+<div class="container">
+    <br />
+    <div id="header2">
+        <a asp-page="ListStudents">List Students</a>
+    </div>
+</div>
+
 <div class="container">
     <br />
     <div id="header2">
         <a asp-page="CreateProgramme">Create Programme</a>
     </div>
 </div>
+
 
 <div class="container">
     <br />
@@ -106,7 +96,21 @@
 <div class="container">
     <br />
     <div id="header2">
-        <a asp-page="ListStudents">List Students</a>
+        <a asp-page="CreateModule">Create Module</a>
+    </div>
+</div>
+
+<div class="container">
+    <br />
+    <div id="header2">
+        <a asp-page="ListModules">List Modules</a>
+    </div>
+</div>
+
+<div class="container">
+    <br />
+    <div id="header2">
+        <a asp-page="SearchStudentDetails">Search Student Details</a>
     </div>
 </div>
 

@@ -1,0 +1,52 @@
+﻿@page
+@model TRHDipComp_Project.Pages.ListModulesModel
+@{
+    ViewData["Title"] = "ListModules";
+}
+
+<h2>List Modules</h2>
+
+<h2>List Modules</h2>
+
+
+<h3>details of all current Modules at ITG </h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Module ID</th>
+            <th>Module name</th>
+            <th>Programme name</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            foreach (var mod in Model.ModuleList)
+            {
+                @*Get associated programme name
+                    First get the prog ID from the ProgrammeModule table.
+                    select ProgrammeID from ProgrammeModules
+                    where ProgrammeModules.ModuleID='L6RDAB';
+                    var teenStudentsName.ToList().ForEach(s => Console.WriteLine(s.StudentName));
+                *@
+                var progMods = Model.ProgrammeModuleList.Where(s => s.ModuleID == @mod.ModuleID)
+                .Select(s => s);
+
+                if (progMods.Count() != 0)
+                {
+                    var progMod = progMods.First();
+                    var progs = Model.ProgrammeList.Where(s => s.ProgrammeID == @progMod.ProgrammeID)
+                                                  .Select(s => s);
+
+                    <tr>
+                        <td>@mod.ModuleID </td>
+                        <td>@mod.ModuleName</td>
+                        <td>@progs.First().ProgrammeName</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-page="/Index">Home</a>

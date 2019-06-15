@@ -1,18 +1,18 @@
 ﻿@page
 @model TRHDipComp_Project.Pages.ListProgrammesModel
 @{
-    ViewData["Title"] = "ListProgrammes";
+    ViewData["Title"] = "List Programmes";
 }
 
 <h2>List Programmes</h2>
 
 @{
-    <h3>details of all current programmes at ITG </h3>
+    <h3>Details of all current programmes at ITG </h3>
     <table class="table">
         <thead>
             <tr>
-                <th>Programme ID</th>
                 <th>Programme name</th>
+                <th>Programme details</th>
             </tr>
         </thead>
         <tbody>
@@ -20,8 +20,8 @@
             @foreach (var par in Model.ProgrammeList)
             {
                 <tr>
-                    <td>@par.ProgrammeID </td>
-                    <td>@par.ProgrammeName</td>
+                    <td>@par.ProgrammeName </td>
+                    <td><a asp-page="/ShowProgrammeDetails" asp-route-id="@par.ProgrammeID">Programme details</a></td>
                 </tr>
             }
         </tbody>

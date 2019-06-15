@@ -13,17 +13,20 @@ namespace TRHDipComp_Project.Models
         [Key]
         [Required(ErrorMessage = ("Programme ID must be 6 alphanumeric characters"))]
         [Display(Name = "Programme ID")]
+        [MaxLength(6)]
         [RegularExpression(@"\w{6}")]
         public string ProgrammeID { get; set; }
 
         // Programme name
         [Required(ErrorMessage = ("Programme name is at least 6 characters"))]
         [Display(Name = "Programme name")]
+        [MaxLength(20)]
         [RegularExpression(@"[\w\s\.\,]{6,20}")]
         public string ProgrammeName { get; set; } = "";
 
         // Programme description
         [Display(Name = "Programme description")]
+        [MaxLength(50)]
         [RegularExpression(@"[\s\w-\,\.]{0,50}")]
         public string ProgrammeDescription { get; set; } = "";
 
@@ -38,11 +41,14 @@ namespace TRHDipComp_Project.Models
         public int ProgrammeCredits { get; set; } = 40;
 
         // Cost
-        [Display(Name = "Programme cost (euro)")]
+        [Display(Name = "Programme cost")]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18,2)")]
         [RegularExpression(@"\d{0,5}\.{0,1}\d{0,2}")]
         public decimal ProgrammeCost { get; set; } = 0;
 
-        [ForeignKey("StudentProgrammeID")]
         public virtual ICollection<Student> Students { get; set; }
+
+        public virtual ICollection<ProgrammeModule> ProgrammeModules { get; set; }
     }
 }

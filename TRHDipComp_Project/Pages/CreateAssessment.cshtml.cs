@@ -9,25 +9,27 @@ using TRHDipComp_Project.Models;
 
 namespace TRHDipComp_Project.Pages
 {
-    public class RegisterStudentModel : PageModel
+    public class CreateAssessmentModel : PageModel
     {
+
         private readonly CollegeDbContext _db;
         public string Message { get; set; } = "";
 
         [BindProperty]
-        public Student Student { get; set; } = new Student();
+        public IList<Module> ModuleListOptions { get; private set; }
 
         [BindProperty]
-        public IList<Programme> ProgrammeList { get; private set; }
+        public Assessment Assessment { get; set; } = new Assessment();
 
-        public RegisterStudentModel(CollegeDbContext db)
+        public CreateAssessmentModel(CollegeDbContext db)
         {
             _db = db;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
+            ModuleListOptions = await _db.Modules.AsNoTracking().ToListAsync();
+
             return Page();
         }
 
@@ -35,16 +37,17 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                Message += " ModelState is Valid: " + Student.StudentProgrammeID;
+                Message += " ModelState is Valid";
 
-                _db.Students.Add(Student);
+                // Save new Assessment
+                _db.Assessments.Add(Assessment);
                 await _db.SaveChangesAsync();
 
-                return RedirectToPage("ShowStudentDetails", new { id = Student.StudentID });
+                return RedirectToPage("ShowAssessmentDetails", new { id = Assessment.AssessmentID });
             }
             else
             {
-                Message += " ModelState is InValid";
+                Message += " ModelState is InValid " + ModelState.ToString();
                 return Page();
             }
         }

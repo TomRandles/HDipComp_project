@@ -36,8 +36,17 @@ namespace TRHDipComp_Project
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // Add Db context to services
-            services.AddDbContext<CollegeDbContext>(options => options.UseInMemoryDatabase("tempCollegeDB"));
+            // Add Db context to services - in memory DB
+            // temp DB option
+            // services.AddDbContext<CollegeDbContext>(options => options.UseInMemoryDatabase("tempCollegeDB"));
+
+            // Local DB option
+            services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("CollegeTestDBContext")));
+
+            // Azure SQL Server service - HDipCompTRproject_DB
+            // services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
+            //    Configuration.GetConnectionString("HDipCompTRproject_DB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

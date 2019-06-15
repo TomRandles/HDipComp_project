@@ -1,0 +1,28 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Pages.DeleteModuleModel
+@{
+    ViewData["Title"] = "Delete Module";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Module @RouteData.Values["id"]</h2>
+
+@if (RouteData.Values["id"] != null)
+{
+    @RouteData.Values["id"]
+}
+else
+{
+    <h2>Routing page, no ID routed </h2>
+}
+
+<script>
+    function UserDeleteConfirmation() {
+        return confirm("Confirm delete");
+    }
+</script>
+
+<form method="post">
+    <input type="hidden" asp-for=Module.ModuleID>
+    <button type="submit" class="btn btn-default" OnClick="UserDeleteConfirmation()">Delete module @RouteData.Values["id"]</button>
+</form>

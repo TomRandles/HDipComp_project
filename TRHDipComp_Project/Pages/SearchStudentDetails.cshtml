@@ -1,0 +1,43 @@
+﻿@page
+@model TRHDipComp_Project.Pages.SearchStudentDetailsModel
+@{
+    ViewData["Title"] = "SearchStudentDetails";
+}
+
+<h2>Search Student Details</h2>
+
+<form>
+    <p>
+        Student surname:
+        Title:
+        <input type="text" asp-for="StudentSearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<h3>Details of students found for search string </h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Student name</th>
+            <th>Student details</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            foreach (var stud in Model.StudentsFound)
+            {
+                <tr>
+                    <td>@stud.StudentID </td>
+                    <td>@stud.FirstName @stud.SurName</td>
+                    <td>student details - more later</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-page="/Index">Home</a>

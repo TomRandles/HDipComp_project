@@ -1,11 +1,10 @@
-﻿@page
-@model TRHDipComp_Project.Pages.RegisterStudentModel
+﻿@page "{id}"
+@model TRHDipComp_Project.Pages.UpdateStudentDetailsModel
 @{
-    ViewData["Title"] = "Register Student";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["Title"] = "UpdateStudentDetails";
 }
 
-<h2>Register Student</h2>
+<h2>Update Student Details @Model.Student.StudentID</h2>
 
 <form method="post" class="form-horizontal">
 
@@ -170,6 +169,14 @@
             </div>
         </div>
 
+        @{
+            if (Model.ProgrammeList.Count == 0)
+            {
+                @*No programmes available, so registration is not possible. Revisit - not working correctly. *@
+                ModelState.AddModelError("CustomError",
+                                         "No programmes are currently available. Registration not possible");
+            }
+        }
         @* Dropdown for existing programmes that the student may select.*@
         <div class="form-group">
             <label class="control-label col-md-2">Programme options:</label>

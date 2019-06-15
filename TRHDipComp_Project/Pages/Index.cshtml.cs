@@ -10,25 +10,26 @@ namespace TRHDipComp_Project.Pages
 {
     public class IndexModel : PageModel
     {
-        public string Message { get; set; } = "Welcome";
+        public string Message { get; set; } = "";
 
         public void OnGet()
-        {
+        {       
 
-            CookieOptions options = new CookieOptions();
-            options.Expires = DateTime.Now.AddMinutes(1);
-            
-
-            Response.Cookies.Append("MyFirstCookie", "Hello there ...", options);
-
-            if (Request.Cookies["MyFirstCookie"] !=null)
+            if (Request.Cookies["Student_Results_Management_Project"] !=null)
             {
-                Message = "Welcome back" + Request.Cookies["MyFirstCookie"];
+                Message = "Welcome back!\n " + Request.Cookies["Student_Results_Management_Project"];
             }
             else
             {
-                // string currentDate = DateTime.Now.ToString();
-                Message += Request.Cookies["MyFirstCookie"];
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now.AddYears(1);
+
+                string currentDate = DateTime.Now.ToString();
+                Response.Cookies.Append("Student_Results_Management_Project", 
+                                        "\nYour last visit was " + currentDate, 
+                                        options);
+
+                Message = "Welcome! \n";
             }
         }
     }
