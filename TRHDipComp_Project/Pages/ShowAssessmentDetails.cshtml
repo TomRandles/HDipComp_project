@@ -4,7 +4,7 @@
     ViewData["Title"] = "Show Assessment Details";
 }
 
-<h2>Show Assessment Details</h2>
+<h2>Show Assessment Details @RouteData.Values["id"]</h2>
 
 @if (RouteData.Values["id"] != null)
 {
@@ -35,7 +35,7 @@ else
                     <td>@Model.Assessment.AssessmentID</td>
                     <td>@Model.Assessment.AssessmentName</td>
                     <td>@Model.Assessment.AssessmentDescription</td>
-                    <td>@Model.Assessment.AssessmentTotalMarks</td>
+                    <td>@Model.Assessment.AssessmentTotalMark</td>
 
                     @*
                             Revisit

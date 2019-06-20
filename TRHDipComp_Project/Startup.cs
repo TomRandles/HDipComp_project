@@ -33,6 +33,8 @@ namespace TRHDipComp_Project
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //Add http client services 
+            services.AddHttpClient();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

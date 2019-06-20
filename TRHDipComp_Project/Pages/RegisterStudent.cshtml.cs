@@ -35,7 +35,7 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                Message += " ModelState is Valid: " + Student.StudentProgrammeID;
+                Message += " ModelState is Valid: " + Student.ProgrammeID;
 
                 _db.Students.Add(Student);
                 await _db.SaveChangesAsync();

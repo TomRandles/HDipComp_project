@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TRHDipComp_Project.Models
@@ -12,6 +13,8 @@ namespace TRHDipComp_Project.Models
         // Module ID - Primary Key 2
         [ForeignKey("Module")]
         public string ModuleID { get; set; }
+
+        public virtual ICollection<AssessmentResult> AssessmentResults { get; set; }
 
     }
 }

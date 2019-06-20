@@ -43,10 +43,10 @@
         <br />
 
         <div class="form-group">
-            <label asp-for=Assessment.AssessmentTotalMarks class="control-label col-md-2"></label>
+            <label asp-for=Assessment.AssessmentTotalMark class="control-label col-md-2"></label>
             <div class="col-md-2">
-                <input type="number" asp-for=Assessment.AssessmentTotalMarks class="form-control">
-                <span asp-validation-for=Assessment.AssessmentTotalMarks></span>
+                <input type="number" asp-for=Assessment.AssessmentTotalMark class="form-control">
+                <span asp-validation-for=Assessment.AssessmentTotalMark></span>
             </div>
             <div class="col-md-8"></div>
         </div>
@@ -76,7 +76,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Module options:</label>
             <div class="col-md-2">
-                <select asp-for=Assessment.AssessmentModuleID >
+                <select asp-for=Assessment.ModuleID >
 
                     @{
                         if (Model.ModuleListOptions != null)

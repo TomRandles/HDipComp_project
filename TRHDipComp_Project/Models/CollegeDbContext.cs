@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace TRHDipComp_Project.Models
 {
     public class CollegeDbContext : DbContext
@@ -22,11 +23,23 @@ namespace TRHDipComp_Project.Models
 
         public DbSet<Assessment> Assessments { get; set; }
 
+        public DbSet<AssessmentResult> AssessmentResults { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             // Configure ProgrammeModule composite key
             modelBuilder.Entity<ProgrammeModule>().HasKey(t => new { t.ProgrammeID, t.ModuleID });
+
+            // Configure ProgrammeModule composite key
+            // modelBuilder.Entity<AssessmentResult>().HasForeignKey(t => new { t.ProgrammeID, t.ModuleID });
+            // modelBuilder.Entity<AssessmentResult>().HasMany(t => t.ProgrammeID);
+            // modelBuilder.Entity<ProgrammeModule>().HasOne(p => p.AssessmentResults).HasForeignKey            
+
+            //.HasForeignKey(t => t.ProgrammeID);
+
+            //builder.Entity<Person>().HasOne(v => v.Address).HasForeignKey(v => v.AddressId); 
+            // modelBuilder.Entity<AssessmentResult>().HasForeignKey()
 
             // Extend models to include a LastUpdated date shadow property
             modelBuilder.Entity<Student>()

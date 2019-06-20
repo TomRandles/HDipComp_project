@@ -10,38 +10,37 @@ using TRHDipComp_Project.Models;
 
 namespace TRHDipComp_Project.Pages
 {
-    public class SearchStudentDetailsModel : PageModel
+    public class SearchProgrammeDetailsModel : PageModel
     {
-
         private readonly CollegeDbContext _db;
 
-        public SearchStudentDetailsModel(CollegeDbContext db)
+        public SearchProgrammeDetailsModel(CollegeDbContext db)
         {
             _db = db;
         }
 
         [BindProperty(SupportsGet = true)]
         [RegularExpression(@"[\w\.\'\.\s]{1,20}")]
-        public string StudentSearchString { get; set; } = "";
+        public string ProgrammeSearchString { get; set; } = "";
 
         [BindProperty]
-        public IList<Student> StudentsFound { get; set; }
+        public IList<Programme> ProgrammesFound { get; set; }
 
         public async Task OnGetAsync()
         {
             if (ModelState.IsValid)
             {
 
-                var students = from s in _db.Students
+                var Programmes = from s in _db.Programmes
                                select s;
 
-                if (!String.IsNullOrEmpty(StudentSearchString))
+                if (!String.IsNullOrEmpty(ProgrammeSearchString))
                 {
-                    // students = students.Where(s => s.Title.Contains(StudentSearchString));
-                    students = students.Where(s => s.SurName.Contains(StudentSearchString));
+                    // Programmes = Programmes.Where(s => s.Title.Contains(ProgrammeSearchString));
+                    Programmes = Programmes.Where(s => s.ProgrammeName.Contains(ProgrammeSearchString));
                 }
 
-                StudentsFound = await students.ToListAsync();
+                ProgrammesFound = await Programmes.ToListAsync();
 
             }
         }

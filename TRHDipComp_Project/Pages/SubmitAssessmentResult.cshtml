@@ -1,0 +1,152 @@
+﻿@page "{id}"
+
+@model TRHDipComp_Project.Pages.SubmitAssessmentResultModel
+@{
+    ViewData["Title"] = "Submit Assessment Result";
+}
+
+<h2>Submit Assessment Result: @RouteData.Values["id"]</h2>
+
+@{
+    if (@RouteData.Values["id"] != null)
+    {
+        Model.AssessmentResult.StudentID = @RouteData.Values["id"].ToString();
+    }
+}
+
+@*
+    Order of submission
+    1. If student ID was passed in via routing
+    or
+    Select student from a dropdown menu of existing students
+
+
+    Get programme of study for student
+
+    Get the module list for this programme
+
+    For each module - get a dropdown list of all of the assessments
+
+    For each assessment - enter the assessment results
+
+
+*@
+
+<form method="post" class="form-horizontal">
+
+    <div asp-validation-summary="All">
+        <br />
+
+        <div class="form-group">
+            <label asp-for=AssessmentResult.StudentID class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=AssessmentResult.StudentID class="form-control">
+                <span asp-validation-for=AssessmentResult.StudentID></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=AssessmentResult.ProgrammeID class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=AssessmentResult.ProgrammeID class="form-control">
+                <span asp-validation-for=AssessmentResult.ProgrammeID></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=AssessmentResult.AssessmentResultID class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=AssessmentResult.AssessmentResultID class="form-control">
+                <span asp-validation-for=AssessmentResult.AssessmentResultID></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select a student:</label>
+            <div class="col-md-2">
+                <select asp-for=AssessmentResult.StudentID>
+                    @{
+
+                        if (Model.StudentList != null)
+                        {
+                            foreach (var stud in Model.StudentList)
+                            {
+                                <option value=@stud.StudentID>@stud.FirstName @stud.SurName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select a module:</label>
+            <div class="col-md-2">
+                <select asp-for=AssessmentResult.ModuleID>
+                    @{
+
+                        if (Model.SelectedModuleList != null)
+                        {
+                            foreach (var mod in Model.SelectedModuleList)
+                            {
+                                <option value=@mod.ModuleID>@mod.ModuleName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select an assessment:</label>
+            <div class="col-md-2">
+                <select asp-for=AssessmentResult.AssessmentID>
+                    @{
+
+                        if (Model.SelectedAssessmentList != null)
+                        {
+                            foreach (var ass in Model.SelectedAssessmentList)
+                            {
+                                <option value=@ass.AssessmentID>@ass.AssessmentName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=AssessmentResult.AssessmentResultDescription class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="text" asp-for=AssessmentResult.AssessmentResultDescription class="form-control">
+                <span asp-validation-for=AssessmentResult.AssessmentResultDescription></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <div class="form-group">
+            <label asp-for=AssessmentResult.AssessmentResultMark class="control-label col-md-2"></label>
+            <div class="col-md-2">
+                <input type="number" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
+                <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
+            </div>
+            <div class="col-md-8"></div>
+        </div>
+        <br />
+
+        <button type="submit" class="btn btn-primary">Enter details</button>
+    </div>
+</form>

@@ -1,0 +1,42 @@
+﻿@page
+@model TRHDipComp_Project.Pages.SearchProgrammeDetailsModel
+@{
+    ViewData["Title"] = "Search Programme Details";
+}
+
+<h2>Search Programme Details</h2>
+
+<form>
+    <p>
+        Programme:
+        
+        <input type="text" asp-for="ProgrammeSearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<h3>Details of students found for search string </h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Programme Name</th>
+            <th>Programme details</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            foreach (var prog in Model.ProgrammesFound)
+            {
+                <tr>
+                    <td>@prog.ProgrammeName</td>
+                    <td>Programme details - more later</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-page="/Index">Home</a>
+

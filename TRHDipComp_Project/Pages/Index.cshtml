@@ -5,6 +5,45 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<script>
+
+    function GetLocalWeather(cityID) {
+        console.log("In GetLocalWeather");
+        var gettingData = true;
+        var APIKey = "1dfc616b32f88edc2de2243c4631d723";
+
+        var requestString = "https://api.openweathermap.org/data/2.5/weather?id=" + cityID
+            + "&cluster=yes&format=json"
+            + "&APPID=" + APIKey
+            + "&units=metric";
+
+        var request = new XMLHttpRequest();
+        request.onload = proccessResults;
+        request.open("get", requestString, true);
+        request.send();
+    };
+
+    // Take the JSON results and proccess them
+    var proccessResults = function () {
+
+        console.log("processResults");
+        var results = JSON.parse(this.responseText);
+
+        document.getElementById("Location").innerHTML = "Location: " + results.name;
+        document.getElementById("Country").innerHTML = "Country: " + results.sys.country;
+        document.getElementById("WeatherMessage").innerHTML = "Weather: " + results.weather[0].description;
+        document.getElementById("Temperature").innerHTML = "Temperature: " + results.main.temp + " °C";
+        document.getElementById("Humidity").innerHTML = "Humidity: " + results.main.humidity + " %";
+        document.getElementById("WindSpeed").innerHTML = "WindSpeed: " + results.wind.speed + " Km/h"; 
+        document.getElementById("Latitude").innerHTML = "Latitude: " + results.coord.lat; 
+        document.getElementById("Longitude").innerHTML = "Longitude: " + results.coord.lon;
+    };
+
+    //Move Galway ID to an app configuration setting - JSON
+    document.getElementById("GetWeather").innerHTML = window.GetLocalWeather("2964179");
+
+</script>
+
 <div class="container text-center">
     <h1>Student Data Management app</h1>
     <br />
@@ -103,7 +142,14 @@
 <div class="container">
     <br />
     <div id="header2">
-        <a asp-page="ListModules">List Modules</a>
+        <a asp-page="CreateAssessment">Create Assessment</a>
+    </div>
+</div>
+
+<div class="container">
+    <br />
+    <div id="header2">
+        <a asp-page="ListModules">List Programme, Module & Assessments</a>
     </div>
 </div>
 
@@ -114,8 +160,32 @@
     </div>
 </div>
 
+<div class="container">
+    <br />
+    <div id="header2">
+        <a asp-page="SearchProgrammeDetails">Search Programme Details</a>
+    </div>
+</div>
+
+<div class="container">
+    <br />
+    <div id="header2">
+        <a asp-page="GetWeatherReport" target="_parent">GetWeatherReport</a>
+    </div>
+</div>
+
+<h3> Today's weather @DateTime.Now.ToShortDateString()  @DateTime.Now.ToShortTimeString()</h3>
 <br />
-<br />
+
+<p id="Location">Location </p>
+<p id="Country">Country: </p>
+<p id="WeatherMessage">Weather message: </p>
+<p id="Temperature">Temperature : "°C"</p>
+<p id="Humidity"> Humidity: </p>
+<p id="WindSpeed">WindSpeed:  "Km/h"</p>
+<p id="Latitude">Latitude: </p>
+<p id="Longitude">Longitude: </p>
+
 <p>@Model.Message</p>
 
 @*

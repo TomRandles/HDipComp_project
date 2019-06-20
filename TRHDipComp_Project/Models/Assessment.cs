@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TRHDipComp_Project.Models
 {
@@ -18,10 +15,9 @@ namespace TRHDipComp_Project.Models
         public string AssessmentID { get; set; }
 
         // Assessment name
-        [Required(ErrorMessage = ("Assessment name is at least 6 characters"))]
+        [Required]
         [Display(Name = "Assessment name")]
-        [StringLength(20)]
-        [RegularExpression(@"[\w\s\.\,]{6,20}")]
+        [StringLength(30)]
         public string AssessmentName { get; set; } = "";
 
         // Assessment description
@@ -31,9 +27,9 @@ namespace TRHDipComp_Project.Models
         public string AssessmentDescription { get; set; } = "";
 
         // Total marks 
-        [Display(Name = "Assessment total marks")]
-        [RegularExpression(@"\w{1,3}")]
-        public int AssessmentTotalMarks { get; set; } = 0;
+        [Display(Name = "Assessment total mark")]
+        [RegularExpression(@"\d{1,3}")]
+        public int AssessmentTotalMark { get; set; } = 0;
 
         public enum AssessmentTypeE
         {
@@ -49,6 +45,8 @@ namespace TRHDipComp_Project.Models
         [StringLength(6)]
         [RegularExpression(@"\w{6}")]
         [ForeignKey("Module")]
-        public string AssessmentModuleID { get; set; } = "";
+        public string ModuleID { get; set; } = "";
+
+        public virtual ICollection<AssessmentResult> AssessmentResults { get; set; }
     }
 }

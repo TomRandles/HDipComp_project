@@ -1,0 +1,58 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Pages.ShowAssessmentResultModel
+@{
+    ViewData["Title"] = "Show Assessment Result";
+}
+
+<h2>Show Assessment Result @RouteData.Values["id"]</h2>
+
+@if (RouteData.Values["id"] != null)
+{
+    @RouteData.Values["id"]
+}
+else
+{
+    <h2>Routing page, no ID routed </h2>
+}
+
+@{
+    <div class="container">
+        <h3>Assessment result details</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Assessment result ID</th>
+                    <th>Student ID</th>
+                    <th>Programme ID</th>
+                    <th>Module ID</th>
+                    <th>Assessment ID</th>
+                    <th>Assessment result description</th>
+                    <th>Assessment mark</th>
+
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.AssessmentResult.AssessmentResultID</td>
+                    <td>@Model.AssessmentResult.StudentID</td>
+                    <td>@Model.AssessmentResult.ProgrammeID</td>
+                    <td>@Model.AssessmentResult.ModuleID</td>
+                    <td>@Model.AssessmentResult.AssessmentID</td>
+                    <td>@Model.AssessmentResult.AssessmentResultDescription</td>
+                    <td>@Model.AssessmentResult.AssessmentResultMark</td>
+
+                    @*
+            Revisit
+        <td><a asp-page="/EditAssessmentDetails" asp-route-id="@Model.Assessment.AssessmentID">Edit Assessment</a></td>
+        <td><a asp-page="/DeleteAssessment" asp-route-id="@Model.Assessment.AssessmentID">Delete Assessment</a></td>
+                    *@
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+<br />

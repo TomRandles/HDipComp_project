@@ -1,48 +1,76 @@
 ﻿@page
 @model TRHDipComp_Project.Pages.ListModulesModel
 @{
-    ViewData["Title"] = "ListModules";
+    ViewData["Title"] = "List Modules";
 }
 
 <h2>List Modules</h2>
 
-<h2>List Modules</h2>
-
-
 <h3>details of all current Modules at ITG </h3>
+
 <table class="table">
     <thead>
         <tr>
-            <th>Module ID</th>
-            <th>Module name</th>
             <th>Programme name</th>
+            <th>Module name</th>
+            <th>Assessment name</th>
+            <th>Assessment total marks</th>
         </tr>
     </thead>
     <tbody>
-
         @{
-            foreach (var mod in Model.ModuleList)
+
+            if (Model.ProgrammeList.Count != 0)
             {
-                @*Get associated programme name
-                    First get the prog ID from the ProgrammeModule table.
-                    select ProgrammeID from ProgrammeModules
-                    where ProgrammeModules.ModuleID='L6RDAB';
-                    var teenStudentsName.ToList().ForEach(s => Console.WriteLine(s.StudentName));
-                *@
-                var progMods = Model.ProgrammeModuleList.Where(s => s.ModuleID == @mod.ModuleID)
-                .Select(s => s);
-
-                if (progMods.Count() != 0)
+                foreach (var prog in Model.ProgrammeList)
                 {
-                    var progMod = progMods.First();
-                    var progs = Model.ProgrammeList.Where(s => s.ProgrammeID == @progMod.ProgrammeID)
-                                                  .Select(s => s);
+                    if (Model.ModulesInProgramme.ContainsValue(prog.ProgrammeID))
+                    {
+                        var modsInCurrentProg = Model.ProgrammeModuleList.Where(s => s.ProgrammeID == prog.ProgrammeID)
+                                                                                .Select(s => s.ModuleID);
+                        foreach (var modID in modsInCurrentProg)
+                        {
 
-                    <tr>
-                        <td>@mod.ModuleID </td>
-                        <td>@mod.ModuleName</td>
-                        <td>@progs.First().ProgrammeName</td>
-                    </tr>
+
+                            var mods = Model.ModuleList.Where(s => s.ModuleID == @modID)
+                                                              .Select(s => s);
+
+                            foreach (var mod in mods)
+                            {
+                                @* Is module ID part of Programme-Module combination?    *@
+                                if (Model.ModulesInProgramme.ContainsKey(mod.ModuleID))
+                                {
+                                    if (Model.AssessmentList.Count() != 0)
+                                    {
+                                        var assessmentsForThisModule = Model.AssessmentList.Where(
+                                                                           a => a.ModuleID == @mod.ModuleID)
+                                                                                 .Select(a => a);
+
+                                        if (assessmentsForThisModule.Count() != 0)
+                                        {
+                                            foreach (var assess in assessmentsForThisModule)
+                                            {
+                                                <tr>
+                                                    <td>@prog.ProgrammeName</td>
+                                                    <td>@mod.ModuleName</td>
+                                                    <td>@assess.AssessmentName</td>
+                                                    <td>@assess.AssessmentTotalMark</td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>@prog.ProgrammeName</td>
+                                                <td>@mod.ModuleName</td>
+                                                <td> No assessments assigned</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

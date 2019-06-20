@@ -181,7 +181,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Programme options:</label>
             <div class="col-md-2">
-                <select asp-for=Student.StudentProgrammeID>
+                <select asp-for=Student.ProgrammeID>
                     @foreach (var prog in Model.ProgrammeList)
                     {
                         <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>

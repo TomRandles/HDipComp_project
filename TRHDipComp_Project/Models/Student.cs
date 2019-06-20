@@ -120,6 +120,8 @@ namespace TRHDipComp_Project.Models
         [MaxLength(6)]
         [RegularExpression(@"\w{6}")]
         [ForeignKey("Programme")]
-        public string StudentProgrammeID { get; set; } = ""; 
+        public string ProgrammeID { get; set; } = "";
+
+        public virtual ICollection<AssessmentResult> AssessmentResults { get; set; }
     }
 }
