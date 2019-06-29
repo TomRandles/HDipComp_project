@@ -15,7 +15,7 @@ using TRHDipComp_Project.Models;
 namespace TRHDipComp_Project
 {
     public class Startup
-    {
+    {        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -49,6 +49,7 @@ namespace TRHDipComp_Project
             // Azure SQL Server service - HDipCompTRproject_DB
             // services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
             //    Configuration.GetConnectionString("HDipCompTRproject_DB")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

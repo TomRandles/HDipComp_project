@@ -8,6 +8,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190612095521_InitialCreate.cs" />
     <Compile Remove="Migrations\20190612095521_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190621130949_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190621130949_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\OpenWeatherMapGoogleMap.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Content Update="Pages\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Shared\_Layout - Copy.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Shared\_TestLayout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

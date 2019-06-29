@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+        #map-canvas {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <p>About to get the weather!</p>
+    <p id="GetWeather">Get the weather!</p>
+    <p>Got the weather!</p>
+
+    <p id="Location">Location </p>
+    <p id="Country">Country: </p>
+    <p id="WeatherMessage">Weather message: </p>
+    <p id="Temperature">Temperature : "°C"</p>
+    <p id="Humidity"> Humidity: </p>
+    <p id="WindSpeed">WindSpeed:  "Km/h"</p>
+    <p id="Latitude">Latitude: </p>
+    <p id="Longitude">Longitude: </p>
+
+    <br />
+    <br />
+
+    <p>About to draw map</p>
+    <div id="map-canvas">map!</div>
+    <p>Map drawn!</p>
+
+    <p>End</p>
+
+    <script>
+
+        function GetLocalWeather(cityID) {
+            console.log("In GetLocalWeather");
+            var gettingData = true;
+            var APIKey = "1dfc616b32f88edc2de2243c4631d723";
+
+            var requestString = "https://api.openweathermap.org/data/2.5/weather?id=" + cityID
+                + "&cluster=yes&format=json"
+                + "&APPID=" + APIKey
+                + "&units=metric";
+
+            var request = new XMLHttpRequest();
+            request.onload = proccessWResults;
+            request.open("get", requestString, true);
+            request.send();
+            return "done";
+        };
+
+        // Take the JSON results and proccess them
+        var proccessWResults = function () {
+
+            console.log("processWResults");
+            var results = JSON.parse(this.responseText);
+
+            document.getElementById("Location").innerHTML = "Location: " + results.name;
+            document.getElementById("Country").innerHTML = "Country: " + results.sys.country;
+            document.getElementById("WeatherMessage").innerHTML = "Weather: " + results.weather[0].description;
+            document.getElementById("Temperature").innerHTML = "Temperature: " + results.main.temp + " °C";
+            document.getElementById("Humidity").innerHTML = "Humidity: " + results.main.humidity + " %";
+            document.getElementById("WindSpeed").innerHTML = "WindSpeed: " + results.wind.speed + " Km/h";
+            document.getElementById("Latitude").innerHTML = "Latitude: " + results.coord.lat;
+            document.getElementById("Longitude").innerHTML = "Longitude: " + results.coord.lon;
+        };
+
+        // ToDo - Move Galway ID to an app configuration setting - JSON
+        document.getElementById("GetWeather").innerHTML = window.GetLocalWeather("2964179");
+
+    </script>
+
+
+    <script>
+        var map;
+        var geoJSON;
+        var request;
+        var gettingData = false;
+        var openWeatherMapKey = "1dfc616b32f88edc2de2243c4631d723";
+        console.log("Google maps");
+
+        function initMap() {
+            console.log("Google maps - initialise");
+            var myLatlng = new google.maps.LatLng(53.27, -9.05);
+            var mapOptions = {
+                zoom: 8,
+                center: myLatlng,
+                mapTypeId: "roadmap",
+                disableDefaultUI: true, // a way to quickly hide all controls
+                scaleControl: true,
+                zoomControl: true
+            };
+            console.log("Google maps - new google maps.Map");
+            map = new google.maps.Map(document.getElementById("map-canvas"),
+                mapOptions);
+
+            console.log("Google maps - google.maps.Marker");
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                title: "Hello World!"
+            });
+
+            console.log("Google maps - marker.setMap");
+            marker.setMap(map);
+            return "done";
+        }
+    </script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA36dWzuzbrzb9ONyMA0PJSUwIj9yrImKA&callback=initMap"
+            async defer>
+    </script>
+
+</body>
+</html>

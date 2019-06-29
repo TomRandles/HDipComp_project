@@ -5,44 +5,24 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<script>
+<style>
+    /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+    #map-canvas {
+        height: 100%;
+        width: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
 
-    function GetLocalWeather(cityID) {
-        console.log("In GetLocalWeather");
-        var gettingData = true;
-        var APIKey = "1dfc616b32f88edc2de2243c4631d723";
-
-        var requestString = "https://api.openweathermap.org/data/2.5/weather?id=" + cityID
-            + "&cluster=yes&format=json"
-            + "&APPID=" + APIKey
-            + "&units=metric";
-
-        var request = new XMLHttpRequest();
-        request.onload = proccessResults;
-        request.open("get", requestString, true);
-        request.send();
-    };
-
-    // Take the JSON results and proccess them
-    var proccessResults = function () {
-
-        console.log("processResults");
-        var results = JSON.parse(this.responseText);
-
-        document.getElementById("Location").innerHTML = "Location: " + results.name;
-        document.getElementById("Country").innerHTML = "Country: " + results.sys.country;
-        document.getElementById("WeatherMessage").innerHTML = "Weather: " + results.weather[0].description;
-        document.getElementById("Temperature").innerHTML = "Temperature: " + results.main.temp + " °C";
-        document.getElementById("Humidity").innerHTML = "Humidity: " + results.main.humidity + " %";
-        document.getElementById("WindSpeed").innerHTML = "WindSpeed: " + results.wind.speed + " Km/h"; 
-        document.getElementById("Latitude").innerHTML = "Latitude: " + results.coord.lat; 
-        document.getElementById("Longitude").innerHTML = "Longitude: " + results.coord.lon;
-    };
-
-    //Move Galway ID to an app configuration setting - JSON
-    document.getElementById("GetWeather").innerHTML = window.GetLocalWeather("2964179");
-
-</script>
+<br />
+<br />
+<br />
 
 <div class="container text-center">
     <h1>Student Data Management app</h1>
@@ -175,7 +155,12 @@
 </div>
 
 <h3> Today's weather @DateTime.Now.ToShortDateString()  @DateTime.Now.ToShortTimeString()</h3>
+
 <br />
+
+<br />
+
+<p id="GetWeather"></p>
 
 <p id="Location">Location </p>
 <p id="Country">Country: </p>
@@ -186,143 +171,35 @@
 <p id="Latitude">Latitude: </p>
 <p id="Longitude">Longitude: </p>
 
-<p>@Model.Message</p>
+<br />
+<br />
 
-@*
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="~/Images/BusinessStudies.png" alt="Business Studies" class="img-responsive" />
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Business courses at ITG prepare students for various business related employments to include
-                        work in commercial and public sector organisations and accountancy related areas.
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <img src="~/Images/Hairdressing&Beauty.png" alt="Hair Dressing & Beauty" class="img-responsive" />
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Learn current trends, techniques and innovations in a creative work and learning environment.
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <img src="~/Images/Art&Design.png" alt="" class="img-responsive" />
-                <div class="carousel-caption" role="option">
-                    <p>
-                        ITG Art and Design courses offer a multi-dimensional learning experience which gives you the
-                        opportunity to develop your art and design concepts and ideas.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+
+<p>About to draw map</p>
+
+<div id="map-canvas">
+
+</div>
+<br />
+
+@* Revisit
+        <iframe id="map-canvas" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+
+    <div style="width: 60%"><iframe width="600" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street%2C%20Dublin%2C%20Ireland+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div><br />
+
 *@
 
-@*
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Learn how to build ASP.NET apps that can run anywhere.
-                        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                            Learn More
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-                <div class="carousel-caption" role="option">
-                    <p>
-                        There are powerful new features in Visual Studio for building modern web apps.
-                        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                            Learn More
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div class="item">
-                <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
-                <div class="carousel-caption" role="option">
-                    <p>
-                        Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                            Learn More
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+<p>Map drawn!</p>
 
-    <div class="row">
-        <div class="col-md-3">
-            <h2>Application uses</h2>
-            <ul>
-                <li>Sample pages using ASP.NET Core Razor Pages</li>
-                <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3">
-            <h2>How to</h2>
-            <ul>
-                <li><a href="https://go.microsoft.com/fwlink/?linkid=852130">Working with Razor Pages.</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3">
-            <h2>Overview</h2>
-            <ul>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3">
-            <h2>Run &amp; Deploy</h2>
-            <ul>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-                <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure App Service</a></li>
-            </ul>
-        </div>
-    </div>
-*@
+<script type="text/javascript" src="~/js/OpenWeatherMapGoogleMap.js">
+</script>
+
+<script>
+    console.log("About to call getElementByID - GetWeather");
+    document.getElementById("GetWeather").innerHTML = window.GetLocalWeather("2964179");
+    console.log("About to call getElementByID - GetWeather called");
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA36dWzuzbrzb9ONyMA0PJSUwIj9yrImKA&callback=initMap"
+        async defer>
+</script>

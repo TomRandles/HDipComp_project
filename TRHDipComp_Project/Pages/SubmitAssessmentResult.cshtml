@@ -90,7 +90,7 @@
         <div class="form-group">
             <label class="control-label col-md-2">Select a module:</label>
             <div class="col-md-2">
-                <select asp-for=AssessmentResult.ModuleID>
+                <select id="SelectModule" asp-for=AssessmentResult.ModuleID onclick="showAssessmentsforModule(value);">
                     @{
 
                         if (Model.SelectedModuleList != null)
@@ -108,19 +108,11 @@
         <br />
 
         <div class="form-group">
-            <label class="control-label col-md-2">Select an assessment:</label>
+            <label class="control-label col-md-2">Select an assessment for this module</label>
             <div class="col-md-2">
                 <select asp-for=AssessmentResult.AssessmentID>
-                    @{
-
-                        if (Model.SelectedAssessmentList != null)
-                        {
-                            foreach (var ass in Model.SelectedAssessmentList)
-                            {
-                                <option value=@ass.AssessmentID>@ass.AssessmentName</option>
-                            }
-                        }
-                    }
+                    <option value="ID" id="optionID1">AssessmentName</option>
+                    <option value="ID" id="optionID2">AssessmentName</option>
                 </select>
             </div>
             <div class="col-md-8"></div>
@@ -150,3 +142,40 @@
         <button type="submit" class="btn btn-primary">Enter details</button>
     </div>
 </form>
+
+<script type="text/javascript">
+
+    function showAssessmentsforModule(myModID) {
+
+        console.log("showAssessmentsforModule module ID: " + myModID);
+
+        var xhttp;
+        if ((myModID == "") || (myModID == null)) {
+            document.getElementById("optionID").innerHTML = "showAssessmentsforModule:ModID empty";
+            console.log("showAssessmentsforModule: ModID empty");
+            return;
+        }
+
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            console.log("onreadystatechange")
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("Good result - ready state: " + this.readyState);
+                console.log("Results: " + this.responseText);
+                var results = JSON.parse(this.responseText);
+                console.log("Parsed results: " + results);
+
+                document.getElementById("optionID1").innerHTML = results.AssessmentName;
+                document.getElementById("optionID2").innerHTML = results.AssessmentID;
+
+            }
+            else {
+                console.log("result - ready state: " + this.readyState);
+            }
+        }
+
+        xhttp.open("GET", "/GetAssessmentsPerModule/" + myModID, true);
+        xhttp.send();
+    }
+
+</script>
