@@ -1,37 +1,4 @@
 ﻿
-function GetLocalWeather(cityID) {
-    console.log("GetLocalWeather");
-    var gettingData = true;
-    var APIKey = "1dfc616b32f88edc2de2243c4631d723";
-
-    var requestString = "https://api.openweathermap.org/data/2.5/weather?id=" + cityID
-        + "&cluster=yes&format=json"
-        + "&APPID=" + APIKey
-        + "&units=metric";
-
-    var request = new XMLHttpRequest();
-    request.onload = proccessWResults;
-    request.open("get", requestString, true);
-    request.send();
-    return "GetLocalWeatherReturn";
-};
-
-var proccessWResults = function () {
-
-    console.log("processWResults: " + this.responseText);
-    var results = JSON.parse(this.responseText);
-    console.log("Parsed results: " + results);
-
-    document.getElementById("Location").innerHTML = "Location: " + results.name;
-    document.getElementById("Country").innerHTML = "Country: " + results.sys.country;
-    document.getElementById("WeatherMessage").innerHTML = "Weather: " + results.weather[0].description;
-    document.getElementById("Temperature").innerHTML = "Temperature: " + results.main.temp + " °C";
-    document.getElementById("Humidity").innerHTML = "Humidity: " + results.main.humidity + " %";
-    document.getElementById("WindSpeed").innerHTML = "WindSpeed: " + results.wind.speed + " Km/h";
-    document.getElementById("Latitude").innerHTML = "Latitude: " + results.coord.lat;
-    document.getElementById("Longitude").innerHTML = "Longitude: " + results.coord.lon;
-};
-
 
 var map;
 var geoJSON;
