@@ -21,6 +21,7 @@ else
         <table class="table table-bordered" >
             <thead>
                 <tr>
+                    <th>Student ID</th>
                     <th>Student name</th>
                     <th>Address</th>
                     <th>Mobile phone</th>
@@ -37,11 +38,12 @@ else
             <tbody>
 
                 <tr>
+                    <td>@Model.Student.StudentID</td>
                     <td>@Model.Student.FirstName @Model.Student.SurName</td>
                     <td>@Model.Student.AddressOne <br /> @Model.Student.AddressTwo <br /> @Model.Student.Town <br /> @Model.Student.County </td>
                     <td>@Model.Student.MobilePhoneNumber</td>
                     <td>@Model.Student.EmailAddress</td>
-                    <td>@Model.Student.DateOfBirth</td>
+                    <td>@Model.Student.DateOfBirth.Date</td>
                     <td>@Model.Student.StudentPPS</td>
                     <td>@Model.Student.GenderType</td>
                     <td>@Model.Student.FullOrPartTime</td>

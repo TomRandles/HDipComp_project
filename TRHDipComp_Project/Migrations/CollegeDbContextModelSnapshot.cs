@@ -52,7 +52,9 @@ namespace TRHDipComp_Project.Migrations
                 {
                     b.Property<string>("AssessmentResultID")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(6);
+                        .HasMaxLength(25);
+
+                    b.Property<DateTime>("AssessmentDate");
 
                     b.Property<string>("AssessmentID")
                         .HasMaxLength(6);

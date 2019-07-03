@@ -13,18 +13,23 @@
         <tr>
             <th>Student ID</th>
             <th>Student name</th>
+            <th>Show student details</th>
             <th>Submit student assessment result</th>
+            <th>Student assessment results</th>
+
         </tr>
     </thead>
     <tbody>
 
         @foreach (var stud in Model.StudentList)
         {
-            <tr>
-                <td>@stud.StudentID </td>
-                <td>@stud.FirstName @stud.SurName !!</td>
-                <td><a asp-page="SubmitAssessmentResult" asp-route-id="@stud.StudentID">Submit assessment result</a></td>
-            </tr>
+        <tr>
+            <td>@stud.StudentID </td>
+            <td>@stud.FirstName @stud.SurName</td>
+            <td><a asp-page="ShowStudentDetails" asp-route-id="@stud.StudentID">Show student details</a></td>
+            <td><a asp-page="SubmitAssessmentResult" asp-route-id="@stud.StudentID">Submit assessment result</a></td>
+            <td><a asp-page="ShowStudentResults" asp-route-id="@stud.StudentID">Show student assessment results</a></td>
+        </tr>
         }
     </tbody>
 </table>

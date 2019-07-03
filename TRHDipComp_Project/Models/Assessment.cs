@@ -23,7 +23,7 @@ namespace TRHDipComp_Project.Models
         // Assessment description
         [Display(Name = "Assessment description")]
         [StringLength(50)]
-        [RegularExpression(@"[\s\w-\,\.]{0,50}")]
+        [RegularExpression(@"[\s\w-\,\.\!]{0,100}")]
         public string AssessmentDescription { get; set; } = "";
 
         // Total marks 
@@ -38,7 +38,7 @@ namespace TRHDipComp_Project.Models
         }
 
         [Required(ErrorMessage = ("Assessment type should be  \"project\" or \"exam\""))]
-        [Display(Name = "Assessment")]
+        [Display(Name = "Assessment type")]
         [EnumDataType(typeof(AssessmentTypeE))]
         public AssessmentTypeE AssessmentType { get; set; } = AssessmentTypeE.project;
 

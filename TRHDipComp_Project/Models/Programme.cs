@@ -18,26 +18,26 @@ namespace TRHDipComp_Project.Models
         public string ProgrammeID { get; set; }
 
         // Programme name
-        [Required(ErrorMessage = ("Programme name is at least 6 characters"))]
+        [Required(ErrorMessage = ("Programme name is 6 to 20 characters"))]
         [Display(Name = "Programme name")]
         [MaxLength(20)]
-        [RegularExpression(@"[\w\s\.\,]{6,20}")]
+        [RegularExpression(@"[\w\s\.\,\-]{6,20}")]
         public string ProgrammeName { get; set; } = "";
 
         // Programme description
         [Display(Name = "Programme description")]
         [MaxLength(50)]
-        [RegularExpression(@"[\s\w-\,\.]{0,50}")]
+        [RegularExpression(@"[\s\w-\,\.\!\@]{0,100}")]
         public string ProgrammeDescription { get; set; } = "";
 
         // QQI level
         [Display(Name = "Programme QQI level")]
-        [RegularExpression(@"\w{1}")]
+        [RegularExpression(@"\d{1}")]
         public int ProgrammeQQILevel { get; set; } = 5;
 
         // Credits 
         [Display(Name = "Programme Credits")]
-        [RegularExpression(@"\w{1,3}")]
+        [RegularExpression(@"\d{1,3}")]
         public int ProgrammeCredits { get; set; } = 40;
 
         // Cost

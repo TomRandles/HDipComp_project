@@ -21,18 +21,18 @@ namespace TRHDipComp_Project.Models
         [Required(ErrorMessage = ("Module name is at least 6 characters"))]
         [Display(Name = "Module name")]
         [MaxLength(20)]
-        [RegularExpression(@"[\w\s\.\,]{6,20}")]
+        [RegularExpression(@"[\w\s\.\,]{6,30}")]
         public string ModuleName { get; set; } = "";
 
         // Module description
         [Display(Name = "Module description")]
         [MaxLength(50)]
-        [RegularExpression(@"[\s\w-\,\.]{0,50}")]
+        [RegularExpression(@"[\s\w-\,\.\!]{0,100}")]
         public string ModuleDescription { get; set; } = "";
 
         // Credits 
         [Display(Name = "Module Credits")]
-        [RegularExpression(@"\w{1,3}")]
+        [RegularExpression(@"\d{1,3}")]
         public int ModuleCredits { get; set; } = 5;
 
         public virtual ICollection<Assessment> Assessments { get; set; }

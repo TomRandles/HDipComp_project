@@ -124,11 +124,12 @@ namespace TRHDipComp_Project.Migrations
                 name: "AssessmentResults",
                 columns: table => new
                 {
-                    AssessmentResultID = table.Column<string>(maxLength: 6, nullable: false),
+                    AssessmentResultID = table.Column<string>(maxLength: 25, nullable: false),
                     AssessmentResultDescription = table.Column<string>(maxLength: 50, nullable: true),
                     AssessmentResultMark = table.Column<int>(nullable: false),
                     StudentID = table.Column<string>(maxLength: 7, nullable: true),
                     ProgrammeID = table.Column<string>(maxLength: 6, nullable: true),
+                    AssessmentDate = table.Column<DateTime>(nullable: false),
                     ModuleID = table.Column<string>(maxLength: 6, nullable: true),
                     AssessmentID = table.Column<string>(maxLength: 6, nullable: true)
                 },

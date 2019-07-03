@@ -60,7 +60,7 @@ body {
     color: red;
     background-color: yellow;
     font-size: 80%;
-    font-style: italic
+    font-style: italic;
 }
 
 .validation-summary-errors {
@@ -70,4 +70,6 @@ body {
     border: 2px solid red;
 }
 
-
+    background-color: khaki;    margin: 0 auto;
+    max-width: 350px;
+}

@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using TRHDipComp_Project.Models;
 
 namespace TRHDipComp_Project.Pages
@@ -8,6 +11,26 @@ namespace TRHDipComp_Project.Pages
     public class ShowAssessmentResultModel : PageModel
     {
         private readonly CollegeDbContext _db;
+
+        [BindProperty]
+        public string ProgrammeName { get; private set; } = "";
+
+        [BindProperty]
+        public string ModuleName { get; private set; } = "";
+
+        [BindProperty]
+        public string AssessmentName { get; private set; } = "";
+
+        [BindProperty]
+        public string StudentName { get; private set; } = "";
+
+        private IList<Student> StudentList;
+
+        private IList<Programme> ProgrammeList;
+
+        private IList<Module> ModuleList;
+
+        private IList<Assessment> AssessmentList;
 
         public ShowAssessmentResultModel(CollegeDbContext db)
         {
@@ -25,21 +48,28 @@ namespace TRHDipComp_Project.Pages
             {
                 return NotFound();
             }
+
+            StudentList = await _db.Students.AsNoTracking().ToListAsync();
+            ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
+            ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
+            AssessmentList = await _db.Assessments.AsNoTracking().ToListAsync();
+
+            var students = StudentList.Where(s => s.StudentID == AssessmentResult.StudentID);
+            StudentName = students.First().FirstName + " " + students.First().SurName;
+
+            AssessmentResult.ProgrammeID = students.First().ProgrammeID;
+            var programmes = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID)
+                                          .Select(p => p);
+
+            ProgrammeName = programmes.First().ProgrammeName;
+
+            var modules = ModuleList.Where(s => s.ModuleID == AssessmentResult.ModuleID);
+            ModuleName = modules.First().ModuleName;
+
+            var assessments = AssessmentList.Where(s => s.AssessmentID == AssessmentResult.AssessmentID);
+            AssessmentName = assessments.First().AssessmentName;
+
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-
-            var assess = await _db.Assessments.FindAsync(AssessmentResult.AssessmentResultID);
-
-            if (assess != null)
-            {
-                _db.Assessments.Remove(assess);
-                await _db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("Index");
         }
     }
 }

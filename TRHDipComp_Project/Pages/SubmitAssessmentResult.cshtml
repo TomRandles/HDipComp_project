@@ -18,7 +18,7 @@
     Order of submission
     1. If student ID was passed in via routing
     or
-    Select student from a dropdown menu of existing students  
+    Select student from a dropdown menu of existing students
 
 
     Get programme of study for student
@@ -32,114 +32,106 @@
 
 *@
 
-<form method="post" class="form-horizontal">
-
+<h4 class="text-center"><strong>Student name: </strong>@Model.StudentName</h4>
+<h4 class="text-center"><strong>Programme: </strong>@Model.ProgrammeName</h4>
+<br />
+<form method="post" class="form-horizontal" style="background-color:khaki; margin:0 auto">
     <div asp-validation-summary="All">
-        <br />
-
-        <div class="form-group">
-            <label asp-for=AssessmentResult.StudentID class="control-label col-md-2"></label>
-            <div class="col-md-2">
-                <input type="text" asp-for=AssessmentResult.StudentID class="form-control">
-                <span asp-validation-for=AssessmentResult.StudentID></span>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=AssessmentResult.StudentID class="control-label"></label>
+                    <input type="text" asp-for=AssessmentResult.StudentID name=AssessmentResult.StudentID class="form-control" readonly>
+                    <span asp-validation-for=AssessmentResult.StudentID></span>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
 
-        <div class="form-group">
-            <label asp-for=AssessmentResult.ProgrammeID class="control-label col-md-2"></label>
-            <div class="col-md-2">
-                <input type="text" asp-for=AssessmentResult.ProgrammeID class="form-control">
-                <span asp-validation-for=AssessmentResult.ProgrammeID></span>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=AssessmentResult.ProgrammeID class="control-label"></label>
+                    <input type="text" asp-for=AssessmentResult.ProgrammeID name=AssessmentResult.ProgrammeID class="form-control" readonly>
+                    <span asp-validation-for=AssessmentResult.ProgrammeID></span>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
 
-        <div class="form-group">
-            <label asp-for=AssessmentResult.AssessmentResultID class="control-label col-md-2"></label>
-            <div class="col-md-2">
-                <input type="text" asp-for=AssessmentResult.AssessmentResultID class="form-control">
-                <span asp-validation-for=AssessmentResult.AssessmentResultID></span>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=AssessmentResult.AssessmentDate class="control-label"></label>
+                    <input type="date" asp-for=AssessmentResult.AssessmentDate class="form-control">
+                    <span asp-validation-for=AssessmentResult.AssessmentDate></span>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Select a student:</label>
-            <div class="col-md-2">
-                <select asp-for=AssessmentResult.StudentID>
-                    @{
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=AssessmentResult.ModuleID class="control-label">Select a module:</label>
+                    <select class="form-control" id="SelectModule" asp-for=AssessmentResult.ModuleID onclick="showAssessmentsforModule(value);">
+                        @{
 
-                        if (Model.StudentList != null)
-                        {
-                            foreach (var stud in Model.StudentList)
+                            if (Model.SelectedModuleList != null)
                             {
-                                <option value=@stud.StudentID>@stud.FirstName @stud.SurName</option>
+                                foreach (var mod in Model.SelectedModuleList)
+                                {
+                                    <option value=@mod.ModuleID>@mod.ModuleName</option>
+                                }
                             }
                         }
-                    }
-                </select>
+                    </select>
+                    <span asp-validation-for=AssessmentResult.ModuleID></span>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Select a module:</label>
-            <div class="col-md-2">
-                <select id="SelectModule" asp-for=AssessmentResult.ModuleID onclick="showAssessmentsforModule(value);">
-                    @{
-
-                        if (Model.SelectedModuleList != null)
-                        {
-                            foreach (var mod in Model.SelectedModuleList)
-                            {
-                                <option value=@mod.ModuleID>@mod.ModuleName</option>
-                            }
-                        }
-                    }
-                </select>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=AssessmentResult.AssessmentID class="control-label">Select module assessment</label>
+                    <select class="form-control" asp-for=AssessmentResult.AssessmentID>
+                        <option id="assessID1">Assessment one</option>
+                        <option id="assessID2">Assessment two</option>
+                    </select>
+                    <span asp-validation-for=AssessmentResult.AssessmentID></span>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Select an assessment for this module</label>
-            <div class="col-md-2">
-                <select asp-for=AssessmentResult.AssessmentID>
-                    <option value="ID" id="optionID1">AssessmentName</option>
-                    <option value="ID" id="optionID2">AssessmentName</option>
-                </select>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-6">
+                    <label asp-for=AssessmentResult.AssessmentResultDescription class="control-label"></label>
+                    <textarea type="text" asp-for=AssessmentResult.AssessmentResultDescription class="form-control" rows="2"></textarea>
+                    <span asp-validation-for=AssessmentResult.AssessmentResultDescription></span>
+                </div>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
 
-        <div class="form-group">
-            <label asp-for=AssessmentResult.AssessmentResultDescription class="control-label col-md-2"></label>
-            <div class="col-md-2">
-                <input type="text" asp-for=AssessmentResult.AssessmentResultDescription class="form-control">
-                <span asp-validation-for=AssessmentResult.AssessmentResultDescription></span>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-3">
+                    <label asp-for=AssessmentResult.AssessmentResultMark class="control-label"></label>
+                    <input type="number" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
+                    <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-8"></div>
-        </div>
-        <br />
+            <br />
 
-        <div class="form-group">
-            <label asp-for=AssessmentResult.AssessmentResultMark class="control-label col-md-2"></label>
-            <div class="col-md-2">
-                <input type="number" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
-                <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary">Enter details</button>
+                </div>
+                <div class="col-md-2"></div>
             </div>
-            <div class="col-md-8"></div>
+            <br />
         </div>
-        <br />
-
-        <button type="submit" class="btn btn-primary">Enter details</button>
     </div>
 </form>
 
@@ -165,8 +157,18 @@
                 var results = JSON.parse(this.responseText);
                 console.log("Parsed results: " + results);
 
-                document.getElementById("optionID1").innerHTML = results.AssessmentName;
-                document.getElementById("optionID2").innerHTML = results.AssessmentID;
+                var results2 = JSON.parse(results);
+
+                console.log("Parsed results - assessment ID: " + results2[0].AssessmentID);
+                console.log("Parsed results - assessment Name: " + results2[0].AssessmentName);
+
+                // First assessment
+                document.getElementById("assessID1").innerHTML = results2[0].AssessmentName;
+                document.getElementById("assessID1").setAttribute("value", results2[0].AssessmentID);
+
+                // Second assessment
+                document.getElementById("assessID2").innerHTML = results2[1].AssessmentName;
+                document.getElementById("assessID2").setAttribute("value", results2[1].AssessmentID);
 
             }
             else {

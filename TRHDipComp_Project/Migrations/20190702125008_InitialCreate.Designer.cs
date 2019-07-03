@@ -10,7 +10,7 @@ using TRHDipComp_Project.Models;
 namespace TRHDipComp_Project.Migrations
 {
     [DbContext(typeof(CollegeDbContext))]
-    [Migration("20190627091915_InitialCreate")]
+    [Migration("20190702125008_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,9 @@ namespace TRHDipComp_Project.Migrations
                 {
                     b.Property<string>("AssessmentResultID")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(6);
+                        .HasMaxLength(25);
+
+                    b.Property<DateTime>("AssessmentDate");
 
                     b.Property<string>("AssessmentID")
                         .HasMaxLength(6);

@@ -21,14 +21,12 @@ else
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Assessment result ID</th>
-                    <th>Student ID</th>
-                    <th>Programme ID</th>
-                    <th>Module ID</th>
-                    <th>Assessment ID</th>
-                    <th>Assessment result description</th>
-                    <th>Assessment mark</th>
-
+                    <th>Student</th>
+                    <th>Programme</th>
+                    <th>Module</th>
+                    <th>Assessment</th>
+                    <th>Feedback</th>
+                    <th>Mark</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -36,11 +34,10 @@ else
             <tbody>
 
                 <tr>
-                    <td>@Model.AssessmentResult.AssessmentResultID</td>
-                    <td>@Model.AssessmentResult.StudentID</td>
-                    <td>@Model.AssessmentResult.ProgrammeID</td>
-                    <td>@Model.AssessmentResult.ModuleID</td>
-                    <td>@Model.AssessmentResult.AssessmentID</td>
+                    <td>@Model.StudentName</td>
+                    <td>@Model.ProgrammeName</td>
+                    <td>@Model.ModuleName</td>
+                    <td>@Model.AssessmentName</td>
                     <td>@Model.AssessmentResult.AssessmentResultDescription</td>
                     <td>@Model.AssessmentResult.AssessmentResultMark</td>
 

@@ -1,0 +1,58 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Pages.ShowStudentResultsModel
+@{
+    ViewData["Title"] = "ShowStudentResults";
+}
+
+<h2>Show Student Results</h2>
+
+
+@*Show student name and programme of study
+
+    Get list of Assessment results for this student
+
+
+*@
+
+<h3>Results submission form for @Model.StudentName, programme: @Model.ProgrammeName</h3>
+
+<div class="container">
+    <h3>Assessment result details</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Assessment</th>
+                <th>Student feedback</th>
+                <th>Mark (%)</th>
+                <th>Maximum mark (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                foreach (var assessmentResult in @Model.StudentAssessmentResultsList)
+                {
+                    var modules = @Model.ModuleList.Where(s => s.ModuleID == assessmentResult.ModuleID)
+                                                   .Select(s => s);
+                    string moduleName = modules.First().ModuleName;
+
+                    var assessments = @Model.AssessmentsList.Where(m => m.ModuleID == assessmentResult.ModuleID)
+                                                            .Select(m => m);
+
+                    string assessmentName = assessments.First().AssessmentName;
+                    int totalMark = assessments.First().AssessmentTotalMark;
+                    <tr>
+                        <td>@moduleName</td>
+                        <td>@assessmentName</td>
+                        <td>@assessmentResult.AssessmentResultDescription</td>
+                        <td align="center">@assessmentResult.AssessmentResultMark</td>
+                        <td align="center">@totalMark</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<br />
