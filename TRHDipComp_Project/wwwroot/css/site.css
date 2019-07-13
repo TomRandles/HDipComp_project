@@ -56,9 +56,9 @@ body {
 }
 
 .field-validation-error {
-    font-weight:bold;
+    font-weight: bold;
     color: red;
-    background-color: yellow;
+    background-color: lightyellow;
     font-size: 80%;
     font-style: italic;
 }
@@ -66,10 +66,53 @@ body {
 .validation-summary-errors {
     font-weight: bold;
     color: red;
-    background-color: yellow;
+    background-color: lightyellow;
     border: 2px solid red;
 }
 
-    background-color: khaki;    margin: 0 auto;
-    max-width: 350px;
+.table-functions-grad {
+    background-image: linear-gradient(180deg, lavender, aliceblue);
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    font-family: Calibri;
+    font-size: 16px;
+    color: black;
+}
+
+/* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+#map-canvas {
+    height: 300px;
+    width: 500px;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Border Radius CSS - used on audio recording controls*/
+.border_rad {
+    border: 3px solid white;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+/*Gradient CSS */
+#functionsGrad {
+    background-color: #ddd;
+    background-image: linear-gradient(180deg, white, lavender);
+    background-color: #ddd;
+    height: 60px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 5px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 20px;
+    font-family: Calibri;
+    color: black;
 }

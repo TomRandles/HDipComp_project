@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/TRHDipComp_Project/Migrations/20190712101517_InitialCreate.cs
+/TRHDipComp_Project/Migrations/20190712101517_InitialCreate.Designer.cs

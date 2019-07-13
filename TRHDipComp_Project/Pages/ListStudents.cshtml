@@ -6,29 +6,46 @@
 
 <h2>List Students</h2>
 
+<form>
+    <p>
+        Programme:
+
+        <input type="text" asp-for="ProgrammeSearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <h3>Current Students at ITG </h3>
 
-<table class="table">
+<table class="table table-bordered table-hover table-condensed table-functions-grad">
     <thead>
         <tr>
             <th>Student ID</th>
+            <th>Programme</th>
             <th>Student name</th>
-            <th>Show student details</th>
-            <th>Submit student assessment result</th>
-            <th>Student assessment results</th>
-
+            <th>Student details</th>
+            <th>Submit assessment result</th>
+            <th>Assessment results</th>
+            <th>Add student photo</th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach (var stud in Model.StudentList)
+        @foreach (var stud in Model.SelectedStudentList)
         {
+            // 
+            var programmes = Model.ProgrammesFound.Where(p => p.ProgrammeID == stud.ProgrammeID)
+                                                  .Select(p => p);
+            string progName = programmes.First().ProgrammeName;
+
         <tr>
             <td>@stud.StudentID </td>
+            <td>@progName</td>
             <td>@stud.FirstName @stud.SurName</td>
-            <td><a asp-page="ShowStudentDetails" asp-route-id="@stud.StudentID">Show student details</a></td>
-            <td><a asp-page="SubmitAssessmentResult" asp-route-id="@stud.StudentID">Submit assessment result</a></td>
-            <td><a asp-page="ShowStudentResults" asp-route-id="@stud.StudentID">Show student assessment results</a></td>
+            <td><a asp-page="ShowStudentDetails" asp-route-id="@stud.StudentID">@stud.FirstName's details</a></td>
+            <td><a asp-page="SubmitAssessmentResult" asp-route-id="@stud.StudentID">Submit result for @stud.FirstName</a></td>
+            <td><a asp-page="ShowStudentResults" asp-route-id="@stud.StudentID">@stud.FirstName's results</a></td>
+            <td><a asp-page="UpdateStudentImage" asp-route-id="@stud.StudentID">Add student photo</a></td>
         </tr>
         }
     </tbody>

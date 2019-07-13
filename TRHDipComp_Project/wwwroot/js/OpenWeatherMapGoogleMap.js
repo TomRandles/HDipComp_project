@@ -84,6 +84,7 @@ var getWeather = function (northLat, eastLng, southLat, westLng) {
         + map.getZoom()
         + "&cluster=yes&format=json"
         + "&APPID=" + openWeatherMapKey;
+    console.log("getWeather: This is the v19 request String: " + requestString);
     request = new XMLHttpRequest();
     request.onload = proccessResults;
     request.open("get", requestString, true);
@@ -151,14 +152,33 @@ var jsonToGeoJson = function (weatherItem) {
 // Take the JSON results and proccess them
 var proccessResults = function () {
     console.log("proccessResults: Response text" + this.responseText);
-    var results = JSON.parse(this.responseText);
+    var results;
+    try {
+        results = JSON.parse(this.responseText);
+    } catch (e) {
+        console.log("JSON.parse exception: " + e);
+        return;
+    }
+
     console.log("proccessResults: " + results);
-    if (results.list.length > 0) {
-        resetData();
-        for (var i = 0; i < results.list.length; i++) {
-            geoJSON.features.push(jsonToGeoJson(results.list[i]));
+    // Check if the resultant object is null; can happen if the response string is empty.
+    console.log("processResults: check for null object and empty typeof undefined  string");
+
+    if (typeof results !== 'undefined') {
+        if (typeof results.list !== 'undefined') {
+            if (results.list.length > 0) {
+                resetData();
+                for (var i = 0; i < results.list.length; i++) {
+                    geoJSON.features.push(jsonToGeoJson(results.list[i]));
+                }
+                drawIcons(geoJSON);
+            }
         }
-        drawIcons(geoJSON);
+        else {
+            console.log("processResults: parsed object results.list undefined");
+        }
+    }
+    else {
+        console.log("processResults: parsed object undefined");
     }
 };
-

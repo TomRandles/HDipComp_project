@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,13 @@ namespace TRHDipComp_Project.Pages
     public class ListModulesModel : PageModel
     {
         private readonly CollegeDbContext _db;
+
+        [BindProperty(SupportsGet = true)]
+        [RegularExpression(@"[\w\.\'\.\s]{1,20}")]
+        public string ProgrammeSearchString { get; set; } = "";
+
+        [BindProperty]
+        public IList<Programme> ProgrammesFound { get; set; }
 
         [BindProperty]
         public IList<Module> ModuleList { get; private set; }
@@ -35,6 +43,9 @@ namespace TRHDipComp_Project.Pages
 
         public async Task OnGetAsync()
         {
+            // var Programmes = from s in _db.Programmes
+            //                 select s;
+
             //get list of Modules, ProgrammeModules and Programmes, Assessments
             ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
             ProgrammeModuleList = await _db.ProgrammeModules.AsNoTracking().ToListAsync();
@@ -42,12 +53,21 @@ namespace TRHDipComp_Project.Pages
             // Populate ModulesInProgramme
             foreach (var progMod in ProgrammeModuleList)
             {
-                ModulesInProgramme.Add(progMod.ModuleID, progMod.ProgrammeID);
+                ModulesInProgramme.Add(progMod.ProgrammeID + progMod.ModuleID, progMod.ProgrammeID);
             }
            
             ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
             AssessmentList = await _db.Assessments.AsNoTracking().ToListAsync();
 
+
+            var programmes = from s in _db.Programmes
+                             select s;
+
+            if (!String.IsNullOrEmpty(ProgrammeSearchString))
+            {
+                programmes = programmes.Where(s => s.ProgrammeName.Contains(ProgrammeSearchString));
+            }
+            ProgrammesFound = await programmes.ToListAsync();
         }
     }
 }

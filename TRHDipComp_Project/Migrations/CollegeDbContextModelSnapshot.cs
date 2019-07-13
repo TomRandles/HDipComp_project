@@ -26,7 +26,7 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(6);
 
                     b.Property<string>("AssessmentDescription")
-                        .HasMaxLength(50);
+                        .HasMaxLength(100);
 
                     b.Property<string>("AssessmentName")
                         .IsRequired()
@@ -52,7 +52,7 @@ namespace TRHDipComp_Project.Migrations
                 {
                     b.Property<string>("AssessmentResultID")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(25);
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("AssessmentDate");
 
@@ -60,9 +60,11 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(6);
 
                     b.Property<string>("AssessmentResultDescription")
-                        .HasMaxLength(50);
+                        .HasMaxLength(100);
 
-                    b.Property<int>("AssessmentResultMark");
+                    b.Property<double>("AssessmentResultMark");
+
+                    b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("ModuleID")
                         .HasMaxLength(6);
@@ -99,7 +101,7 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("ModuleName")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(30);
 
                     b.HasKey("ModuleID");
 
@@ -194,6 +196,8 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("ProgrammeID")
                         .HasMaxLength(6);
+
+                    b.Property<byte[]>("StudentImage");
 
                     b.Property<string>("StudentPPS")
                         .IsRequired()

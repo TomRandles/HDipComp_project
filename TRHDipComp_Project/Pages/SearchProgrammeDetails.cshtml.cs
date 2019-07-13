@@ -36,7 +36,6 @@ namespace TRHDipComp_Project.Pages
 
                 if (!String.IsNullOrEmpty(ProgrammeSearchString))
                 {
-                    // Programmes = Programmes.Where(s => s.Title.Contains(ProgrammeSearchString));
                     Programmes = Programmes.Where(s => s.ProgrammeName.Contains(ProgrammeSearchString));
                 }
 

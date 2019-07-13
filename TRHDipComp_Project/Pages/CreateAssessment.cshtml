@@ -50,17 +50,18 @@
                 <div class="col-md-5"></div>
             </div>
 
-            <div class="row">
+            <div class="row form-group">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
-                    <label asp-for=Assessment.AssessmentType class="control-label"></label>
+                <div class="col-md-1">
+                    <label asp-for=Assessment.AssessmentType class="control-label text-right"></label>
+                </div>
+                <div class="col-md-1">
                     <div class="radio">
                         <label asp-for=Assessment.AssessmentType class="control-label">
                             <input type="radio" asp-for=Assessment.AssessmentType value="project" />
                             <span asp-validation-for=Assessment.AssessmentType></span>Project
                         </label>
                     </div>
-
                     <div class="radio">
                         <label asp-for=Assessment.AssessmentType class="control-label">
                             <input type="radio" asp-for=Assessment.AssessmentType value="exam" />
@@ -68,11 +69,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-6"></div>
             </div>
+            <br />
 
             @*Add Assessment to an existing Module
-                Dropdown for existing modules that the Assessment may select.*@
+              Dropdown for existing modules that the Assessment may select.*@
 
             <div class="row">
                 <div class="col-md-4"></div>
@@ -102,6 +104,7 @@
                 </div>
                 <div class="col-md-5"></div>
             </div>
+            <br />
         </div>
     </div>
 </form>

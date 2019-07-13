@@ -5,29 +5,13 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<style>
-    /* Always set the map height explicitly to define the size of the div
-        * element that contains the map. */
-    #map-canvas {
-        height: 100%;
-        width: 100%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-</style>
 
-<br />
-<br />
-<br />
-
-<div class="container text-center">
-    <h1>Student Data Management app</h1>
-    <br />
-
+<div class="row border border-primary">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 border_rad text-center align-middle" id="functionsGrad">
+        <p style="font-size:30px; color:cornflowerblue">Welcome to the <strong>Student Data Management</strong> site for ITG</p>
+    </div>
+    <div class="col-md-2"> </div>
 </div>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
@@ -81,115 +65,94 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="RegisterStudent">Register Student</a>
-    </div>
-</div>
-
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="ListStudents">List Students</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="CreateProgramme">Create Programme</a>
-    </div>
-</div>
-
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="ListProgrammes">List Programmes</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="CreateModule">Create Module</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="CreateAssessment">Create Assessment</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="ListModules">List Programme, Module & Assessments</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="SearchStudentDetails">Search Student Details</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="SearchProgrammeDetails">Search Programme Details</a>
-    </div>
-</div>
-
-<div class="container">
-    <br />
-    <div id="header2">
-        <a asp-page="GetWeatherReport" target="_parent">GetWeatherReport</a>
-    </div>
-</div>
-
-<h3> Today's weather @DateTime.Now.ToShortDateString()  @DateTime.Now.ToShortTimeString()</h3>
-
 <br />
 
-<br />
+<div class="container" style="background-color: azure">
 
-<p id="GetWeather"></p>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="RegisterStudent"><strong>Register Student</strong></a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="CreateProgramme"><strong>Create Programme</strong></a>
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
 
-<p id="Location">Location </p>
-<p id="Country">Country: </p>
-<p id="WeatherMessage">Weather message: </p>
-<p id="Temperature">Temperature : "°C"</p>
-<p id="Humidity"> Humidity: </p>
-<p id="WindSpeed">WindSpeed:  "Km/h"</p>
-<p id="Latitude">Latitude: </p>
-<p id="Longitude">Longitude: </p>
-
-<br />
-<br />
-
-
-<p>About to draw map</p>
-
-<div id="map-canvas">
-
+    <div class="row border border-primary">
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="ListStudents"><strong>List students</strong></a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="CreateModule"><strong>Create Module</strong></a>
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
+    <div class="row border border-primary">
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="SearchStudentDetails"><strong>Search Student Details</strong></a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="CreateAssessment"><strong>Create Assessment</strong></a>
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
+    <div class="row border border-primary">
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="SearchProgrammeDetails"><strong>Search Programme Details</strong></a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="ListProgrammes"><strong>List Programmes</strong></a>
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
+    <div class="row border border-primary">
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="SendStudentMessage"><strong>Send Student Message</strong></a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+          
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
+    <div class="row border border-primary">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="ListModules"><strong>List Programmes, Modules & Assessments</strong></a>
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
 </div>
+
+<br />
+<p><strong>@Model.Message</strong> </p>
 <br />
 
-@* Revisit
-        <iframe id="map-canvas" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-
-    <div style="width: 60%"><iframe width="600" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street%2C%20Dublin%2C%20Ireland+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div><br />
-
-*@
-
-<p>Map drawn!</p>
+<div class="container" style="background-color:beige; margin:auto; padding:20px;">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <br />
+            <h3>Today's weather </h3>
+            <p>@DateTime.Now.ToShortDateString()  @DateTime.Now.ToShortTimeString()</p>
+            <br />
+            <p id="GetWeather"></p>
+            <br />
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-4" id="map-canvas"></div>
+    </div>
+</div>
 
 <script type="text/javascript" src="~/js/OpenWeatherMapGoogleMap.js">
 </script>
@@ -218,14 +181,8 @@
         var results = JSON.parse(this.responseText);
         console.log("Parsed results: " + results);
 
-        document.getElementById("Location").innerHTML = "Location: " + results.name;
-        document.getElementById("Country").innerHTML = "Country: " + results.sys.country;
-        document.getElementById("WeatherMessage").innerHTML = "Weather: " + results.weather[0].description;
-        document.getElementById("Temperature").innerHTML = "Temperature: " + results.main.temp + " °C";
-        document.getElementById("Humidity").innerHTML = "Humidity: " + results.main.humidity + " %";
-        document.getElementById("WindSpeed").innerHTML = "WindSpeed: " + results.wind.speed + " Km/h";
-        document.getElementById("Latitude").innerHTML = "Latitude: " + results.coord.lat;
-        document.getElementById("Longitude").innerHTML = "Longitude: " + results.coord.lon;
+        document.getElementById("GetWeather").innerHTML = results.name + "\'s weather today: " + results.weather[0].description + ", temperature: " + results.main.temp + " °C, humidity: " + results.main.humidity + " %, windspeed: " + results.wind.speed + " Km/h.";
+
     };
 
 </script>

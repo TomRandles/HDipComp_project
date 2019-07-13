@@ -20,7 +20,7 @@ namespace TRHDipComp_Project.Models
         // Module name
         [Required(ErrorMessage = ("Module name is at least 6 characters"))]
         [Display(Name = "Module name")]
-        [MaxLength(20)]
+        [MaxLength(30)]
         [RegularExpression(@"[\w\s\.\,]{6,30}")]
         public string ModuleName { get; set; } = "";
 

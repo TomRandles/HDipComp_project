@@ -22,7 +22,7 @@ namespace TRHDipComp_Project.Models
 
         // Assessment description
         [Display(Name = "Assessment description")]
-        [StringLength(50)]
+        [StringLength(100)]
         [RegularExpression(@"[\s\w-\,\.\!]{0,100}")]
         public string AssessmentDescription { get; set; } = "";
 

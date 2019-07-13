@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+
+
 
 namespace TRHDipComp_Project.Models
 {
@@ -117,6 +116,8 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Fulltime / parttime:")]
         [EnumDataType(typeof(FullOrPartTimeE))]
         public FullOrPartTimeE FullOrPartTime { get; set; } = FullOrPartTimeE.fulltime;
+
+        public byte[] StudentImage{ get; set; }
 
         // Student programme of study - Foreign Key        
         [Display(Name = "Student Programme ID:")]

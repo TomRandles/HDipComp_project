@@ -106,11 +106,8 @@ namespace TRHDipComp_Project.Pages
             {
                 Message += " ModelState is Valid";
 
-                // Construct PK value
-
-                AssessmentResult.AssessmentResultID = AssessmentResult.StudentID + AssessmentResult.AssessmentID;
-
-                // + AssessmentResult.AssessmentDate.Date.ToString();
+                // Construct PK value - Student, AssessmentID, AssessmentDate
+                AssessmentResult.AssessmentResultID = AssessmentResult.StudentID +"-"+ AssessmentResult.AssessmentID +"-"+ AssessmentResult.AssessmentDate.Date.ToString();
 
                 // Save new Assessment
                 _db.AssessmentResults.Add(AssessmentResult);

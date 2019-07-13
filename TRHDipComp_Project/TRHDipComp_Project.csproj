@@ -20,9 +20,20 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+    <PackageReference Include="SendGrid" Version="9.11.0" />
+    <PackageReference Include="Twilio" Version="5.31.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Drawing.VisualStudio.15.0">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\System.Drawing.VisualStudio.15.0.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\SendStudentMessage.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\Shared\_Layout.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

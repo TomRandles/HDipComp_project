@@ -52,6 +52,8 @@ namespace TRHDipComp_Project.Models
                 .Property<DateTime>("LastUpdated");
             modelBuilder.Entity<Assessment>()
                 .Property<DateTime>("LastUpdated");
+            modelBuilder.Entity<AssessmentResult>()
+                .Property<DateTime>("LastUpdated");
 
             // modelBuilder.Entity<Course>()
             //   .HasRequired(c => c.Department)
