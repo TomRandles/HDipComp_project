@@ -7,8 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace TRHDipComp_Project.Pages
 {
-    public class TestGMapModel : PageModel
+    public class MyErrorPageModel : PageModel
     {
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+        
         public void OnGet()
         {
 

@@ -58,16 +58,17 @@ namespace TRHDipComp_Project.Pages
             StudentName = students.First().FirstName + " " + students.First().SurName;
 
             AssessmentResult.ProgrammeID = students.First().ProgrammeID;
-            var programmes = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID)
-                                          .Select(p => p);
 
-            ProgrammeName = programmes.First().ProgrammeName;
+            ProgrammeName = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID)
+                                          .Select(p => p)
+                                          .First().ProgrammeName;
 
-            var modules = ModuleList.Where(s => s.ModuleID == AssessmentResult.ModuleID);
-            ModuleName = modules.First().ModuleName;
 
-            var assessments = AssessmentList.Where(s => s.AssessmentID == AssessmentResult.AssessmentID);
-            AssessmentName = assessments.First().AssessmentName;
+            ModuleName = ModuleList.Where(s => s.ModuleID == AssessmentResult.ModuleID)
+                                                .First().ModuleName;
+
+            AssessmentName = AssessmentList.Where(s => s.AssessmentID == AssessmentResult.AssessmentID)
+                                                        .First().AssessmentName;
 
             return Page();
         }

@@ -20,7 +20,7 @@ namespace TRHDipComp_Project.Pages
         }
 
         [BindProperty(SupportsGet = true)]
-        [RegularExpression(@"[\w\.\'\.\s]{1,20}")]
+        [RegularExpression(@"[\w\.\'\.\s\-]{1,20}")]
         public string ProgrammeSearchString { get; set; } = "";
 
         [BindProperty]

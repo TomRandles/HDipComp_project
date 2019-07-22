@@ -18,6 +18,9 @@ namespace TRHDipComp_Project.Pages
             _db = db;
         }
 
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         [BindProperty]
         public ProgrammeModule ProgrammeModule { get; set; } = new ProgrammeModule();
 
@@ -49,7 +52,7 @@ namespace TRHDipComp_Project.Pages
 
             // Save modified programmeModule object in DB
             ProgrammeModule.ModuleID = Module.ModuleID;
-            _db.Attach(ProgrammeModule).State = EntityState.Modified; ;
+            _db.Attach(ProgrammeModule).State = EntityState.Modified;
 
             _db.Attach(Module).State = EntityState.Modified;
 
@@ -57,9 +60,20 @@ namespace TRHDipComp_Project.Pages
             {
                 await _db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                throw new Exception($"Module {Module.ModuleID} not found!");
+                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+            }
+            catch (DbUpdateException e)
+            {
+                ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
             }
 
             return RedirectToPage("/ShowModuleDetails");

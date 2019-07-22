@@ -11,7 +11,6 @@ namespace TRHDipComp_Project.Pages
 {
     public class ShowStudentResultsModel : PageModel
     {
-
         private readonly CollegeDbContext _db;
 
         [BindProperty]
@@ -65,8 +64,8 @@ namespace TRHDipComp_Project.Pages
             AssessmentsList = await _db.Assessments.AsNoTracking().ToListAsync();
 
             var programmes = ProgrammeList.Where(p => p.ProgrammeID == Student.ProgrammeID);
+            
             ProgrammeName = programmes.First().ProgrammeName;
-
 
             var assessmentResults = AssessmentResultsList.Where(a => a.StudentID == Student.StudentID)
                                                                        .Select(a => a);

@@ -1,0 +1,77 @@
+﻿@page
+@model TRHDipComp_Project.Pages.ListAssessmentResultsModel
+@{
+    ViewData["Title"] = "ListAssessmentResults";
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h3 class="text-center">List Assessment Results</h3>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
+
+<form>
+    <label class="control-label">Select Programme</label>
+    <div class="row">
+        <select asp-for=ProgrammeID onchange="this.form.submit();">
+            <option value="All" selected>All</option>
+            @foreach (var prog in Model.ProgrammesList)
+            {
+                <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>
+            }
+        </select>
+    </div>
+</form>
+
+<br />
+<br />
+
+<table class="table table-bordered table-hover table-condensed table-functions-grad">
+    <thead>
+        <tr>
+            <th>Programme</th>
+            <th>Module</th>
+            <th>Assessment</th>
+            <th>Assessment Date</th>
+            <th>Student name</th>
+            <th>Results</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            foreach (var assessResult in Model.AssessmentResultsFound)
+            {
+                string progName = Model.ProgrammesFound.Where(p => p.ProgrammeID == assessResult.ProgrammeID)
+                                                       .Select(p => p)
+                                                       .FirstOrDefault().ProgrammeName;
+
+                string modName = Model.ModulesList.Where(m => m.ModuleID == assessResult.ModuleID)
+                                                       .Select(m => m)
+                                                       .FirstOrDefault().ModuleName;
+
+                string assessmentName = Model.AssessmentsList.Where(a => a.AssessmentID == assessResult.AssessmentID)
+                                                       .Select(a => a)
+                                                       .FirstOrDefault().AssessmentName;
+
+                string studentName = Model.StudentsList.Where(s => s.StudentID == assessResult.StudentID)
+                                                       .Select(s => s)
+                                                       .FirstOrDefault().ToString();
+
+                <tr>
+                    <td>@progName</td>
+                    <td>@modName</td>
+                    <td>@assessmentName</td>
+                    <td>@assessResult.AssessmentDate.ToShortDateString()</td>
+                    <td>@studentName</td>
+                    <td><a asp-page="ShowAssessmentResult" asp-route-id="@assessResult.AssessmentResultID">Results</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

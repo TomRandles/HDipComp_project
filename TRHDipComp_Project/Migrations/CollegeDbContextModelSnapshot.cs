@@ -29,6 +29,7 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("AssessmentName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(30);
 
@@ -54,9 +55,11 @@ namespace TRHDipComp_Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50);
 
-                    b.Property<DateTime>("AssessmentDate");
+                    b.Property<DateTime>("AssessmentDate")
+                        .IsConcurrencyToken();
 
                     b.Property<string>("AssessmentID")
+                        .IsConcurrencyToken()
                         .HasMaxLength(6);
 
                     b.Property<string>("AssessmentResultDescription")
@@ -73,6 +76,7 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(6);
 
                     b.Property<string>("StudentID")
+                        .IsConcurrencyToken()
                         .HasMaxLength(7);
 
                     b.HasKey("AssessmentResultID");
@@ -100,6 +104,7 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("ModuleName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(30);
 
@@ -125,6 +130,7 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("ProgrammeName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -137,9 +143,11 @@ namespace TRHDipComp_Project.Migrations
 
             modelBuilder.Entity("TRHDipComp_Project.Models.ProgrammeModule", b =>
                 {
-                    b.Property<string>("ProgrammeID");
+                    b.Property<string>("ProgrammeID")
+                        .IsConcurrencyToken();
 
-                    b.Property<string>("ModuleID");
+                    b.Property<string>("ModuleID")
+                        .IsConcurrencyToken();
 
                     b.Property<DateTime>("LastUpdated");
 
@@ -175,9 +183,10 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("EmergencyMobilePhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(12);
+                        .HasMaxLength(15);
 
                     b.Property<string>("FirstName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -189,7 +198,7 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("MobilePhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(12);
+                        .HasMaxLength(15);
 
                     b.Property<decimal>("ProgrammeFeePaid")
                         .HasColumnType("decimal(18,2)");
@@ -201,9 +210,10 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("StudentPPS")
                         .IsRequired()
-                        .HasMaxLength(8);
+                        .HasMaxLength(10);
 
                     b.Property<string>("SurName")
+                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(20);
 

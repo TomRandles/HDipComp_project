@@ -21,7 +21,7 @@ namespace TRHDipComp_Project.Pages
         }
 
         [BindProperty(SupportsGet = true)]
-        [RegularExpression(@"[\w\.\'\.\s]{1,20}")]
+        [RegularExpression(@"[\w\.\'\.\s\-]{1,20}")]
         public string StudentSearchString { get; set; } = "";
 
         [BindProperty]
@@ -37,7 +37,6 @@ namespace TRHDipComp_Project.Pages
 
                 if (!String.IsNullOrEmpty(StudentSearchString))
                 {
-                    // students = students.Where(s => s.Title.Contains(StudentSearchString));
                     students = students.Where(s => s.SurName.Contains(StudentSearchString));
                 }
 

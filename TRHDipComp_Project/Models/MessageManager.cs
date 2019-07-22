@@ -12,6 +12,8 @@ using SendGrid.Helpers.Mail;
 
 namespace TRHDipComp_Project.Models
 {
+
+    // MessageManager handles the SMS and eMail API invocations to the Twilio SMS and SendGrid eMail systems 
     public class MessageManager
     {
 
@@ -27,15 +29,12 @@ namespace TRHDipComp_Project.Models
         }
 
         public void SendSMSMessage(string targetPhoneNumber, string SMSMessage)
-        {
-
+        {            
             var message = MessageResource.Create(
                 from: new Twilio.Types.PhoneNumber(myTwilioPhoneNumber),
                 body: SMSMessage,
                 to: new Twilio.Types.PhoneNumber(targetPhoneNumber)
             );
-
-            // Console.WriteLine(message.Sid);
         }
 
         public async Task SendEmailMessage(string sourceEmailAddress,
@@ -47,17 +46,9 @@ namespace TRHDipComp_Project.Models
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
             var client = new SendGridClient(apiKey);
 
-            // var from = new EmailAddress("test@example.com", "Example User");
-            // var subject = "Sending with SendGrid is Fun";
-            // var to = new EmailAddress("test@example.com", "Example User");
-            // var plainTextContent = "and easy to do anywhere, even with C#";
-
-            // var htmlContent = "<strong>Tom Randles, HDip Comp, Sligo</strong>";
-
             var from = new EmailAddress(sourceEmailAddress, sourceEmailAddress);
             var to = new EmailAddress(targetEmailAddress, targetEmailAddress);
 
-            // var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             htmlContent = "<p>HTML Content</p>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             

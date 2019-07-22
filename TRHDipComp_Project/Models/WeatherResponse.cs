@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TRHDipComp_Project.Models
 {
 
-    /*
-     *Result {"coord":{"lon":-9,"lat":53.33},"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01n"}],"base":"stations","main":{"temp":12.22,"pressure":1012,"humidity":83,"temp_min":12.22,"temp_max":12.22},"wind":{"speed":2.24,"deg":222,"gust":5.36},"clouds":{"all":0},"dt":1560894240,"sys":{"type":3,"id":2001337,"message":0.0069,"country":"IE","sunrise":1560830844,"sunset":1560892004},"timezone":3600,"id":2964179,"name":"County Galway","cod":200} 
-     * 
-     * 
-     */
     public class Coord
     {
         public double lon { get; set; }

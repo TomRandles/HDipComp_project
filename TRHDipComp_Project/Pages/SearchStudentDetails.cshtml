@@ -1,10 +1,19 @@
 ﻿@page
 @model TRHDipComp_Project.Pages.SearchStudentDetailsModel
 @{
-    ViewData["Title"] = "SearchStudentDetails";
+    ViewData["Title"] = "Search student details";
 }
 
-<h2>Search Student Details</h2>
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Search Student Details</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 <form>
     <p>
@@ -15,14 +24,11 @@
     </p>
 </form>
 
-<h3>Details of students found for search string </h3>
-
-<table class="table">
+<table class="table table-bordered table-hover table-condensed table-functions-grad">
     <thead>
         <tr>
-            <th>Student ID</th>
             <th>Student name</th>
-            <th>Student details</th>
+            <th>Student image</th>
         </tr>
     </thead>
     <tbody>
@@ -31,9 +37,19 @@
             foreach (var stud in Model.StudentsFound)
             {
                 <tr>
-                    <td>@stud.StudentID </td>
-                    <td>@stud.FirstName @stud.SurName</td>
-                    <td>student details - more later</td>
+                    <td><a asp-page="ShowStudentDetails" asp-route-id="@stud.StudentID">@stud.ToString()</a></td>
+                    <td>
+                        @{
+                            if (@stud.StudentImage != null)
+                            {
+                                var base64 = Convert.ToBase64String(@stud.StudentImage);
+                                var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                                <img src=@imgSrc style="max-width:50px; max-height:50px;" />
+                            }
+                        }
+
+                    </td>
                 </tr>
             }
         }

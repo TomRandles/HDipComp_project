@@ -13,6 +13,9 @@ namespace TRHDipComp_Project.Pages
     {
         private readonly CollegeDbContext _db;
 
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public UpdateAssessmentDetailsModel(CollegeDbContext db)
         {
             _db = db;
@@ -50,9 +53,19 @@ namespace TRHDipComp_Project.Pages
             {
                 await _db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                throw new Exception($"Assessment {Assessment.AssessmentID} not found!");
+                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+            } catch (DbUpdateException e)
+            {
+                ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
             }
 
             return RedirectToPage("/ShowAssessmentDetails");

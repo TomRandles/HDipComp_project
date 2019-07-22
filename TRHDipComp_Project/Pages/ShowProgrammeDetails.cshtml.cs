@@ -30,20 +30,5 @@ namespace TRHDipComp_Project.Pages
             }
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-
-            var prog = await _db.Programmes.FindAsync(Programme.ProgrammeID);
-
-            if (prog != null)
-            {
-                _db.Programmes.Remove(prog);
-                await _db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("Index");
-        }
-
     }
 }

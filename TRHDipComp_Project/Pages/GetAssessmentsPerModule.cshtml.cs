@@ -51,10 +51,8 @@ namespace TRHDipComp_Project.Pages
                     SelectedAssessmentList.Add(assess);
                 }
             }
-            // return Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(SelectedAssessmentList.ToString());
-            // var json = new JavaScriptSerializer().Serialize(SelectedAssessmentList);
-            // return Newtonsoft.Json.JsonConvert.Des;
-            // return Page();
+
+            
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(SelectedAssessmentList);
             // return new JsonResult() { Data = json, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             return new JsonResult(json);

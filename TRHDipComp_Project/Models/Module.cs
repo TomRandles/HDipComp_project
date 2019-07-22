@@ -11,23 +11,22 @@ namespace TRHDipComp_Project.Models
     {
         // Module ID - Primary Key
         [Key]
-        [Required(ErrorMessage = ("Module ID must be 6 alphanumeric characters"))]
         [Display(Name = "Module ID")]
-        [MaxLength(6)]
+        [StringLength(6, ErrorMessage = ("Must be 6 characters"))]
         [RegularExpression(@"\w{6}")]
         public string ModuleID { get; set; }
 
         // Module name
-        [Required(ErrorMessage = ("Module name is at least 6 characters"))]
+        [Required]
         [Display(Name = "Module name")]
-        [MaxLength(30)]
-        [RegularExpression(@"[\w\s\.\,]{6,30}")]
+        [StringLength(30, ErrorMessage = ("Maximum 30 characters"))]
+        [RegularExpression(@"[\w\s\.\,\-]{6,30}")]
+        [ConcurrencyCheck]
         public string ModuleName { get; set; } = "";
 
         // Module description
         [Display(Name = "Module description")]
-        [MaxLength(50)]
-        [RegularExpression(@"[\s\w-\,\.\!]{0,100}")]
+        [StringLength(50, ErrorMessage = ("Maximum 50 characters"))]
         public string ModuleDescription { get; set; } = "";
 
         // Credits 

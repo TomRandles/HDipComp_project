@@ -4,21 +4,21 @@
     ViewData["Title"] = "Show Assessment Details";
 }
 
-<h2>Show Assessment Details @RouteData.Values["id"]</h2>
-
-@if (RouteData.Values["id"] != null)
-{
-    @RouteData.Values["id"]
-}
-else
-{
-    <h2>Routing page, no ID routed </h2>
-}
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Show Assessment Details</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 @{
     <div class="container">
         <h3>Assessment details</h3>
-        <table class="table table-bordered table-hover table-condensed">
+        <table class="table table-bordered table-hover table-condensed table-functions-grad">
             <thead>
                 <tr>
                     <th>Assessment ID</th>
@@ -30,20 +30,14 @@ else
                 </tr>
             </thead>
             <tbody>
-
                 <tr>
                     <td>@Model.Assessment.AssessmentID</td>
                     <td>@Model.Assessment.AssessmentName</td>
                     <td>@Model.Assessment.AssessmentDescription</td>
                     <td>@Model.Assessment.AssessmentTotalMark</td>
-
-                    @*
-                            Revisit
-                        <td><a asp-page="/EditAssessmentDetails" asp-route-id="@Model.Assessment.AssessmentID">Edit Assessment</a></td>
-                        <td><a asp-page="/DeleteAssessment" asp-route-id="@Model.Assessment.AssessmentID">Delete Assessment</a></td>
-                    *@
+                    <td><a asp-page="/UpdateAssessmentDetails" asp-route-id="@Model.Assessment.AssessmentID">Edit Assessment</a></td>
+                    <td><a asp-page="/DeleteAssessment" asp-route-id="@Model.Assessment.AssessmentID">Delete Assessment</a></td>
                 </tr>
-
             </tbody>
         </table>
     </div>

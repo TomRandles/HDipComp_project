@@ -1,10 +1,9 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Student Data Management app";
+    ViewData["Title"] = "Student Data Management";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
 
 <div class="row border border-primary">
     <div class="col-md-2"></div>
@@ -72,11 +71,11 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="RegisterStudent"><strong>Register Student</strong></a>
+            <a asp-page="RegisterStudent"><strong>Register student</strong></a>
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="CreateProgramme"><strong>Create Programme</strong></a>
+            <a asp-page="CreateProgramme"><strong>Create programme</strong></a>
         </div>
         <div class="col-md-2"> </div>
     </div>
@@ -88,47 +87,47 @@
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="CreateModule"><strong>Create Module</strong></a>
+            <a asp-page="CreateModule"><strong>Create module</strong></a>
         </div>
         <div class="col-md-2"> </div>
     </div>
     <div class="row border border-primary">
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="SearchStudentDetails"><strong>Search Student Details</strong></a>
+            <a asp-page="SearchStudentDetails"><strong>Search student details</strong></a>
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="CreateAssessment"><strong>Create Assessment</strong></a>
-        </div>
-        <div class="col-md-2"> </div>
-    </div>
-    <div class="row border border-primary">
-        <div class="col-md-2"></div>
-        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="SearchProgrammeDetails"><strong>Search Programme Details</strong></a>
-        </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="ListProgrammes"><strong>List Programmes</strong></a>
+            <a asp-page="CreateAssessment"><strong>Create assessment</strong></a>
         </div>
         <div class="col-md-2"> </div>
     </div>
     <div class="row border border-primary">
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="SendStudentMessage"><strong>Send Student Message</strong></a>
+            <a asp-page="SearchProgrammeDetails"><strong>Search programme details</strong></a>
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
-          
+            <a asp-page="ListProgrammes"><strong>List programmes</strong></a>
+        </div>
+        <div class="col-md-2"> </div>
+    </div>
+    <div class="row border border-primary">
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="SendStudentMessage"><strong>Send student message</strong></a>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-3 border_rad text-center align-middle" id="functionsGrad">
+            <a asp-page="ListAssessmentResults"><strong>List assessment results</strong></a>
         </div>
         <div class="col-md-2"> </div>
     </div>
     <div class="row border border-primary">
         <div class="col-md-2"></div>
         <div class="col-md-8 border_rad text-center align-middle" id="functionsGrad">
-            <a asp-page="ListModules"><strong>List Programmes, Modules & Assessments</strong></a>
+            <a asp-page="ListModules"><strong>List programmes, modules & assessments</strong></a>
         </div>
         <div class="col-md-2"> </div>
     </div>
@@ -150,7 +149,7 @@
             <br />
         </div>
         <div class="col-md-3"></div>
-        <div class="col-md-4" id="map-canvas"></div>
+        <div style="height:300px; width:500px" class="col-md-4" id="map-canvas"></div>
     </div>
 </div>
 
@@ -159,7 +158,7 @@
 
 <script>
     function GetLocalWeather(cityID) {
-        console.log("GetLocalWeather");
+ 
         var gettingData = true;
         var APIKey = "1dfc616b32f88edc2de2243c4631d723";
 
@@ -177,22 +176,24 @@
 
     var proccessWResults = function () {
 
-        console.log("processWResults: " + this.responseText);
         var results = JSON.parse(this.responseText);
-        console.log("Parsed results: " + results);
-
         document.getElementById("GetWeather").innerHTML = results.name + "\'s weather today: " + results.weather[0].description + ", temperature: " + results.main.temp + " °C, humidity: " + results.main.humidity + " %, windspeed: " + results.wind.speed + " Km/h.";
-
     };
 
 </script>
 
 <script>
-    console.log("About to call getElementByID - GetWeather");
-    document.getElementById("GetWeather").innerHTML = window.GetLocalWeather("2964179");
-    console.log("About to call getElementByID - GetWeather called");
-</script>
+       
+    document.getElementById("GetWeather").innerHTML = window.GetLocalWeather(@Model.OpenWeatherMapsCityID);
+    var string = "";
+    window.loadMap();
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA36dWzuzbrzb9ONyMA0PJSUwIj9yrImKA&callback=initMap"
-        async defer>
+    function loadMap() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        string = '{\"latitude\":' + @Model.GoogleMapsLatitudeCoordinate + ',\"longitude\":' + @Model.GoogleMapsLongitudeCoordinate + '}';
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA36dWzuzbrzb9ONyMA0PJSUwIj9yrImKA&callback=initMap";
+        document.body.appendChild(script);
+    }
+
 </script>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,23 +8,23 @@ namespace TRHDipComp_Project.Models
     {
         // Programme ID - Primary Key
         [Key]
-        [Required(ErrorMessage = ("Programme ID must be 6 alphanumeric characters"))]
+        [Required(ErrorMessage = "Programme ID required")] 
         [Display(Name = "Programme ID")]
-        [MaxLength(6)]
+        [StringLength(6, ErrorMessage = "Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
         public string ProgrammeID { get; set; }
 
         // Programme name
-        [Required(ErrorMessage = ("Programme name is 6 to 20 characters"))]
+        [Required(ErrorMessage = "Programme name required")]
         [Display(Name = "Programme name")]
-        [MaxLength(20)]
-        [RegularExpression(@"[\w\s\.\,\-]{6,20}")]
+        [StringLength(20, ErrorMessage = "6 to 20 characters")]
+        [RegularExpression(@"[\w\s\.\-]{6,20}")]
+        [ConcurrencyCheck]
         public string ProgrammeName { get; set; } = "";
 
         // Programme description
         [Display(Name = "Programme description")]
-        [MaxLength(50)]
-        [RegularExpression(@"[\s\w-\,\.\!\@]{0,100}")]
+        [StringLength(100, ErrorMessage = "100 characters max")]
         public string ProgrammeDescription { get; set; } = "";
 
         // QQI level

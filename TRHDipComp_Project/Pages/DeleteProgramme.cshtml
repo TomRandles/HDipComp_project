@@ -5,16 +5,16 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>Delete Programme @RouteData.Values["id"]</h2>
-
-@if (RouteData.Values["id"] != null)
-{
-    @RouteData.Values["id"]
-}
-else
-{
-    <h2>Routing page, no ID routed </h2>
-}
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Delete Programme @Model.Programme.ProgrammeName </h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 <script>
     function UserDeleteConfirmation() {
@@ -24,7 +24,6 @@ else
 
 <form method="post">
     <input type="hidden" asp-for=Programme.ProgrammeID>
-    <button type="submit" class="btn btn-default" OnClick="UserDeleteConfirmation()">Delete student @RouteData.Values["id"]</button>
+    <button type="submit" class="btn btn-default" OnClick="UserDeleteConfirmation()">Delete programme @Model.Programme.ProgrammeName </button>
 </form>
-
 

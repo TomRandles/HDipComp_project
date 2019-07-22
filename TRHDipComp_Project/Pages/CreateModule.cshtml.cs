@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,7 +11,9 @@ namespace TRHDipComp_Project.Pages
     public class CreateModuleModel : PageModel
     {
         private readonly CollegeDbContext _db;
-        public string Message { get; set; } = "";
+
+        [TempData]
+        public string ErrorMessage { get; set; } = "";
 
         [BindProperty]
         public IList<Programme> ProgrammeListOptions { get; private set; }
@@ -37,21 +40,40 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                Message += " ModelState is Valid";
+                // Message += " ModelState is Valid";
 
                 // Save new programmeModule object in DB
                 ProgrammeModule.ModuleID = Module.ModuleID;
-                _db.ProgrammeModules.Add(ProgrammeModule);
 
-                // Save new Module
-                _db.Modules.Add(Module);
-                await _db.SaveChangesAsync();
+                try
+                {
+                    _db.ProgrammeModules.Add(ProgrammeModule);
+
+                    // Save new Module
+                    _db.Modules.Add(Module);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    ErrorMessage = "Db Update Concurrency error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                }
+                catch (DbUpdateException e)
+                {
+                    ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                }
+                catch (Exception e)
+                {
+                    ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                }
 
                 return RedirectToPage("ShowModuleDetails", new { id = Module.ModuleID });
             }
             else
             {
-                Message += " ModelState is InValid " + ModelState.ToString();
+                // ModelState is InValid
                 return Page();
             }
         }

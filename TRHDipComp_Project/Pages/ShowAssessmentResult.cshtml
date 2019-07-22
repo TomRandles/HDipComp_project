@@ -4,27 +4,28 @@
     ViewData["Title"] = "Show Assessment Result";
 }
 
-<h2>Show Assessment Result @RouteData.Values["id"]</h2>
-
-@if (RouteData.Values["id"] != null)
-{
-    @RouteData.Values["id"]
-}
-else
-{
-    <h2>Routing page, no ID routed </h2>
-}
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Show Assessment Result</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 @{
     <div class="container">
         <h3>Assessment result details</h3>
-        <table class="table table-bordered table-hover table-condensed">
+        <table class="table table-bordered table-hover table-condensed table-functions-grad">
             <thead>
                 <tr>
                     <th>Student</th>
                     <th>Programme</th>
                     <th>Module</th>
                     <th>Assessment</th>
+                    <th>Assessment date</th>
                     <th>Feedback</th>
                     <th>Mark</th>
                     <th>Edit</th>
@@ -38,16 +39,12 @@ else
                     <td>@Model.ProgrammeName</td>
                     <td>@Model.ModuleName</td>
                     <td>@Model.AssessmentName</td>
+                    <td>@Model.AssessmentResult.AssessmentDate.ToShortDateString()</td>
                     <td>@Model.AssessmentResult.AssessmentResultDescription</td>
                     <td>@Model.AssessmentResult.AssessmentResultMark</td>
-
-                    @*
-            Revisit
-        <td><a asp-page="/EditAssessmentDetails" asp-route-id="@Model.Assessment.AssessmentID">Edit Assessment</a></td>
-        <td><a asp-page="/DeleteAssessment" asp-route-id="@Model.Assessment.AssessmentID">Delete Assessment</a></td>
-                    *@
+                    <td><a asp-page="/UpdateAssessmentResult" asp-route-id="@Model.AssessmentResult.AssessmentResultID">Edit AssessmentResult</a></td>
+                    <td><a asp-page="/DeleteAssessmentResult" asp-route-id="@Model.AssessmentResult.AssessmentResultID">Delete AssessmentResult</a></td>
                 </tr>
-
             </tbody>
         </table>
     </div>

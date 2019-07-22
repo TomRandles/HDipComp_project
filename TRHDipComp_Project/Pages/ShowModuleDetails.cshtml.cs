@@ -35,19 +35,5 @@ namespace TRHDipComp_Project.Pages
             }
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-
-            var prog = await _db.Modules.FindAsync(Module.ModuleID);
-
-            if (prog != null)
-            {
-                _db.Modules.Remove(prog);
-                await _db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("Index");
-        }
     }
 }

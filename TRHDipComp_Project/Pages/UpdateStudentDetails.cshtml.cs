@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +26,11 @@ namespace TRHDipComp_Project.Pages
             GetProgrammeList();
         }
 
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         [BindProperty]
+        [Display(Name = "Upload a student picture (optional)")]
         public IFormFile Upload { get; set; }
 
         [BindProperty]
@@ -33,7 +38,6 @@ namespace TRHDipComp_Project.Pages
 
         [BindProperty]
         public IList<Programme> ProgrammeList { get; private set; }
-
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -53,36 +57,11 @@ namespace TRHDipComp_Project.Pages
                 return Page();
             }
 
-            int numBytesToRead = 0;
-
-            var file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
-            try
+            // Picture upload is optional; check if the IForm variable is set
+            if (Upload != null)
             {
-                using (var fileStream = new MyFileStream(file, FileMode.Open))
-                {
-                    await Upload.opyToAsCync(fileStream);
-                    int numBytesRead = 0;
-                    numBytesToRead = (int)Upload.Length;
-                    Student.StudentImage = new byte[numBytesToRead];
-
-                    // Copy bytestream to byte array propery in Student class
-                    while (numBytesToRead > 0)
-                    {
-                        // Read may return anything from 0 to numBytesToRead.
-                        int n = fileStream.Read(Student.StudentImage, numBytesRead, numBytesToRead);
-
-                        // Break when the end of the file is reached.
-                        if (n == 0)
-                            break;
-
-                        numBytesRead += n;
-                        numBytesToRead -= n;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-
+                string file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
+                Student.ReadStudentImage(file);
             }
 
             _db.Attach(Student).State = EntityState.Modified;
@@ -91,9 +70,20 @@ namespace TRHDipComp_Project.Pages
             {
                 await _db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                throw new Exception($"Student {Student.StudentID} not found!");
+                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+            }
+            catch (DbUpdateException e)
+            {
+                ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
 
             return RedirectToPage("/ShowStudentDetails");

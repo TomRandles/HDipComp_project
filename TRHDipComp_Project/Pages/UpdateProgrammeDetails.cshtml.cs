@@ -18,6 +18,9 @@ namespace TRHDipComp_Project.Pages
             _db = db;
         }
 
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         [BindProperty]
         public Programme Programme { get; set; }
 
@@ -45,9 +48,20 @@ namespace TRHDipComp_Project.Pages
             {
                 await _db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-                throw new Exception($"Programme {Programme.ProgrammeID} not found!");
+                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+            }
+            catch (DbUpdateException e)
+            {
+                ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = "General error: " +e.Message + " " + e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
             }
 
             return RedirectToPage("/ShowProgrammeDetails");

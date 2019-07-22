@@ -4,16 +4,19 @@
     ViewData["Title"] = "Delete Assessment";
 }
 
-<h2>Delete Assessment @RouteData.Values["id"]</h2>
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Delete Assessment Result @Model.Assessment.AssessmentName </h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
-@if (RouteData.Values["id"] != null)
-{
-    @RouteData.Values["id"]
-}
-else
-{
-    <h2>Routing page, no ID routed </h2>
-}
+
+<h2>Delete Assessment @Model.Assessment.AssessmentName </h2>
 
 <script>
     function UserDeleteConfirmation() {
@@ -23,7 +26,5 @@ else
 
 <form method="post">
     <input type="hidden" asp-for=Assessment.AssessmentID>
-    <button type="submit" class="btn btn-default" OnClick="UserDeleteConfirmation()">Delete module @RouteData.Values["id"]</button>
+    <button type="submit" class="btn btn-default" OnClick="UserDeleteConfirmation()">Delete module @Model.Assessment.AssessmentName </button>
 </form>
-
-

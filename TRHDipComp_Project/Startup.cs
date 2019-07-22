@@ -47,7 +47,7 @@ namespace TRHDipComp_Project
                 Configuration.GetConnectionString("CollegeTestDBContext")));
 
             // Azure SQL Server service - HDipCompTRproject_DB
-            // services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
+            //services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
             //    Configuration.GetConnectionString("HDipCompTRproject_DB")));
 
         }

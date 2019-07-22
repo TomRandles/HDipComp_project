@@ -28,19 +28,5 @@ namespace TRHDipComp_Project.Pages
             }
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-
-            var assess = await _db.Assessments.FindAsync(Assessment.AssessmentID);
-
-            if (assess != null)
-            {
-                _db.Assessments.Remove(assess);
-                await _db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("Index");
-        }
     }
 }

@@ -8,17 +8,18 @@
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <h3 class="text-center">Send Message </h3class=>
+        <h3 class="text-center">Send Message</h3>
     </div>
     <div class="col-md-4"></div>
 </div>
+<br />
 
 <form>
     <label class="control-label">Select Programme</label>
     <div class="row">
         <select asp-for=ProgrammeID onchange="this.form.submit();">
             <option value="All" selected>All</option>
-            @foreach (var prog in Model.Programmes)
+            @foreach (var prog in Model.ProgrammesList)
             {
                 <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>
             }
@@ -70,45 +71,31 @@
     <br />
     <table class="table table-bordered table-hover table-condensed table-functions-grad">
         <thead>
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <tr>
-                        <th class="text-center">Select</th>
-                        <th class="text-center">Student ID</th>
-                        <th class="text-center">Programme</th>
-                        <th class="text-center">Student name</th>
-                    </tr>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
+            <tr>
+                <th class="text-center">Select</th>
+                <th class="text-center">Student ID</th>
+                <th class="text-center">Programme</th>
+                <th class="text-center">Student name</th>
+            </tr>
         </thead>
+
         <tbody>
-            @for (var i = 0; i < Model.StudentsInProgramme.Count(); i++)
-            {
 
-                var programmes = Model.ProgrammesFound.Where(p => p.ProgrammeID == Model.StudentsInProgramme[i].ProgrammeID)
-                .Select(p => p);
-
-                string progName = "";
-                if (programmes.Count() != 0)
+            @{
+                for (var i = 0; i < Model.StudentsInProgramme.Count(); i++)
                 {
-                    progName = programmes.First().ProgrammeName;
-                }
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+                    string progName = Model.ProgrammesFound.Where(p => p.ProgrammeID == Model.StudentsInProgramme[i].ProgrammeID)
+                                                          .Select(p => p)
+                                                          .First().ProgrammeName;
+
                     <tr>
-                        <div class="col-xs-offset-2">
-                            <td class="text-center"><input type="checkbox" name="SelectedStudentIDsInProgramme" value="@Model.StudentsInProgramme[i].StudentID" class="center-block" /></td>
-                        </div>
+
+                        <td class="text-center"><input type="checkbox" name="SelectedStudentIDsInProgramme" value="@Model.StudentsInProgramme[i].StudentID" class="center-block" /></td>
                         <td class="text-center">@Model.StudentsInProgramme[i].StudentID </td>
                         <td>@progName</td>
                         <td><a asp-page="ShowStudentDetails" asp-route-id="@Model.StudentsInProgramme[i].StudentID">@Model.StudentsInProgramme[i].FirstName @Model.StudentsInProgramme[i].SurName</a></td>
                     </tr>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
+                }
             }
         </tbody>
     </table>

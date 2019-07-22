@@ -7,59 +7,67 @@ namespace TRHDipComp_Project.Models
 {
     public class AssessmentResult
     {
-
         // Assessment Result ID - Primary Key
         [Key]
-        [MaxLength(50)]
+        [StringLength(50, ErrorMessage = "No more than 50 characters")]
+        [Display(Name = "Assessment Result ID")]
+        [RegularExpression(@"[\-\w\.]{10,50}")]
         public string AssessmentResultID { get; set; }
 
-        // Assessment description
+        // Assessment result description - optional
         [Display(Name = "Assessment feedback")]
-        [StringLength(100)]
-        [RegularExpression(@"[\s\w-\,\.!]{0,100}")]
+        [StringLength(100, ErrorMessage = "No more than 100 characters")]
+        
         public string AssessmentResultDescription { get; set; } = "";
 
         // Result mark 
         [Display(Name = "Assessment result (%)")]
-        [RegularExpression(@"^\d{1,3}\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
+        [RegularExpression(@"^\d{1,3}\.{0,1}\d{0,2}$")]
+        [Range(0, 100)]
         public double AssessmentResultMark { get; set; } = 0;
 
-        //Foreign Key - Student   
+        //Foreign Key - Student
+        [Required]
         [Display(Name = "Student ID")]
         [MaxLength(7)]
-        [RegularExpression(@"[gG]{1}[0-9]{6}")]
+        [RegularExpression(@"[sS]{1}[0-9]{6}")]
         [ForeignKey("Student")]
+        [ConcurrencyCheck]
         public string StudentID { get; set; }
 
-        // Foreign Key - Programme ID 
+        // Foreign Key - Programme ID
+        [Required]
         [Display(Name = "Programme ID")]
         [MaxLength(6)]
         [RegularExpression(@"\w{6}")]
         [ForeignKey("ProgrammeModule")]
         public string ProgrammeID { get; set; }
 
-        //
-        [Display(Name = "Assessment Date")]
-        [Required(ErrorMessage = ("Assessment date incorrect. Format DD/MM/YYYY"))]
+        [Display(Name = "Assessment date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = ("Assessment date required: format {0:dd-MM-yyyy}"))]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
+        [ConcurrencyCheck]
         public DateTime AssessmentDate { get; set; }
 
         // Foreign Key - Module ID
+        [Required]
         [Display(Name = "Module")]
-        [MaxLength(6)]
+        [StringLength(6, ErrorMessage = "Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
         [ForeignKey("ProgrammeModule")]
         public string ModuleID { get; set; }
 
         // Foreign Key - Assessment ID 
+        [Required]
         [Display(Name = "Assessment")]
-        [StringLength(6)]
+        [StringLength(6, ErrorMessage = "Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
         [ForeignKey("Assessment")]
+        [ConcurrencyCheck]
         public string AssessmentID { get; set; }
         
+        // Function used to generate a unique and random 6 character ID
         private string GetRandomID()
         {
             StringBuilder builder = new StringBuilder();

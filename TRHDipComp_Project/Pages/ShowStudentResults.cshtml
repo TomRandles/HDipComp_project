@@ -4,8 +4,20 @@
     ViewData["Title"] = "ShowStudentResults";
 }
 
-<h2>Show Student Results</h2>
+<br />
+<br />
 
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Show Student Results</h2>
+        <br />
+        <h2 class="text-center">@Model.StudentName</h2>
+        <h2 class="text-center">@Model.ProgrammeName</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 @*Show student name and programme of study
 
@@ -13,16 +25,13 @@
 
 
 *@
-
-<h3>Results submission form for @Model.StudentName, programme: @Model.ProgrammeName</h3>
-
 <div class="container">
-    <h3>Assessment result details</h3>
-    <table class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed table-functions-grad">
         <thead>
             <tr>
                 <th>Module</th>
                 <th>Assessment</th>
+                <th>Assessment date</th>
                 <th>Student feedback</th>
                 <th>Mark (%)</th>
                 <th>Maximum mark (%)</th>
@@ -45,6 +54,7 @@
                     <tr>
                         <td>@moduleName</td>
                         <td>@assessmentName</td>
+                        <td>@assessmentResult.AssessmentDate.ToShortDateString()</td>
                         <td>@assessmentResult.AssessmentResultDescription</td>
                         <td align="center">@assessmentResult.AssessmentResultMark</td>
                         <td align="center">@totalMark</td>

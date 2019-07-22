@@ -31,16 +31,6 @@ namespace TRHDipComp_Project.Models
             // Configure ProgrammeModule composite key
             modelBuilder.Entity<ProgrammeModule>().HasKey(t => new { t.ProgrammeID, t.ModuleID });
 
-            // Configure ProgrammeModule composite key
-            // modelBuilder.Entity<AssessmentResult>().HasForeignKey(t => new { t.ProgrammeID, t.ModuleID });
-            // modelBuilder.Entity<AssessmentResult>().HasMany(t => t.ProgrammeID);
-            // modelBuilder.Entity<ProgrammeModule>().HasOne(p => p.AssessmentResults).HasForeignKey            
-
-            //.HasForeignKey(t => t.ProgrammeID);
-
-            //builder.Entity<Person>().HasOne(v => v.Address).HasForeignKey(v => v.AddressId); 
-            // modelBuilder.Entity<AssessmentResult>().HasForeignKey()
-
             // Extend models to include a LastUpdated date shadow property
             modelBuilder.Entity<Student>()
                 .Property<DateTime>("LastUpdated");
@@ -55,24 +45,7 @@ namespace TRHDipComp_Project.Models
             modelBuilder.Entity<AssessmentResult>()
                 .Property<DateTime>("LastUpdated");
 
-            // modelBuilder.Entity<Course>()
-            //   .HasRequired(c => c.Department)
-            //   .WithMany(t => t.Courses)
-            //   .Map(m => m.MapKey("ChangedDepartmentID"));
-
-
-            // modelBuilder.Entity<Programme>()
-            //    .HasRequired(c => c.ProgrammeModule)
-            //    .WithMany(t => t.Courses)
-            //    .Map(m => m.MapKey("ChangedDepartmentID"));
-
-            // modelBuilder.Entity<Student>().H
-
-            //            .HasRequired(p => p.Programme)
-            //            .WithMany()
-            //            .HasForeignKey(p => p.ProgrammeID)
-            //            .WillCascadeOnDelete(false);
-
+      
         }
 
         // Set values via the ChangeTracker API through its Entries() method. 
@@ -83,9 +56,9 @@ namespace TRHDipComp_Project.Models
 
             foreach (var entry in ChangeTracker.Entries())
             {
-                if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                if (entry.State == EntityState.Added || entry.State == EntityState.Modified )
                 {
-                    entry.Property("LastUpdated").CurrentValue = DateTime.UtcNow.Date;
+                    entry.Property("LastUpdated").CurrentValue = DateTime.Now.ToShortDateString();
                 }
             }
             return base.SaveChanges();

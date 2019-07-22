@@ -12,7 +12,9 @@ namespace TRHDipComp_Project.Pages
     public class CreateProgrammeModel : PageModel
     {
         private readonly CollegeDbContext _db;
-        public string message { get; set; } = "";
+
+        [TempData]
+        public string ErrorMessage { get; set; } = "";
 
         [BindProperty]
         public Programme Programme { get; set; } = new Programme();
@@ -27,16 +29,34 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                message += " ModelState is Valid";
+                // message += " ModelState is Valid";
 
-                _db.Programmes.Add(Programme);
-                await _db.SaveChangesAsync();
+                try
+                {
+                    _db.Programmes.Add(Programme);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    ErrorMessage = "Db update Concurrency error: " + e.Message + " " + e.InnerException.Message; ;
+                    return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                }
+                catch (DbUpdateException e)
+                {
+                    ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                }
+                catch (Exception e)
+                {
+                    ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                }
 
                 return RedirectToPage("ShowProgrammeDetails", new { id = Programme.ProgrammeID });
             }
             else
             {
-                message += " ModelState is InValid";
+                // message += " ModelState is InValid";
                 return Page();
             }
         }

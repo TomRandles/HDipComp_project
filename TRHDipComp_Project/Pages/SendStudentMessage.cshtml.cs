@@ -7,6 +7,9 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Exceptions;
 
 namespace TRHDipComp_Project.Pages
 {
@@ -19,31 +22,41 @@ namespace TRHDipComp_Project.Pages
         [BindProperty(SupportsGet = true)]
         public string ProgrammeID { get; set; } = "";
 
-        private MessageManager msgmgr;
+        // Error message management property
+        [TempData]
+        public string ErrorMessage { get; set; }
 
+        // Message manager object to handle both SMS and email functions 
+        private MessageManager msgMgr;
+
+        // Filtered programmmes
         [BindProperty]
-        public IEnumerable<Programme> ProgrammesFound { get; set; }
+        public IList<Programme> ProgrammesFound { get; set; }
 
+        // Programmes in the system
         [BindProperty]
-        public IEnumerable<Programme> Programmes { get; set; }
+        public IList<Programme> ProgrammesList { get; set; }
 
+        // Registered students
         [BindProperty]
-        public IList<Student> StudentList { get; private set; }
+        public IList<Student> StudentsList { get; private set; }
 
+        // Students in a particular programme
         [BindProperty]
         public IList<Student> StudentsInProgramme { get; set; } = new List<Student>();
 
+        // Students in a particular programme that have been selected
         [BindProperty]
         public IList<string> SelectedStudentIDsInProgramme { get; set; } = new List<string>();
 
         [BindProperty]
         [Display(Name = "Subject (Email only, 100 characters max)")]
-        [StringLength(100, MinimumLength = 0)]
+        [StringLength(100, MinimumLength = 0, ErrorMessage ="100 characters max.")]
         public string Subject { get; set; } = "";
 
         [BindProperty]
         [Display(Name = "Message content (Email: 500 characters max; SMS: 125 characters max)")]
-        [StringLength(500, MinimumLength = 0)]
+        [StringLength(500, MinimumLength = 0, ErrorMessage = "100 characters max.")]
         public string Message { get; set; } = "";
 
         [BindProperty]
@@ -57,31 +70,32 @@ namespace TRHDipComp_Project.Pages
         public SendStudentMessageModel(CollegeDbContext db)
         {
             _db = db;
-            msgmgr = new MessageManager();
+            msgMgr = new MessageManager();
         }
 
         public async Task OnGetAsync()
         {
             //get list of Students
-            StudentList = await _db.Students.AsNoTracking().ToListAsync();
-            Programmes = await _db.Programmes.AsNoTracking().ToListAsync();
+            StudentsList = await _db.Students.AsNoTracking().ToListAsync();
+            ProgrammesList = await _db.Programmes.AsNoTracking().ToListAsync();
 
             if ((ProgrammeID.Length == 0) || (ProgrammeID == "All"))
             {
-                ProgrammesFound = Programmes.Select(p => p);
+                ProgrammesFound = ProgrammesList.Select(p => p).ToList();
             }
             else
             {
-                ProgrammesFound = Programmes.Where(p => p.ProgrammeID == ProgrammeID)
-                                            .Select(p => p);
+                ProgrammesFound = ProgrammesList.Where(p => p.ProgrammeID == ProgrammeID)
+                                            .Select(p => p).ToList();
             }
 
             if (ProgrammesFound.Count() != 0)
             {
                 foreach (var programme in ProgrammesFound)
                 {
-                    var students = StudentList.Where(s => s.ProgrammeID == programme.ProgrammeID)
-                                              .Select(s => s);
+                    var students = StudentsList.Where(s => s.ProgrammeID == programme.ProgrammeID)
+                                                   .Select(s => s);
+
                     {
                         foreach (var stud in students)
                         {
@@ -92,7 +106,7 @@ namespace TRHDipComp_Project.Pages
             }
             else
             {
-                foreach (var stud in StudentList)
+                foreach (var stud in StudentsList)
                 {
                     StudentsInProgramme.Add(stud);
                 }
@@ -103,26 +117,41 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                StudentList = await _db.Students.AsNoTracking().ToListAsync();
+                StudentsList = await _db.Students.AsNoTracking().ToListAsync();
 
                 foreach (var studID in SelectedStudentIDsInProgramme)
                 {
-                    var students = StudentList.Where(s => s.StudentID == studID)
-                                              .Select(s => s);
-
-                    var student = students.First();
+                    var student = StudentsList.Where(s => s.StudentID == studID)
+                                              .Select(s => s)
+                                              .FirstOrDefault();
 
                     if (SendSMSMessage)
                     {
-                        msgmgr.SendSMSMessage(student.MobilePhoneNumber, Message);
+                        try
+                        {
+                            msgMgr.SendSMSMessage(student.MobilePhoneNumber, Message);
+                        }
+                        catch (TwilioException e)
+                        {
+                            ErrorMessage = e.Message + " " + e.InnerException.Message;
+                            RedirectToPage("MyErrorPage", new { id = student.StudentID });
+                        }
                     }
                     if (SendEmailMessage)
                     {
-                        msgmgr.SendEmailMessage("randles.tom@gmail.com",
-                                                student.EmailAddress,
-                                                Subject,
-                                                Message,
-                                                "").Wait();
+                        try
+                        {
+                            msgMgr.SendEmailMessage("randles.tom@gmail.com",
+                                                    student.EmailAddress,
+                                                    Subject,
+                                                    Message,
+                                                    "").Wait();
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorMessage = e.Message + " " + e.InnerException.Message;
+                            RedirectToPage("MyErrorPage", new { id = student.StudentID });
+                        }
                     }
                 }
                 return RedirectToPage("Index");

@@ -4,15 +4,22 @@
     ViewData["Title"] = "List Programmes";
 }
 
-<h2>List Programmes</h2>
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Current Programmes</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 @{
-    <h3>Details of all current programmes at ITG </h3>
     <table class="table table-bordered table-hover table-condensed table-functions-grad">
         <thead>
             <tr>
-                <th>Programme name</th>
-                <th>Programme details</th>
+                <th>Programme</th>
             </tr>
         </thead>
         <tbody>
@@ -20,8 +27,7 @@
             @foreach (var par in Model.ProgrammeList)
             {
                 <tr>
-                    <td>@par.ProgrammeName </td>
-                    <td><a asp-page="/ShowProgrammeDetails" asp-route-id="@par.ProgrammeID">Programme details</a></td>
+                    <td><a asp-page="/ShowProgrammeDetails" asp-route-id="@par.ProgrammeID">@par.ProgrammeName</a></td>
                 </tr>
             }
         </tbody>

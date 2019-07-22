@@ -53,6 +53,7 @@ namespace TRHDipComp_Project.Pages
             {
                 foreach (var programme in ProgrammesFound)
                 {
+                     
                     var students = StudentList.Where(s => s.ProgrammeID == programme.ProgrammeID)
                                               .Select(s => s);
                     {

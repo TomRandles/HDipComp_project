@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,7 +14,8 @@ namespace TRHDipComp_Project.Pages
 
         private readonly CollegeDbContext _db;
 
-        public string Message { get; set; } = "";
+        [TempData]
+        public string ErrorMessage { get; set; } = "";
 
         [BindProperty]
         public string ProgrammeName { get; private set; } = "";
@@ -38,13 +38,12 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public IList<ProgrammeModule> ProgrammeModuleList { get; private set; }
 
-        /*
         [BindProperty]
         public IList<Assessment> AssessmentList { get; private set; }
 
         [BindProperty]
         public IList<Assessment> SelectedAssessmentList { get; private set; } = new List<Assessment>();
-        */
+
 
         [BindProperty]
         public AssessmentResult AssessmentResult { get; set; } = new AssessmentResult();
@@ -55,17 +54,17 @@ namespace TRHDipComp_Project.Pages
         public SubmitAssessmentResultModel(CollegeDbContext db)
         {
             _db = db;
-            
+
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
             StudentList = await _db.Students.AsNoTracking().ToListAsync();
-            // ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
-            ModuleList = await _db.Modules.ToListAsync();
+            ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
+            // ModuleList = await _db.Modules.ToListAsync();
             ProgrammeModuleList = await _db.ProgrammeModules.AsNoTracking().ToListAsync();
             ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
-            
+
             if (RouteData.Values["id"] != null)
             {
                 AssessmentResult.StudentID = RouteData.Values["id"].ToString();
@@ -75,6 +74,7 @@ namespace TRHDipComp_Project.Pages
             // need to revisit with validation code
             var students = StudentList.Where(s => s.StudentID == AssessmentResult.StudentID);
             AssessmentResult.ProgrammeID = students.First().ProgrammeID;
+
             StudentName = students.First().FirstName + " " + students.First().SurName;
 
             var programmes = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID);
@@ -96,7 +96,7 @@ namespace TRHDipComp_Project.Pages
                     }
                 }
             }
-            
+
             return Page();
         }
 
@@ -104,21 +104,36 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                Message += " ModelState is Valid";
+                // Message += " ModelState is Valid";
+                AssessmentResult.AssessmentResultID = AssessmentResult.StudentID + "-" + AssessmentResult.AssessmentID + "-" +
+                                                      AssessmentResult.AssessmentDate.ToString("dd-MM-yyyy");
+                try
+                {
+                    // Save new Assessment result
+                    _db.AssessmentResults.Add(AssessmentResult);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    ErrorMessage = "Db Update Concurrency error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                }
+                catch (DbUpdateException e)
+                {
+                    ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                }
+                catch (Exception e)
+                {
+                    ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                }
 
-                // Construct PK value - Student, AssessmentID, AssessmentDate
-                AssessmentResult.AssessmentResultID = AssessmentResult.StudentID +"-"+ AssessmentResult.AssessmentID +"-"+ AssessmentResult.AssessmentDate.Date.ToString();
-
-                // Save new Assessment
-                _db.AssessmentResults.Add(AssessmentResult);
-                await _db.SaveChangesAsync();
-
-                // return RedirectToPage("ShowAssessmentResult", new { id = AssessmentResult.AssessmentResultID });
                 return RedirectToPage("ShowAssessmentResult", new { id = AssessmentResult.AssessmentResultID });
             }
             else
             {
-                Message += " ModelState is InValid " + ModelState.ToString();
+                // ModelState is InValid
                 return Page();
             }
         }

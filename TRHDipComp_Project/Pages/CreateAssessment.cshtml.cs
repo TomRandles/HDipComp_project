@@ -13,7 +13,9 @@ namespace TRHDipComp_Project.Pages
     {
 
         private readonly CollegeDbContext _db;
-        public string Message { get; set; } = "";
+
+        [TempData]
+        public string ErrorMessage { get; set; } = "";
 
         [BindProperty]
         public IList<Module> ModuleListOptions { get; private set; }
@@ -37,17 +39,35 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                Message += " ModelState is Valid";
+                // Message += " ModelState is Valid";
 
-                // Save new Assessment
-                _db.Assessments.Add(Assessment);
-                await _db.SaveChangesAsync();
+                try
+                {
+                    // Save new Assessment
+                    _db.Assessments.Add(Assessment);
+                    await _db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                }
+                catch (DbUpdateException e)
+                {
+                    ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                }
+                catch (Exception e)
+                {
+                    ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                }
 
                 return RedirectToPage("ShowAssessmentDetails", new { id = Assessment.AssessmentID });
             }
             else
             {
-                Message += " ModelState is InValid " + ModelState.ToString();
+                // Message += " ModelState is InValid " + ModelState.ToString();
                 return Page();
             }
         }

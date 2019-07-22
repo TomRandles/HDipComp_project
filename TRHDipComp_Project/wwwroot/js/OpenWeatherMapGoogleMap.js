@@ -11,7 +11,14 @@ var openWeatherMapKey = "1dfc616b32f88edc2de2243c4631d723";
 function initMap() {
 
     console.log("InitMap");
-    myLatlng = new google.maps.LatLng(53.27, -9.05);
+    console.log(string);
+/* Parse incoming string to get lat & longitude co-ordinates */
+    var coordinates = JSON.parse(string);
+    var latitude = coordinates.latitude;
+    var longitude = coordinates.longitude;
+    console.log("Coordinates: " + latitude + " " + longitude);
+    /* myLatlng = new google.maps.LatLng(53.27, -9.05); */
+    myLatlng = new google.maps.LatLng(latitude, longitude);
     mapOptions = {
         zoom: 10,
         center: myLatlng

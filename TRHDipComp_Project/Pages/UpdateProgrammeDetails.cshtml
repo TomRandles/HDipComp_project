@@ -4,9 +4,18 @@
     ViewData["Title"] = "Update Programme Details";
 }
 
-<h2>Update Programme Details @Model.Programme.ProgrammeID</h2>
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Update Programme Details</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
-<form method="post" class="form-horizontal">
+<form method="post" class="form-horizontal" style="background-color:khaki; margin:0 auto">
 
     <div asp-validation-summary="All">
         <br />
@@ -15,7 +24,7 @@
             <div class="form-group">
                 <label asp-for=Programme.ProgrammeID class="control-label col-md-2"></label>
                 <div class="col-md-2">
-                    <input type="text" asp-for=Programme.ProgrammeID class="form-control">
+                    <input type="text" asp-for=Programme.ProgrammeID class="form-control" readonly>
                     <span asp-validation-for=Programme.ProgrammeID></span>
                 </div>
                 <div class="col-md-8"></div>

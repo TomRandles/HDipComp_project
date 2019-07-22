@@ -1,0 +1,29 @@
+﻿@page "{id?}"
+@model TRHDipComp_Project.Pages.MyErrorPageModel
+@{
+    ViewData["Title"] = "MyErrorPage";
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Error page</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
+
+
+
+@if (RouteData.Values["id"] != null)
+{
+    <h4> Error message for entity @RouteData.Values["id"]</h4>
+}
+else
+{
+    <h2>MyErrorPage, no entity ID routed</h2>
+}
+<br />
+<h4>@Model.ErrorMessage</h4>

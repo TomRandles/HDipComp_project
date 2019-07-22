@@ -5,7 +5,15 @@
     ViewData["Title"] = "Submit Assessment Result";
 }
 
-<h2>Submit Assessment Result: @RouteData.Values["id"]</h2>
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Submit Assessment Result</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
 
 @{
     if (@RouteData.Values["id"] != null)
@@ -117,7 +125,7 @@
                 <div class="col-md-4"></div>
                 <div class="form-group col-md-3">
                     <label asp-for=AssessmentResult.AssessmentResultMark class="control-label"></label>
-                    <input type="number" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
+                    <input type="text" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
                     <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
                 </div>
                 <div class="col-md-5"></div>

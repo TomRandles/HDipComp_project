@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using TRHDipComp_Project.Models;
 
 namespace TRHDipComp_Project.Pages
@@ -18,10 +19,15 @@ namespace TRHDipComp_Project.Pages
         }
 
         [BindProperty]
+        public IList<Programme> ProgrammesList { get; set; }
+
+        [BindProperty]
         public Student Student { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
+            ProgrammesList = await _db.Programmes.AsNoTracking().ToListAsync();
+
             Student = await _db.Students.FindAsync(id);
 
             if (Student == null)
@@ -29,20 +35,6 @@ namespace TRHDipComp_Project.Pages
                 return NotFound();
             }
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-
-            var student = await _db.Students.FindAsync(Student.StudentID);
-
-            if (student != null)
-            {
-                _db.Students.Remove(student);
-                await _db.SaveChangesAsync();
-            }
-
-            return RedirectToPage("Index");
         }
     }
 }
