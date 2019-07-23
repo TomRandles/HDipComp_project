@@ -160,8 +160,7 @@
     function GetLocalWeather(cityID) {
  
         var gettingData = true;
-        var APIKey = "1dfc616b32f88edc2de2243c4631d723";
-
+        var APIKey = "@Model.OpenWeatherMapAPIKey";
         var requestString = "https://api.openweathermap.org/data/2.5/weather?id=" + cityID
             + "&cluster=yes&format=json"
             + "&APPID=" + APIKey
@@ -189,10 +188,11 @@
     window.loadMap();
 
     function loadMap() {
+        var key = "@Model.GoogleMapsAPIKey";
         var script = document.createElement('script');
         script.type = 'text/javascript';
         string = '{\"latitude\":' + @Model.GoogleMapsLatitudeCoordinate + ',\"longitude\":' + @Model.GoogleMapsLongitudeCoordinate + '}';
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA36dWzuzbrzb9ONyMA0PJSUwIj9yrImKA&callback=initMap";
+        script.src = "https://maps.googleapis.com/maps/api/js?key=" + key + "&callback=initMap";
         document.body.appendChild(script);
     }
 

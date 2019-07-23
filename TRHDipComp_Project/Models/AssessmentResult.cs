@@ -21,8 +21,9 @@ namespace TRHDipComp_Project.Models
         public string AssessmentResultDescription { get; set; } = "";
 
         // Result mark 
-        [Display(Name = "Assessment result (%)")]
+        [Display(Name = "Assessment result")]
         [RegularExpression(@"^\d{1,3}\.{0,1}\d{0,2}$")]
+        [AssessmentResultMark]
         [Range(0, 100)]
         public double AssessmentResultMark { get; set; } = 0;
 
@@ -47,6 +48,7 @@ namespace TRHDipComp_Project.Models
         [DataType(DataType.Date)]
         [Required(ErrorMessage = ("Assessment date required: format {0:dd-MM-yyyy}"))]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
+        [AssessmentDate]
         [ConcurrencyCheck]
         public DateTime AssessmentDate { get; set; }
 

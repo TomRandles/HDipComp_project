@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
-using TRHDipComp_Project;
 
 namespace TRHDipComp_Project.Pages
 {
@@ -15,6 +11,12 @@ namespace TRHDipComp_Project.Pages
         private readonly IConfiguration _configuration;
 
         public string Message { get; set; } = "";
+
+        [BindProperty]
+        public string OpenWeatherMapAPIKey { get; private set; }
+
+        [BindProperty]
+        public string GoogleMapsAPIKey { get; private set; }
 
         [BindProperty]
         public string OpenWeatherMapsCityID { get; private set; }
@@ -54,6 +56,10 @@ namespace TRHDipComp_Project.Pages
 
                 Message = "Welcome! ";
             }
+
+            OpenWeatherMapAPIKey = _configuration["AppSettings:OpenWeatherMapAPIKey"];
+
+            GoogleMapsAPIKey = _configuration["AppSettings:GoogleMapsAPIKey"];
 
             // Get OpenWeatherMaps City ID configuration value 
             OpenWeatherMapsCityID = _configuration["AppSettings:OpenWeatherMapCityID"];

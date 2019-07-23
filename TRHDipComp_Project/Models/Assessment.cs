@@ -8,9 +8,9 @@ namespace TRHDipComp_Project.Models
     {
         // Assessment ID - Primary Key
         [Key]
-        [Required(ErrorMessage = ("Must be 6 characters"))]
+        [Required(ErrorMessage = ("Assessment ID required"))]
         [Display(Name = "Assessment ID")]
-        [StringLength(6)]
+        [StringLength(6, ErrorMessage="Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
         public string AssessmentID { get; set; }
 
@@ -28,7 +28,7 @@ namespace TRHDipComp_Project.Models
 
         // Total marks 
         [Required]
-        [Display(Name = "Assessment total mark")]
+        [Display(Name = "Assessment maximum mark")]
         [RegularExpression(@"\d{1,3}")]
         public int AssessmentTotalMark { get; set; } = 0;
 

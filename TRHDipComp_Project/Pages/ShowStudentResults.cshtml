@@ -12,8 +12,8 @@
     <div class="col-md-4">
         <h2 class="text-center">Show Student Results</h2>
         <br />
-        <h2 class="text-center">@Model.StudentName</h2>
-        <h2 class="text-center">@Model.ProgrammeName</h2>
+        <h4 class="text-center">@Model.StudentName</h4>
+        <h4 class="text-center">@Model.ProgrammeName</h4>
     </div>
     <div class="col-md-4"></div>
 </div>
@@ -22,7 +22,6 @@
 @*Show student name and programme of study
 
     Get list of Assessment results for this student
-
 
 *@
 <div class="container">
@@ -33,8 +32,8 @@
                 <th>Assessment</th>
                 <th>Assessment date</th>
                 <th>Student feedback</th>
-                <th>Mark (%)</th>
-                <th>Maximum mark (%)</th>
+                <th>Mark</th>
+                <th>Maximum mark</th>
             </tr>
         </thead>
         <tbody>
@@ -42,15 +41,17 @@
             @{
                 foreach (var assessmentResult in @Model.StudentAssessmentResultsList)
                 {
-                    var modules = @Model.ModuleList.Where(s => s.ModuleID == assessmentResult.ModuleID)
-                                                   .Select(s => s);
-                    string moduleName = modules.First().ModuleName;
+                    string moduleName = @Model.ModuleList.Where(s => s.ModuleID == assessmentResult.ModuleID)
+                                                   .Select(s => s)
+                                                   .FirstOrDefault().ModuleName;
 
                     var assessments = @Model.AssessmentsList.Where(m => m.ModuleID == assessmentResult.ModuleID)
                                                             .Select(m => m);
 
-                    string assessmentName = assessments.First().AssessmentName;
-                    int totalMark = assessments.First().AssessmentTotalMark;
+                    string assessmentName = assessments.FirstOrDefault().AssessmentName;
+
+                    int totalMark = assessments.FirstOrDefault().AssessmentTotalMark;
+
                     <tr>
                         <td>@moduleName</td>
                         <td>@assessmentName</td>

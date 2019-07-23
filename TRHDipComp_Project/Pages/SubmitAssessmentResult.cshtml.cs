@@ -11,7 +11,6 @@ namespace TRHDipComp_Project.Pages
 {
     public class SubmitAssessmentResultModel : PageModel
     {
-
         private readonly CollegeDbContext _db;
 
         [TempData]
@@ -23,17 +22,11 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public string StudentName { get; private set; } = "";
 
-        private IList<Student> StudentList;
-
         [BindProperty]
         public IList<Module> ModuleList { get; private set; }
 
-
         [BindProperty]
         public IList<Module> SelectedModuleList { get; private set; } = new List<Module>();
-
-
-        private IList<Programme> ProgrammeList;
 
         [BindProperty]
         public IList<ProgrammeModule> ProgrammeModuleList { get; private set; }
@@ -44,12 +37,15 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public IList<Assessment> SelectedAssessmentList { get; private set; } = new List<Assessment>();
 
-
         [BindProperty]
         public AssessmentResult AssessmentResult { get; set; } = new AssessmentResult();
 
         [BindProperty]
         public IList<AssessmentResult> ResultList { get; set; }
+
+        private IList<Programme> ProgrammeList;
+
+        private IList<Student> StudentList;
 
         public SubmitAssessmentResultModel(CollegeDbContext db)
         {
@@ -61,25 +57,20 @@ namespace TRHDipComp_Project.Pages
         {
             StudentList = await _db.Students.AsNoTracking().ToListAsync();
             ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
-            // ModuleList = await _db.Modules.ToListAsync();
             ProgrammeModuleList = await _db.ProgrammeModules.AsNoTracking().ToListAsync();
             ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
-
-            if (RouteData.Values["id"] != null)
-            {
-                AssessmentResult.StudentID = RouteData.Values["id"].ToString();
-            }
 
             // Select programme from student details
             // need to revisit with validation code
             var students = StudentList.Where(s => s.StudentID == AssessmentResult.StudentID);
-            AssessmentResult.ProgrammeID = students.First().ProgrammeID;
+            AssessmentResult.ProgrammeID = students.FirstOrDefault().ProgrammeID;
 
-            StudentName = students.First().FirstName + " " + students.First().SurName;
+            StudentName = students.FirstOrDefault().ToString();
 
-            var programmes = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID);
-            ProgrammeName = programmes.First().ProgrammeName;
-
+            ProgrammeName = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID)
+                                         .Select(p => p)
+                                         .FirstOrDefault().ProgrammeName;
+            
             if (ProgrammeModuleList.Count() != 0)
             {
                 var progMods = ProgrammeModuleList.Where(s => s.ProgrammeID == AssessmentResult.ProgrammeID)
@@ -104,8 +95,9 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                // Message += " ModelState is Valid";
-                AssessmentResult.AssessmentResultID = AssessmentResult.StudentID + "-" + AssessmentResult.AssessmentID + "-" +
+                // ModelState is valid
+                AssessmentResult.AssessmentResultID = AssessmentResult.StudentID + "-" + 
+                                                      AssessmentResult.AssessmentID + "-" +
                                                       AssessmentResult.AssessmentDate.ToString("dd-MM-yyyy");
                 try
                 {
@@ -115,12 +107,12 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db Update Concurrency error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
                 }
                 catch (Exception e)

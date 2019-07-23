@@ -7,15 +7,16 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
 using Twilio.Exceptions;
+using Microsoft.Extensions.Configuration;
 
 namespace TRHDipComp_Project.Pages
 {
     public class SendStudentMessageModel : PageModel
     {
         private readonly CollegeDbContext _db;
+
+        private readonly IConfiguration _configuration;
 
         // SupportsGet = true. Necessary to pass a value to the server via OnGet. Is a security 
         // compromise
@@ -56,7 +57,7 @@ namespace TRHDipComp_Project.Pages
 
         [BindProperty]
         [Display(Name = "Message content (Email: 500 characters max; SMS: 125 characters max)")]
-        [StringLength(500, MinimumLength = 0, ErrorMessage = "100 characters max.")]
+        [StringLength(500, MinimumLength = 0, ErrorMessage = "500 characters max.")]
         public string Message { get; set; } = "";
 
         [BindProperty]
@@ -67,10 +68,21 @@ namespace TRHDipComp_Project.Pages
         [Display(Name = "Send Email message")]
         public bool SendEmailMessage { get; set; } = false;
 
-        public SendStudentMessageModel(CollegeDbContext db)
+        private string accountSid;
+        private string authToken; 
+        private string myTwilioPhoneNumber;
+
+        public SendStudentMessageModel(CollegeDbContext db, IConfiguration configuration)
         {
             _db = db;
-            msgMgr = new MessageManager();
+            _configuration = configuration;
+            
+            accountSid = _configuration["AppSettings:TwilioAccountSID"];
+            authToken = _configuration["AppSettings:TwilioAuthToken"];
+            myTwilioPhoneNumber = _configuration["AppSettings:MyTwilioPhoneNumber"];
+
+            msgMgr = new MessageManager(accountSid,
+                                        authToken);
         }
 
         public async Task OnGetAsync()
@@ -129,7 +141,10 @@ namespace TRHDipComp_Project.Pages
                     {
                         try
                         {
-                            msgMgr.SendSMSMessage(student.MobilePhoneNumber, Message);
+                            msgMgr.SendSMSMessage(student.MobilePhoneNumber, 
+                                Message,
+                                myTwilioPhoneNumber
+                                );
                         }
                         catch (TwilioException e)
                         {

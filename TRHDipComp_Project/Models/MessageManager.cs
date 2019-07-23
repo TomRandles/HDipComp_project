@@ -19,16 +19,17 @@ namespace TRHDipComp_Project.Models
 
         // Find your Account Sid and Token at twilio.com/console
         // DANGER! This is insecure. See http://twil.io/secure
-        private const string accountSid = "AC962e31756dc628059d12a61439dc7a2c";
-        private const string authToken = "265f55bca7f0f9594637b99343172413";
-        private const string myTwilioPhoneNumber = "+12029026723"; 
 
-        public MessageManager()
+        public MessageManager(string accountSid,
+                                   string authToken)
         {
             TwilioClient.Init(accountSid, authToken);
         }
 
-        public void SendSMSMessage(string targetPhoneNumber, string SMSMessage)
+        public void SendSMSMessage(string targetPhoneNumber, 
+                                   string SMSMessage,
+                                   string myTwilioPhoneNumber
+                                   )
         {            
             var message = MessageResource.Create(
                 from: new Twilio.Types.PhoneNumber(myTwilioPhoneNumber),

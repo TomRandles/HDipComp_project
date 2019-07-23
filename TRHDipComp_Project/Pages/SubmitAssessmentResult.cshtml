@@ -8,7 +8,7 @@
 <br />
 <div class="row">
     <div class="col-md-4"></div>
-    <div class="col-md-4">
+    <div class="col-md-">
         <h2 class="text-center">Submit Assessment Result</h2>
     </div>
     <div class="col-md-4"></div>
@@ -16,10 +16,12 @@
 <br />
 
 @{
+    @*
     if (@RouteData.Values["id"] != null)
     {
         Model.AssessmentResult.StudentID = @RouteData.Values["id"].ToString();
     }
+    *@
 }
 
 @*
@@ -49,37 +51,37 @@
             <br />
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label asp-for=AssessmentResult.StudentID class="control-label"></label>
                     <input type="text" asp-for=AssessmentResult.StudentID name=AssessmentResult.StudentID class="form-control" readonly>
                     <span asp-validation-for=AssessmentResult.StudentID></span>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
             </div>
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label asp-for=AssessmentResult.ProgrammeID class="control-label"></label>
                     <input type="text" asp-for=AssessmentResult.ProgrammeID name=AssessmentResult.ProgrammeID class="form-control" readonly>
                     <span asp-validation-for=AssessmentResult.ProgrammeID></span>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
             </div>
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label asp-for=AssessmentResult.AssessmentDate class="control-label"></label>
                     <input type="date" asp-for=AssessmentResult.AssessmentDate class="form-control">
                     <span asp-validation-for=AssessmentResult.AssessmentDate></span>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
             </div>
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label asp-for=AssessmentResult.ModuleID class="control-label">Select a module:</label>
                     <select class="form-control" id="SelectModule" asp-for=AssessmentResult.ModuleID onclick="showAssessmentsforModule(value);">
                         @{
@@ -95,12 +97,12 @@
                     </select>
                     <span asp-validation-for=AssessmentResult.ModuleID></span>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
             </div>
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label asp-for=AssessmentResult.AssessmentID class="control-label">Select module assessment</label>
                     <select class="form-control" asp-for=AssessmentResult.AssessmentID>
                         <option id="assessID1">Assessment one</option>
@@ -108,7 +110,7 @@
                     </select>
                     <span asp-validation-for=AssessmentResult.AssessmentID></span>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
             </div>
 
             <div class="row">
@@ -123,12 +125,12 @@
 
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-4">
                     <label asp-for=AssessmentResult.AssessmentResultMark class="control-label"></label>
                     <input type="text" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
                     <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-4"></div>
             </div>
             <br />
 
@@ -172,11 +174,11 @@
                 console.log("Parsed results - assessment Name: " + results2[0].AssessmentName);
 
                 // First assessment
-                document.getElementById("assessID1").innerHTML = results2[0].AssessmentName;
+                document.getElementById("assessID1").innerHTML = results2[0].AssessmentName + ", maximum mark: " + results2[0].AssessmentTotalMark;
                 document.getElementById("assessID1").setAttribute("value", results2[0].AssessmentID);
 
                 // Second assessment
-                document.getElementById("assessID2").innerHTML = results2[1].AssessmentName;
+                document.getElementById("assessID2").innerHTML = results2[1].AssessmentName + ", maximum mark: " + results2[1].AssessmentTotalMark;
                 document.getElementById("assessID2").setAttribute("value", results2[1].AssessmentID);
 
             }
