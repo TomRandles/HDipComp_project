@@ -17,7 +17,6 @@
 
 @{
     <div class="container">
-        <h3>Assessment details</h3>
         <table class="table table-bordered table-hover table-condensed table-functions-grad">
             <thead>
                 <tr>
@@ -34,7 +33,7 @@
                     <td>@Model.Assessment.AssessmentID</td>
                     <td>@Model.Assessment.AssessmentName</td>
                     <td>@Model.Assessment.AssessmentDescription</td>
-                    <td>@Model.Assessment.AssessmentTotalMark</td>
+                    <td align="center">@Model.Assessment.AssessmentTotalMark</td>
                     <td><a asp-page="/UpdateAssessmentDetails" asp-route-id="@Model.Assessment.AssessmentID">Edit Assessment</a></td>
                     <td><a asp-page="/DeleteAssessment" asp-route-id="@Model.Assessment.AssessmentID">Delete Assessment</a></td>
                 </tr>
