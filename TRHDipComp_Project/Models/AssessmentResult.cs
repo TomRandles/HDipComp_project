@@ -12,6 +12,7 @@ namespace TRHDipComp_Project.Models
         [StringLength(50, ErrorMessage = "No more than 50 characters")]
         [Display(Name = "Assessment Result ID")]
         [RegularExpression(@"[\-\w\.]{10,50}")]
+        [ConcurrencyCheck]
         public string AssessmentResultID { get; set; }
 
         // Assessment result description - optional
@@ -33,7 +34,6 @@ namespace TRHDipComp_Project.Models
         [MaxLength(7)]
         [RegularExpression(@"[sS]{1}[0-9]{6}")]
         [ForeignKey("Student")]
-        [ConcurrencyCheck]
         public string StudentID { get; set; }
 
         // Foreign Key - Programme ID
@@ -48,8 +48,8 @@ namespace TRHDipComp_Project.Models
         [DataType(DataType.Date)]
         [Required(ErrorMessage = ("Assessment date required: format {0:dd-MM-yyyy}"))]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
+        //AssessmentDate - custom validation - check that date is within 6 months and not in the future
         [AssessmentDate]
-        [ConcurrencyCheck]
         public DateTime AssessmentDate { get; set; }
 
         // Foreign Key - Module ID
@@ -66,22 +66,7 @@ namespace TRHDipComp_Project.Models
         [StringLength(6, ErrorMessage = "Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
         [ForeignKey("Assessment")]
-        [ConcurrencyCheck]
-        public string AssessmentID { get; set; }
         
-        // Function used to generate a unique and random 6 character ID
-        private string GetRandomID()
-        {
-            StringBuilder builder = new StringBuilder();
-            Random r = new Random();
-            char ch;
-            for (int i = 0; i < 6; i++)
-            {
-                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * r.NextDouble() + 65)));
-                builder.Append(ch);
-            }
-
-            return builder.ToString().ToUpper();
-        }
+        public string AssessmentID { get; set; } 
     }
 }

@@ -6,7 +6,6 @@
 
 <br />
 <br />
-
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
@@ -17,6 +16,17 @@
     </div>
     <div class="col-md-4"></div>
 </div>
+<br />
+
+@{
+    if (@Model.Student.StudentImage != null)
+    {
+        var base64 = Convert.ToBase64String(@Model.Student.StudentImage);
+        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+        <img src=@imgSrc style="max-width:200px; max-height:200px;" />
+    }
+}
 <br />
 
 @*Show student name and programme of study
@@ -41,16 +51,20 @@
             @{
                 foreach (var assessmentResult in @Model.StudentAssessmentResultsList)
                 {
-                    string moduleName = @Model.ModuleList.Where(s => s.ModuleID == assessmentResult.ModuleID)
-                                                   .Select(s => s)
-                                                   .FirstOrDefault().ModuleName;
+                    // Get the module name
+                    var moduleName = @Model.ModuleList.Where(s => s.ModuleID == assessmentResult.ModuleID)
+                                                      .Select(s => s)
+                                                      .FirstOrDefault().ModuleName;
 
-                    var assessments = @Model.AssessmentsList.Where(m => m.ModuleID == assessmentResult.ModuleID)
-                                                            .Select(m => m);
 
-                    string assessmentName = assessments.FirstOrDefault().AssessmentName;
+                    // Only one assessment matches the current assessment result
+                    var assessment = @Model.AssessmentsList.Where(a => a.AssessmentID == assessmentResult.AssessmentID)
+                                                           .Select(m => m)
+                                                           .FirstOrDefault();
 
-                    int totalMark = assessments.FirstOrDefault().AssessmentTotalMark;
+                    string assessmentName = assessment.AssessmentName;
+
+                    int totalMark = assessment.AssessmentTotalMark;
 
                     <tr>
                         <td>@moduleName</td>

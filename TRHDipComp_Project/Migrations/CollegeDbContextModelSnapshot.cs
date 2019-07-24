@@ -22,6 +22,7 @@ namespace TRHDipComp_Project.Migrations
             modelBuilder.Entity("TRHDipComp_Project.Models.Assessment", b =>
                 {
                     b.Property<string>("AssessmentID")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(6);
 
@@ -29,7 +30,6 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("AssessmentName")
-                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(30);
 
@@ -52,14 +52,14 @@ namespace TRHDipComp_Project.Migrations
             modelBuilder.Entity("TRHDipComp_Project.Models.AssessmentResult", b =>
                 {
                     b.Property<string>("AssessmentResultID")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50);
 
-                    b.Property<DateTime>("AssessmentDate")
-                        .IsConcurrencyToken();
+                    b.Property<DateTime>("AssessmentDate");
 
                     b.Property<string>("AssessmentID")
-                        .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(6);
 
                     b.Property<string>("AssessmentResultDescription")
@@ -70,13 +70,15 @@ namespace TRHDipComp_Project.Migrations
                     b.Property<DateTime>("LastUpdated");
 
                     b.Property<string>("ModuleID")
+                        .IsRequired()
                         .HasMaxLength(6);
 
                     b.Property<string>("ProgrammeID")
+                        .IsRequired()
                         .HasMaxLength(6);
 
                     b.Property<string>("StudentID")
-                        .IsConcurrencyToken()
+                        .IsRequired()
                         .HasMaxLength(7);
 
                     b.HasKey("AssessmentResultID");
@@ -93,6 +95,7 @@ namespace TRHDipComp_Project.Migrations
             modelBuilder.Entity("TRHDipComp_Project.Models.Module", b =>
                 {
                     b.Property<string>("ModuleID")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(6);
 
@@ -104,7 +107,6 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("ModuleName")
-                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(30);
 
@@ -116,6 +118,7 @@ namespace TRHDipComp_Project.Migrations
             modelBuilder.Entity("TRHDipComp_Project.Models.Programme", b =>
                 {
                     b.Property<string>("ProgrammeID")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(6);
 
@@ -127,10 +130,9 @@ namespace TRHDipComp_Project.Migrations
                     b.Property<int>("ProgrammeCredits");
 
                     b.Property<string>("ProgrammeDescription")
-                        .HasMaxLength(50);
+                        .HasMaxLength(100);
 
                     b.Property<string>("ProgrammeName")
-                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -144,10 +146,12 @@ namespace TRHDipComp_Project.Migrations
             modelBuilder.Entity("TRHDipComp_Project.Models.ProgrammeModule", b =>
                 {
                     b.Property<string>("ProgrammeID")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasMaxLength(6);
 
                     b.Property<string>("ModuleID")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasMaxLength(6);
 
                     b.Property<DateTime>("LastUpdated");
 
@@ -161,6 +165,7 @@ namespace TRHDipComp_Project.Migrations
             modelBuilder.Entity("TRHDipComp_Project.Models.Student", b =>
                 {
                     b.Property<string>("StudentID")
+                        .IsConcurrencyToken()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(7);
 
@@ -183,10 +188,9 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("EmergencyMobilePhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(15);
+                        .HasMaxLength(14);
 
                     b.Property<string>("FirstName")
-                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -198,7 +202,7 @@ namespace TRHDipComp_Project.Migrations
 
                     b.Property<string>("MobilePhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(15);
+                        .HasMaxLength(14);
 
                     b.Property<decimal>("ProgrammeFeePaid")
                         .HasColumnType("decimal(18,2)");
@@ -213,7 +217,6 @@ namespace TRHDipComp_Project.Migrations
                         .HasMaxLength(10);
 
                     b.Property<string>("SurName")
-                        .IsConcurrencyToken()
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -239,15 +242,18 @@ namespace TRHDipComp_Project.Migrations
                 {
                     b.HasOne("TRHDipComp_Project.Models.Assessment")
                         .WithMany("AssessmentResults")
-                        .HasForeignKey("AssessmentID");
+                        .HasForeignKey("AssessmentID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRHDipComp_Project.Models.Student")
                         .WithMany("AssessmentResults")
-                        .HasForeignKey("StudentID");
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TRHDipComp_Project.Models.ProgrammeModule")
                         .WithMany("AssessmentResults")
-                        .HasForeignKey("ProgrammeID", "ModuleID");
+                        .HasForeignKey("ProgrammeID", "ModuleID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TRHDipComp_Project.Models.ProgrammeModule", b =>

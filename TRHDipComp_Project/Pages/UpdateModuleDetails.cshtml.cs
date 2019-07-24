@@ -50,29 +50,40 @@ namespace TRHDipComp_Project.Pages
                 return Page();
             }
 
-            // Save modified programmeModule object in DB
-            ProgrammeModule.ModuleID = Module.ModuleID;
-            _db.Attach(ProgrammeModule).State = EntityState.Modified;
-
-            _db.Attach(Module).State = EntityState.Modified;
-
             try
             {
+                // Save modified programmeModule object in DB
+                ProgrammeModule.ModuleID = Module.ModuleID;
+                _db.Attach(ProgrammeModule).State = EntityState.Modified;
+
+                _db.Attach(Module).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db update concurrency error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db Update error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
             }
             catch (Exception e)
             {
-                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "General error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
             }
 

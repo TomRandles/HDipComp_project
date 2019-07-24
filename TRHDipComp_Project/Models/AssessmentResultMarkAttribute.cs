@@ -14,6 +14,13 @@ namespace TRHDipComp_Project.Models
             // Get current Assessment Result object 
             AssessmentResult assessmentResult = (AssessmentResult)validationContext.ObjectInstance;
 
+            // Check if AssessMentResult.Assessment ID is set. If not, exit without validation
+            if (assessmentResult.AssessmentID == null )
+            {
+                // Cannot complete validation - exit
+                return new ValidationResult("AssessmentResult object not populated properly. Cannot complete validation.");
+            }
+
             // Get DB context 
             var _db = (CollegeDbContext)validationContext
                          .GetService(typeof(CollegeDbContext));

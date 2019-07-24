@@ -11,6 +11,12 @@ namespace TRHDipComp_Project.Models
             AssessmentResult result = (AssessmentResult)validationContext.ObjectInstance;
 
             string msg = "";
+            if ((result == null) || ( result.AssessmentID == null))
+            {
+                msg = "Assessment result object invalid, cannot complete validation";
+                return new ValidationResult(msg);
+            }
+            
             // Calculate days since assessment
             TimeSpan daysSinceAssessment = DateTime.Now - result.AssessmentDate;
 

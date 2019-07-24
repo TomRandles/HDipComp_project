@@ -52,6 +52,7 @@
                     <th>Student gender</th>
                     <th>Programme type</th>
                     <th>Programme of study</th>
+                    <th>Fee paid</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -68,6 +69,7 @@
                     <td>@Model.Student.GenderType</td>
                     <td>@Model.Student.FullOrPartTime</td>
                     <td>@programmeName</td>
+                    <td>@Model.Student.ProgrammeFeePaid</td>
                     <td><a asp-page="/UpdateStudentDetails" asp-route-id="@Model.Student.StudentID">Update student</a></td>
                     <td><a asp-page="/DeleteStudent" asp-route-id="@Model.Student.StudentID">Delete student</a></td>
                 </tr>

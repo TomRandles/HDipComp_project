@@ -53,42 +53,74 @@ namespace TRHDipComp_Project.Pages
 
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             StudentList = await _db.Students.AsNoTracking().ToListAsync();
             ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
             ProgrammeModuleList = await _db.ProgrammeModules.AsNoTracking().ToListAsync();
             ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
 
-            // Select programme from student details
-            // need to revisit with validation code
-            var students = StudentList.Where(s => s.StudentID == AssessmentResult.StudentID);
-            AssessmentResult.ProgrammeID = students.FirstOrDefault().ProgrammeID;
 
-            StudentName = students.FirstOrDefault().ToString();
+            // Should only be one student returned here
+            var students = StudentList.Where(s => s.StudentID == id)
+                                      .Select(s => s);
 
-            ProgrammeName = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID)
-                                         .Select(p => p)
-                                         .FirstOrDefault().ProgrammeName;
-            
-            if (ProgrammeModuleList.Count() != 0)
+            if ( (students != null ) && (students.Count() == 1))
             {
-                var progMods = ProgrammeModuleList.Where(s => s.ProgrammeID == AssessmentResult.ProgrammeID)
-                                                               .Select(s => s);
+                // Extract relevant details from the student object
+                AssessmentResult.ProgrammeID = students.FirstOrDefault().ProgrammeID;
+                AssessmentResult.StudentID = students.FirstOrDefault().StudentID;
+                StudentName = students.FirstOrDefault().ToString();
 
-                foreach (var progMod in progMods)
+                // Get the relevant programme name
+                ProgrammeName = ProgrammeList.Where(p => p.ProgrammeID == AssessmentResult.ProgrammeID)
+                                             .Select(p => p)
+                                             .FirstOrDefault().ProgrammeName;
+
+                // Populate select module list for this programme
+                if (ProgrammeModuleList.Count() != 0)
                 {
-                    var mods = ModuleList.Where(s => s.ModuleID == progMod.ModuleID)
-                            .Select(s => s);
+                    var progMods = ProgrammeModuleList.Where(s => s.ProgrammeID == AssessmentResult.ProgrammeID)
+                                                                   .Select(s => s);
 
-                    foreach (var mod in mods)
+                    if (progMods != null)
                     {
-                        SelectedModuleList.Add(mod);
+                        foreach (var progMod in progMods)
+                        {
+                            var mods = ModuleList.Where(s => s.ModuleID == progMod.ModuleID)
+                                    .Select(s => s);
+
+                            foreach (var mod in mods)
+                            {
+                                SelectedModuleList.Add(mod);
+                            }
+                        }
+                        return Page();
+                    }
+                    else
+                    {
+                        //Error - no programme assigned to this student
+                        ErrorMessage = $"Error: there is no programme assigned to this student: {AssessmentResult.StudentID}";
+                        return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
                     }
                 }
+                else
+                {
+                    //Error - Prog Mods is null
+                    ErrorMessage = "Error: the Programme - Modules table is empty; cannot process assessment submission";
+                    return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                }
             }
-
-            return Page();
+            else
+            {
+                // Student not found
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -96,6 +128,7 @@ namespace TRHDipComp_Project.Pages
             if (ModelState.IsValid)
             {
                 // ModelState is valid
+                // Populate assessment result ID from 3 components
                 AssessmentResult.AssessmentResultID = AssessmentResult.StudentID + "-" + 
                                                       AssessmentResult.AssessmentID + "-" +
                                                       AssessmentResult.AssessmentDate.ToString("dd-MM-yyyy");
@@ -107,17 +140,32 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "Db update concurrency error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
+                 
                     return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "Db update error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
+
                     return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
                 }
                 catch (Exception e)
                 {
-                    ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "General error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
+
                     return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
                 }
 

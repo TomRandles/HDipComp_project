@@ -28,7 +28,7 @@ namespace TRHDipComp_Project.Migrations
                 {
                     ProgrammeID = table.Column<string>(maxLength: 6, nullable: false),
                     ProgrammeName = table.Column<string>(maxLength: 20, nullable: false),
-                    ProgrammeDescription = table.Column<string>(maxLength: 50, nullable: true),
+                    ProgrammeDescription = table.Column<string>(maxLength: 100, nullable: true),
                     ProgrammeQQILevel = table.Column<int>(nullable: false),
                     ProgrammeCredits = table.Column<int>(nullable: false),
                     ProgrammeCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -66,8 +66,8 @@ namespace TRHDipComp_Project.Migrations
                 name: "ProgrammeModules",
                 columns: table => new
                 {
-                    ProgrammeID = table.Column<string>(nullable: false),
-                    ModuleID = table.Column<string>(nullable: false),
+                    ProgrammeID = table.Column<string>(maxLength: 6, nullable: false),
+                    ModuleID = table.Column<string>(maxLength: 6, nullable: false),
                     LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -98,9 +98,9 @@ namespace TRHDipComp_Project.Migrations
                     AddressTwo = table.Column<string>(maxLength: 30, nullable: false),
                     Town = table.Column<string>(maxLength: 30, nullable: false),
                     County = table.Column<string>(maxLength: 30, nullable: false),
-                    MobilePhoneNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    MobilePhoneNumber = table.Column<string>(maxLength: 14, nullable: false),
                     EmailAddress = table.Column<string>(nullable: false),
-                    EmergencyMobilePhoneNumber = table.Column<string>(maxLength: 15, nullable: false),
+                    EmergencyMobilePhoneNumber = table.Column<string>(maxLength: 14, nullable: false),
                     StudentPPS = table.Column<string>(maxLength: 10, nullable: false),
                     ProgrammeFeePaid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
@@ -128,11 +128,11 @@ namespace TRHDipComp_Project.Migrations
                     AssessmentResultID = table.Column<string>(maxLength: 50, nullable: false),
                     AssessmentResultDescription = table.Column<string>(maxLength: 100, nullable: true),
                     AssessmentResultMark = table.Column<double>(nullable: false),
-                    StudentID = table.Column<string>(maxLength: 7, nullable: true),
-                    ProgrammeID = table.Column<string>(maxLength: 6, nullable: true),
+                    StudentID = table.Column<string>(maxLength: 7, nullable: false),
+                    ProgrammeID = table.Column<string>(maxLength: 6, nullable: false),
                     AssessmentDate = table.Column<DateTime>(nullable: false),
-                    ModuleID = table.Column<string>(maxLength: 6, nullable: true),
-                    AssessmentID = table.Column<string>(maxLength: 6, nullable: true),
+                    ModuleID = table.Column<string>(maxLength: 6, nullable: false),
+                    AssessmentID = table.Column<string>(maxLength: 6, nullable: false),
                     LastUpdated = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -143,19 +143,19 @@ namespace TRHDipComp_Project.Migrations
                         column: x => x.AssessmentID,
                         principalTable: "Assessments",
                         principalColumn: "AssessmentID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AssessmentResults_Students_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Students",
                         principalColumn: "StudentID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AssessmentResults_ProgrammeModules_ProgrammeID_ModuleID",
                         columns: x => new { x.ProgrammeID, x.ModuleID },
                         principalTable: "ProgrammeModules",
                         principalColumns: new[] { "ProgrammeID", "ModuleID" },
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

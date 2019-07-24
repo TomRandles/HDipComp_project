@@ -25,7 +25,7 @@ namespace TRHDipComp_Project.Pages
 
         // Error message management property
         [TempData]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } = "";
 
         // Message manager object to handle both SMS and email functions 
         private MessageManager msgMgr;
@@ -148,7 +148,10 @@ namespace TRHDipComp_Project.Pages
                         }
                         catch (TwilioException e)
                         {
-                            ErrorMessage = e.Message + " " + e.InnerException.Message;
+                            if (e.Message != null)
+                                ErrorMessage = e.Message;
+                            if ((e.InnerException != null) && (e.InnerException.Message != null))
+                                ErrorMessage += e.InnerException.Message;
                             RedirectToPage("MyErrorPage", new { id = student.StudentID });
                         }
                     }
@@ -164,7 +167,11 @@ namespace TRHDipComp_Project.Pages
                         }
                         catch (Exception e)
                         {
-                            ErrorMessage = e.Message + " " + e.InnerException.Message;
+                            if (e.Message != null)
+                                ErrorMessage = e.Message;
+                            if ((e.InnerException != null) && (e.InnerException.Message != null)) 
+                                ErrorMessage += e.InnerException.Message;
+
                             RedirectToPage("MyErrorPage", new { id = student.StudentID });
                         }
                     }

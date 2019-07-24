@@ -37,7 +37,6 @@ namespace TRHDipComp_Project.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-
             try
             {
                 var stud = await _db.Students.FindAsync(Student.StudentID);
@@ -50,17 +49,30 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db Update Concurrency error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db Update Concurrency error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db update error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
             catch (Exception e)
             {
-                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "General error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
             return RedirectToPage("/ListStudents");

@@ -15,23 +15,39 @@
 </div>
 <br />
 
-@{
-    <table class="table table-bordered table-hover table-condensed table-functions-grad">
-        <thead>
-            <tr>
-                <th>Programme</th>
-            </tr>
-        </thead>
-        <tbody>
+<form>
+    <p>
+        Programme:
 
-            @foreach (var par in Model.ProgrammeList)
-            {
+        <input type="text" asp-for="ProgrammeSearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<div class="container">
+    <br />
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+
+        <table class="table table-bordered table-hover table-condensed table-functions-grad">
+            <thead>
                 <tr>
-                    <td><a asp-page="/ShowProgrammeDetails" asp-route-id="@par.ProgrammeID">@par.ProgrammeName</a></td>
+                    <th>Programme</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
-    <a asp-page="/Index">Home</a>
-}
+            </thead>
+            <tbody>
+                @{
+                    foreach (var prog in Model.ProgrammesFound)
+                    {
+                        <tr>
+                            <td><a asp-page="ShowProgrammeDetails" asp-route-id="@prog.ProgrammeID">@prog.ProgrammeName</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+<a asp-page="/Index">Home</a>

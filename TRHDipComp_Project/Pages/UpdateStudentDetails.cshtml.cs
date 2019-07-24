@@ -39,7 +39,7 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public IList<Programme> ProgrammeList { get; private set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async  Task<IActionResult> OnGetAsync(string id)
         {
             Student = await _db.Students.FindAsync(id);
 
@@ -50,7 +50,7 @@ namespace TRHDipComp_Project.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async  Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -72,25 +72,51 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db update concurrency error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if ((e.InnerException != null) && ((e.InnerException.Message != null)))
+                    ErrorMessage += e.InnerException.Message;
+
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "DB update exception: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if ((e.InnerException != null) && ((e.InnerException.Message != null)))
+                    ErrorMessage += e.InnerException.Message;
+
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
+            catch (InvalidOperationException e)
+            {
+                ErrorMessage = "Invalid operation: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if ((e.InnerException != null) && ((e.InnerException.Message != null)))
+                    ErrorMessage += e.InnerException.Message;
+
+                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+            }
+                       
             catch (Exception e)
             {
-                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "General error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if ((e.InnerException != null) && ((e.InnerException.Message != null)))
+                    ErrorMessage += e.InnerException.Message;
+
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
 
             return RedirectToPage("/ShowStudentDetails");
         }
-        private async void GetProgrammeList()
+        private void GetProgrammeList()
         {
-            ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
+            ProgrammeList = _db.Programmes.AsNoTracking().ToList();
         }
     }
 }

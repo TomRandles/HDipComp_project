@@ -47,6 +47,7 @@ namespace TRHDipComp_Project.Pages
 
                 try
                 {
+                    // Save new programme module combo
                     _db.ProgrammeModules.Add(ProgrammeModule);
 
                     // Save new Module
@@ -55,17 +56,30 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db Update Concurrency error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "Db update concurrency error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "Db update error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
                 }
                 catch (Exception e)
                 {
-                    ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                    ErrorMessage = "General error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
+
                     return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
                 }
 

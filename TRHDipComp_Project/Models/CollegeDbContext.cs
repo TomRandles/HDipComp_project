@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,24 +45,23 @@ namespace TRHDipComp_Project.Models
                 .Property<DateTime>("LastUpdated");
             modelBuilder.Entity<AssessmentResult>()
                 .Property<DateTime>("LastUpdated");
-
-      
         }
 
         // Set values via the ChangeTracker API through its Entries() method. 
-        // Update "LastUpdated" property value for all entities by overriding the SaveChanges method.
-        public override int SaveChanges()
+        // Update "LastUpdated" property value for all entities by overriding the SaveChangesAsync method
+
+        public  override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             ChangeTracker.DetectChanges();
 
             foreach (var entry in ChangeTracker.Entries())
             {
-                if (entry.State == EntityState.Added || entry.State == EntityState.Modified )
+                if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
                 {
-                    entry.Property("LastUpdated").CurrentValue = DateTime.Now.ToShortDateString();
+                    entry.Property("LastUpdated").CurrentValue = DateTime.Now;
                 }
             }
-            return base.SaveChanges();
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

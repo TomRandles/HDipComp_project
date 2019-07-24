@@ -12,6 +12,7 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Programme ID")]
         [StringLength(6, ErrorMessage = "Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
+        [ConcurrencyCheck]
         public string ProgrammeID { get; set; }
 
         // Programme name
@@ -19,7 +20,7 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Programme name")]
         [StringLength(20, ErrorMessage = "6 to 20 characters")]
         [RegularExpression(@"[\w\s\.\-]{6,20}")]
-        [ConcurrencyCheck]
+
         public string ProgrammeName { get; set; } = "";
 
         // Programme description
@@ -38,6 +39,7 @@ namespace TRHDipComp_Project.Models
         public int ProgrammeCredits { get; set; } = 40;
 
         // Cost
+        [Required(ErrorMessage = "Programme fee required")]
         [Display(Name = "Programme cost")]
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18,2)")]

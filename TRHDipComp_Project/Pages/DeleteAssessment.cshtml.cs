@@ -37,6 +37,8 @@ namespace TRHDipComp_Project.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // local copy of assessment ID
+            string assessID = Assessment.AssessmentID;
             try
             {
                 var assess = await _db.Assessments.FindAsync(Assessment.AssessmentID);
@@ -49,21 +51,35 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db Update Concurrency error: " + e.Message + " " + e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                ErrorMessage = "Db Update Concurrency error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = assessID });
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db Update error: " + e.Message + " " + e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                ErrorMessage = "Db update error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = assessID });
             }
             catch (Exception e)
-            {
-                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+            { 
+                ErrorMessage = "General error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+
+                return RedirectToPage("MyErrorPage", new { id = assessID });
             }
 
-            return RedirectToPage("/ListAssessments");
+            // Return to programmes, modules and assessments
+            return RedirectToPage("/ListModules");
         }
     }
 }

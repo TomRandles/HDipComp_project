@@ -14,6 +14,7 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Module ID")]
         [StringLength(6, ErrorMessage = ("Must be 6 characters"))]
         [RegularExpression(@"\w{6}")]
+        [ConcurrencyCheck]
         public string ModuleID { get; set; }
 
         // Module name
@@ -21,7 +22,6 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Module name")]
         [StringLength(30, ErrorMessage = ("Maximum 30 characters"))]
         [RegularExpression(@"[\w\s\.\,\-]{6,30}")]
-        [ConcurrencyCheck]
         public string ModuleName { get; set; } = "";
 
         // Module description

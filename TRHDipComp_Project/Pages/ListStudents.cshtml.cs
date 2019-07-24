@@ -24,6 +24,9 @@ namespace TRHDipComp_Project.Pages
         public IList<Programme> ProgrammesFound { get; set; }
 
         [BindProperty]
+        public IList<Programme> ProgrammesList { get; set; }
+
+        [BindProperty]
         public IList<Student> StudentList { get; private set; }
 
         [BindProperty]
@@ -38,35 +41,36 @@ namespace TRHDipComp_Project.Pages
         {
             //get list of Students
             StudentList = await _db.Students.AsNoTracking().ToListAsync();
-
-            var Programmes = from s in _db.Programmes
-                             select s;
+            ProgrammesList = await _db.Programmes.AsNoTracking().ToListAsync();
 
             if (!String.IsNullOrEmpty(ProgrammeSearchString))
             {
-                Programmes = Programmes.Where(s => s.ProgrammeName.Contains(ProgrammeSearchString));
+                ProgrammesFound = ProgrammesList.Where(s => s.ProgrammeName.Contains(ProgrammeSearchString))
+                                                .Select(s => s)
+                                                .ToList();
             }
-
-            ProgrammesFound = await Programmes.ToListAsync();
+            else
+            {
+                ProgrammesFound = await _db.Programmes.AsNoTracking().ToListAsync();
+            }
 
             if (ProgrammesFound.Count() != 0)
             {
                 foreach (var programme in ProgrammesFound)
                 {
-                     
+
                     var students = StudentList.Where(s => s.ProgrammeID == programme.ProgrammeID)
                                               .Select(s => s);
+
+                    foreach (var student in students)
                     {
-                        foreach (var stud in students)
-                        {
-                            SelectedStudentList.Add(stud);
-                        }
+                        SelectedStudentList.Add(student);
                     }
                 }
             }
             else
             {
-                SelectedStudentList = StudentList;
+                SelectedStudentList = StudentList.ToList();
             }
         }
     }

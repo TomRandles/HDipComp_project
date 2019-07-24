@@ -43,13 +43,15 @@ namespace TRHDipComp_Project
             // services.AddDbContext<CollegeDbContext>(options => options.UseInMemoryDatabase("tempCollegeDB"));
 
             // Local DB option
-            services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("CollegeTestDBContext")));
+            // services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
+            //    Configuration.GetConnectionString("CollegeTestDBContext")));
 
             // Azure SQL Server service - HDipCompTRproject_DB
-            //services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
-            //    Configuration.GetConnectionString("HDipCompTRproject_DB")));
+            services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("HDipCompTRproject_DB")));
 
+            //Ensure threadsafe code - validation code especially
+            services.AddDbContext<CollegeDbContext>(ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,20 +13,19 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Student ID:")]
         [StringLength(7, ErrorMessage = "Must be a single \'S\' character followed by 6 digits")]
         [RegularExpression(@"[sS]{1}[0-9]{6}")]
+        [ConcurrencyCheck]
         public string StudentID { get; set; }
 
         [Required(ErrorMessage = ("First name required"))]
         [Display(Name = "Student first name:")]
         [StringLength(20, ErrorMessage = "Max 20 characters")]
-        [RegularExpression(@"[\w\'\-\s\,]{2,20}")]
-        [ConcurrencyCheck]
+        [RegularExpression(@"[\w\'\-\s\,\.]{2,20}")]
         public string FirstName { get; set; } = "";
 
         [Required(ErrorMessage = ("Surname name required"))]
         [Display(Name = "Student surname:")]
         [StringLength(20, ErrorMessage = "Max 20 characters")]
-        [RegularExpression(@"[\w\'\-]{2,20}")]
-        [ConcurrencyCheck]
+        [RegularExpression(@"[\w\'\-\s\,\.]{2,20}")]
         public string SurName { get; set; } = "";
 
         [Required(ErrorMessage = ("Address 1 is required"))]
@@ -57,7 +56,7 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Mobile number:")]
         [DataType(DataType.PhoneNumber)]
         [StringLength(14, ErrorMessage = "[+][country code][area code][number] 12-14 numeric characters; no spaces or hyphens")]
-        [RegularExpression(@"[\+]{0,1}[0-9]{12,14}")]
+        [RegularExpression(@"[\+]{1}[1-9]{1,3}[0-9]{9}")]
         public string MobilePhoneNumber { get; set; } = "";
 
         [Required(ErrorMessage = ("Email address is name@emailaddress.com "))]
@@ -69,8 +68,8 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Emergency contact number:")]
         [DataType(DataType.PhoneNumber)]
         [StringLength(14, ErrorMessage = "[+][country code][area code][number] 12-14 numeric characters; no spaces or hyphens")]
-        [RegularExpression(@"[\+]{0,1}[0-9]{12,14}")]
-     
+        [RegularExpression(@"[\+]{1}[1-9]{1,3}[0-9]{9}")]
+
         public string EmergencyMobilePhoneNumber { get; set; } = "";
 
         // PPS is 8 numeric characters
@@ -85,13 +84,14 @@ namespace TRHDipComp_Project.Models
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18,2)")]
         [RegularExpression(@"\d{0,5}\.{0,1}\d{0,2}")]
+        [StudentProgrammeFee]
         public decimal ProgrammeFeePaid { get; set; } = 0;
 
         [Required(ErrorMessage = ("Student date of birth incorrect. Format DD/MM/YYYY"))]
         [Display(Name = "Student date of birth:")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
-        // Custom validation - check student's age is between 18 and 60
+        // StudentDateOfBirth - custom validation - check student's age is between 18 and 60
         [StudentDateOfBirth]
         public DateTime DateOfBirth { get; set; }
 

@@ -20,7 +20,7 @@ namespace TRHDipComp_Project.Pages
         private readonly CollegeDbContext _db;
 
         [TempData]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } = "";
 
         [BindProperty]
         [Display(Name = "Upload a student picture (optional)")]
@@ -52,7 +52,7 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                // Message += " ModelState is Valid: ";
+                // ModelState is Valid
 
                 // Picture upload is optional; check if the IForm variable is set
                 if (Upload != null)
@@ -68,17 +68,30 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db Update Concurrency error: " + e.Message;
+                    ErrorMessage = "Db Update Concurrency error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db Update error: " + e.Message;
+                    ErrorMessage = "Db Update error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
                 }
                 catch (Exception e)
                 {
-                    ErrorMessage = "General error: " + e.Message;
+                    ErrorMessage = "General error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
+
                     return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
                 }
 
@@ -86,7 +99,7 @@ namespace TRHDipComp_Project.Pages
             }
             else
             {
-                // Message += " ModelState is InValid";
+                // ModelState is InValid
                 return Page();
             }
         }

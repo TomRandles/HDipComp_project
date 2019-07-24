@@ -55,16 +55,29 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db update concurrency error: " + e.Message + " " + e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
-            } catch (DbUpdateException e)
-            {
-                ErrorMessage = "Db update error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db update concurrency error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
             }
-            catch (Exception e)
+            catch (DbUpdateException e)
             {
-                ErrorMessage = "General error: " + e.Message + " " + e.InnerException.Message;
+                ErrorMessage = "Db update error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });                
+            }
+            catch (Exception e )
+            {
+                ErrorMessage = "General error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
             }
 

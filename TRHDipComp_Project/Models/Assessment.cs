@@ -12,13 +12,13 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Assessment ID")]
         [StringLength(6, ErrorMessage="Must be 6 characters")]
         [RegularExpression(@"\w{6}")]
+        [ConcurrencyCheck]
         public string AssessmentID { get; set; }
 
         // Assessment name
         [Required]
         [Display(Name = "Assessment name")]
         [StringLength(30, ErrorMessage = "No more than 30 characters")]
-        [ConcurrencyCheck]
         public string AssessmentName { get; set; } = "";
 
         // Assessment description - optional

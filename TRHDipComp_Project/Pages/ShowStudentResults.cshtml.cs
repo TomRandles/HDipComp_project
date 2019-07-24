@@ -56,7 +56,7 @@ namespace TRHDipComp_Project.Pages
                 return NotFound();
             }
 
-            StudentName = Student.FirstName + " " + Student.SurName;
+            StudentName = Student.ToString();
 
             ModuleList = await _db.Modules.AsNoTracking().ToListAsync();
             ProgrammeList = await _db.Programmes.AsNoTracking().ToListAsync();
@@ -67,14 +67,11 @@ namespace TRHDipComp_Project.Pages
             
             ProgrammeName = programmes.First().ProgrammeName;
 
-            var assessmentResults = AssessmentResultsList.Where(a => a.StudentID == Student.StudentID)
-                                                                       .Select(a => a);
+            StudentAssessmentResultsList = AssessmentResultsList.Where(a => a.StudentID == Student.StudentID)
+                                                                      .Select(a => a)
+                                                                      .ToList();
 
-            foreach (AssessmentResult assessmentResult in assessmentResults)
-            {
-                StudentAssessmentResultsList.Add(assessmentResult);
-            }
-
+            
             return Page();
         }
     }
