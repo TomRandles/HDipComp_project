@@ -16,14 +16,11 @@ namespace TRHDipComp_Project.Pages
 {
     public class UpdateStudentDetailsModel : PageModel
     {
-        private IHostingEnvironment _environment;
-
         private readonly CollegeDbContext _db;
 
-        public UpdateStudentDetailsModel(IHostingEnvironment environment, CollegeDbContext db)
+        public UpdateStudentDetailsModel(CollegeDbContext db)
         {
             _db = db;
-            _environment = environment;
             GetProgrammeList();
         }
 
@@ -40,7 +37,7 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public IList<Programme> ProgrammeList { get; private set; }
 
-        public async  Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
             Student = await _db.Students.FindAsync(id);
 
@@ -51,7 +48,7 @@ namespace TRHDipComp_Project.Pages
             return Page();
         }
 
-        public async  Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -61,16 +58,21 @@ namespace TRHDipComp_Project.Pages
             // Picture upload is optional; check if the IForm variable is set
             if (Upload != null)
             {
-                string file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
-                if (!System.IO.File.Exists(file))
+                // Get the length of the binary stream
+                long numBytesRead = Upload.Length;
+
+                // create new byte array
+                Student.StudentImage = new byte[numBytesRead];
+
+                // Update with binary data
+                using (var memoryStream = new MemoryStream())
                 {
-                    // Generate an error message
-                    ErrorMessage = $"Error: file: {file} does not exist";
-                    Trace.TraceError(ErrorMessage);
-                    return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                    await Upload.CopyToAsync(memoryStream);
+                    Student.StudentImage = memoryStream.ToArray();
                 }
             }
-
+            
+            // Save updated entity 
             try
             {
                 _db.Attach(Student).State = EntityState.Modified;
@@ -106,7 +108,7 @@ namespace TRHDipComp_Project.Pages
 
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
-                       
+
             catch (Exception e)
             {
                 ErrorMessage = "General error: ";

@@ -34,7 +34,7 @@
             <th>Student name</th>
             <th>Submit assessment result</th>
             <th>Assessment results</th>
-            <th>Student photo</th>
+            <th>Student image</th>
         </tr>
     </thead>
     <tbody>
@@ -48,7 +48,7 @@
                 <tr>
                     <td>@stud.StudentID </td>
                     <td>@progName</td>
-                    <td><a asp-page="ShowStudentDetails" asp-route-id="@stud.StudentID">@stud.FirstName @stud.SurName</a></td>
+                    <td><a asp-page="ShowStudentDetails" asp-route-id="@stud.StudentID">@stud.ToString()</a></td>
                     <td><a asp-page="SubmitAssessmentResult" asp-route-id="@stud.StudentID">Submit result for @stud.FirstName</a></td>
                     <td><a asp-page="ShowStudentResults" asp-route-id="@stud.StudentID">@stud.FirstName's results</a></td>
                     <td>

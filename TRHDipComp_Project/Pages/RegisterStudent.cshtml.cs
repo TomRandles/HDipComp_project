@@ -15,8 +15,6 @@ namespace TRHDipComp_Project.Pages
 {
     public class RegisterStudentModel : PageModel
     {
-        private IHostingEnvironment _environment;
-
         private readonly CollegeDbContext _db;
 
         [TempData]
@@ -32,10 +30,9 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public IList<Programme> ProgrammeList { get; private set; }
 
-        public RegisterStudentModel(IHostingEnvironment environment, CollegeDbContext db)
+        public RegisterStudentModel(CollegeDbContext db)
         {
             _db = db;
-            _environment = environment;
 
             // GetRandomID can only be called in the Registration process; 
             // did not belong in the Student constructor
@@ -57,39 +54,21 @@ namespace TRHDipComp_Project.Pages
                 // Picture upload is optional; check if the IForm variable is set
                 if (Upload != null)
                 {
-                    string file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
-                    if (!System.IO.File.Exists(file))
-                    {
-                        // Generate an error message
-                        ErrorMessage = $"Error: file: {file} does not exist";
-                        Trace.TraceError(ErrorMessage);
-                        return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
-                    }
+                    // Get the length of the binary stream
+                    long numBytesRead = Upload.Length;
 
-                    try
+                    // create new byte array
+                    Student.StudentImage = new byte[numBytesRead];
+
+                    // Update with binary data
+                    using (var memoryStream = new MemoryStream())
                     {
-                        Student.ReadStudentImage(file);
-                    }
-                    catch (IOException e)
-                    {
-                        ErrorMessage = "File IO error: ";
-                        if (e.Message != null)
-                            ErrorMessage += e.Message;
-                        if (e.InnerException.Message != null)
-                            ErrorMessage += e.InnerException.Message;
-                        return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
-                    }
-                    catch (Exception e)
-                    {
-                        ErrorMessage = "General error: ";
-                        if (e.Message != null)
-                            ErrorMessage += e.Message;
-                        if (e.InnerException.Message != null)
-                            ErrorMessage += e.InnerException.Message;
-                        return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                        await Upload.CopyToAsync(memoryStream);
+                        Student.StudentImage = memoryStream.ToArray();
                     }
                 }
 
+                // Save new student entity
                 try
                 {
                     _db.Students.Add(Student);

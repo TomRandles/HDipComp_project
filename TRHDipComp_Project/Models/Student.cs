@@ -138,33 +138,6 @@ namespace TRHDipComp_Project.Models
             return studentID;
         }
 
-        public void ReadStudentImage(string file)
-        {
-            int numBytesToRead = 0;
-            // using (FileStream fileStream = new MyFileStream(file, FileMode.Open))
-
-            using (FileStream fileStream = System.IO.File.OpenRead(file))
-            {
-                int numBytesRead = 0;
-                numBytesToRead = (int)fileStream.Length;
-                StudentImage = new byte[numBytesToRead];
-
-                // Copy bytestream to byte array propery in Student class
-                while (numBytesToRead > 0)
-                {
-                    // Read may return anything from 0 to numBytesToRead.
-                    int n = fileStream.Read(StudentImage, numBytesRead, numBytesToRead);
-
-                    // Break when the end of the file is reached.
-                    if (n == 0)
-                        break;
-
-                    numBytesRead += n;
-                    numBytesToRead -= n;
-                }
-            }
-        }
-
         // Override ToString to provide the student name as a single string
         public override string ToString()
         {
