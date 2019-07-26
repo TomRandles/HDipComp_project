@@ -10,7 +10,14 @@ namespace TRHDipComp_Project.Pages
     {
         private readonly IConfiguration _configuration;
 
-        public string Message { get; set; } = "";
+        [TempData]
+        public string ErrorMessage { get; set; } = "";
+
+        [BindProperty]
+        public string Message { get; set; }
+
+        [BindProperty]
+        public string CookieMessage { get; set; }
 
         [BindProperty]
         public string OpenWeatherMapAPIKey { get; private set; }
@@ -35,7 +42,7 @@ namespace TRHDipComp_Project.Pages
             _configuration = configuration;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             // Cookies code
             string currentDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
@@ -43,7 +50,7 @@ namespace TRHDipComp_Project.Pages
 
             if (Request.Cookies["Student_Results_Management_Project"] != null)
             {
-                Message = "Welcome back! " + Request.Cookies["Student_Results_Management_Project"];
+                CookieMessage = "Welcome back! " + Request.Cookies["Student_Results_Management_Project"];
                 Response.Cookies.Append("Student_Results_Management_Project",
                                         "Your last visit was " + currentDate,
                                         options);
@@ -54,7 +61,7 @@ namespace TRHDipComp_Project.Pages
                                         " Your last visit was " + currentDate,
                                         options);
 
-                Message = "Welcome! ";
+                CookieMessage = "Welcome! ";
             }
 
             OpenWeatherMapAPIKey = _configuration["AppSettings:OpenWeatherMapAPIKey"];
@@ -67,6 +74,19 @@ namespace TRHDipComp_Project.Pages
             // Get Google Maps co-ordinates as configured
             GoogleMapsLatitudeCoordinate = _configuration["AppSettings:GoogleMapsLatitudeCoordinate"];
             GoogleMapsLongitudeCoordinate = _configuration["AppSettings:GoogleMapsLongitudeCoordinate"];
+
+            string SENDGRID_API_KEY = _configuration["AppSettings:SENDGRID_API_KEY"];
+
+            if (!String.IsNullOrEmpty(SENDGRID_API_KEY))
+            {
+                Environment.SetEnvironmentVariable("SENDGRID_API_KEY", SENDGRID_API_KEY);
+            }
+            else
+            {
+                ErrorMessage = "SENDGRID_API_KEY is not configured in the application";
+                return RedirectToPage("MyErrorPage");
+            }
+            return Page();
         }
     }
 }

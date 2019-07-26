@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,13 +62,18 @@ namespace TRHDipComp_Project.Pages
             if (Upload != null)
             {
                 string file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
-                Student.ReadStudentImage(file);
+                if (!System.IO.File.Exists(file))
+                {
+                    // Generate an error message
+                    ErrorMessage = $"Error: file: {file} does not exist";
+                    Trace.TraceError(ErrorMessage);
+                    return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                }
             }
-
-            _db.Attach(Student).State = EntityState.Modified;
 
             try
             {
+                _db.Attach(Student).State = EntityState.Modified;
                 await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)

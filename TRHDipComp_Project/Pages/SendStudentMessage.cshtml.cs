@@ -9,6 +9,7 @@ using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using Twilio.Exceptions;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace TRHDipComp_Project.Pages
 {
@@ -23,9 +24,8 @@ namespace TRHDipComp_Project.Pages
         [BindProperty(SupportsGet = true)]
         public string ProgrammeID { get; set; } = "";
 
-        // Error message management property
         [TempData]
-        public string ErrorMessage { get; set; } = "";
+        public string MessageResults { get; set; }
 
         // Message manager object to handle both SMS and email functions 
         private MessageManager msgMgr;
@@ -131,6 +131,7 @@ namespace TRHDipComp_Project.Pages
             {
                 StudentsList = await _db.Students.AsNoTracking().ToListAsync();
 
+                int studentCounter = 1;
                 foreach (var studID in SelectedStudentIDsInProgramme)
                 {
                     var student = StudentsList.Where(s => s.StudentID == studID)
@@ -141,42 +142,56 @@ namespace TRHDipComp_Project.Pages
                     {
                         try
                         {
-                            msgMgr.SendSMSMessage(student.MobilePhoneNumber, 
+                            msgMgr.SendSMSMessage(student.MobilePhoneNumber,
                                 Message,
                                 myTwilioPhoneNumber
                                 );
+
+                            MessageResults += $"{studentCounter}. SMS to {student.ToString()},mobile: {student.MobilePhoneNumber}, " +
+                                              $"sent on {DateTime.Now.ToShortDateString()} at {DateTime.Now.ToShortTimeString()} was sent successfully." +
+                                              $" {Environment.NewLine}";
                         }
                         catch (TwilioException e)
-                        {
+                        { 
+                            MessageResults += $"{studentCounter}. SMS Error, student: {student.ToString()}, mobile number: {student.MobilePhoneNumber}. {Environment.NewLine}";
                             if (e.Message != null)
-                                ErrorMessage = e.Message;
+                                MessageResults += e.Message;
                             if ((e.InnerException != null) && (e.InnerException.Message != null))
-                                ErrorMessage += e.InnerException.Message;
-                            RedirectToPage("MyErrorPage", new { id = student.StudentID });
+                                MessageResults += e.InnerException.Message;
+                            MessageResults += Environment.NewLine;
+
                         }
                     }
                     if (SendEmailMessage)
                     {
                         try
                         {
+                            // No HTML content sent for now
+                            string htmlContent = "";
                             msgMgr.SendEmailMessage("randles.tom@gmail.com",
                                                     student.EmailAddress,
                                                     Subject,
                                                     Message,
-                                                    "").Wait();
+                                                    htmlContent).Wait();
+                            MessageResults += $"{studentCounter}. Email  to {student.ToString()} ,email : {student.EmailAddress}, " +
+                                              $"sent on {DateTime.Now.ToShortDateString()} at {DateTime.Now.ToShortTimeString()} was sent successfully." +
+                                              $"{Environment.NewLine}";
                         }
                         catch (Exception e)
                         {
+                            MessageResults += $"{studentCounter}. EMail Error, student: {student.ToString()}, email: {student.EmailAddress}, " +
+                                $"sent on {DateTime.Now.ToShortDateString()} at {DateTime.Now.ToShortTimeString()} {Environment.NewLine}";
                             if (e.Message != null)
-                                ErrorMessage = e.Message;
-                            if ((e.InnerException != null) && (e.InnerException.Message != null)) 
-                                ErrorMessage += e.InnerException.Message;
-
-                            RedirectToPage("MyErrorPage", new { id = student.StudentID });
+                                MessageResults += e.Message;
+                            if ((e.InnerException != null) && (e.InnerException.Message != null))
+                                MessageResults += e.InnerException.Message;
+                            MessageResults += Environment.NewLine;
                         }
                     }
+                    studentCounter++;
                 }
-                return RedirectToPage("Index");
+               
+                return RedirectToPage("SendStudentMessageResults");
             }
             else
             {

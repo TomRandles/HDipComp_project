@@ -43,8 +43,8 @@ namespace TRHDipComp_Project
             // services.AddDbContext<CollegeDbContext>(options => options.UseInMemoryDatabase("tempCollegeDB"));
 
             // Local DB option
-            // services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
-            //    Configuration.GetConnectionString("CollegeTestDBContext")));
+            //services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
+            //      Configuration.GetConnectionString("CollegeTestDBContext")));
 
             // Azure SQL Server service - HDipCompTRproject_DB
             services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
@@ -63,7 +63,8 @@ namespace TRHDipComp_Project
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                // Use custom MyErrorPage in production
+                app.UseExceptionHandler("/MyErrorPage");
                 app.UseHsts();
             }
 

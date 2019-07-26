@@ -127,8 +127,8 @@ namespace TRHDipComp_Project.Models
         [ForeignKey("Programme")]
         public string ProgrammeID { get; set; } = "";
 
-        public virtual ICollection<AssessmentResult> AssessmentResults { get; set; }   
-        
+        public virtual ICollection<AssessmentResult> AssessmentResults { get; set; }
+
         public string GetRandomID()
         {
             string studentID;
@@ -138,51 +138,35 @@ namespace TRHDipComp_Project.Models
             return studentID;
         }
 
-        public string ReadStudentImage (string file)
+        public void ReadStudentImage(string file)
         {
-
-            string returnMessage = "";
             int numBytesToRead = 0;
-            try
+            // using (FileStream fileStream = new MyFileStream(file, FileMode.Open))
+
+            using (FileStream fileStream = System.IO.File.OpenRead(file))
             {
-                if (System.IO.File.Exists(file))
+                int numBytesRead = 0;
+                numBytesToRead = (int)fileStream.Length;
+                StudentImage = new byte[numBytesToRead];
+
+                // Copy bytestream to byte array propery in Student class
+                while (numBytesToRead > 0)
                 {
-                    // using (FileStream fileStream = new MyFileStream(file, FileMode.Open))
-                    using (FileStream fileStream = System.IO.File.OpenRead(file))
-                    {
-                        int numBytesRead = 0;
-                        numBytesToRead = (int)fileStream.Length;
-                        StudentImage = new byte[numBytesToRead];
+                    // Read may return anything from 0 to numBytesToRead.
+                    int n = fileStream.Read(StudentImage, numBytesRead, numBytesToRead);
 
-                        // Copy bytestream to byte array propery in Student class
-                        while (numBytesToRead > 0)
-                        {
-                            // Read may return anything from 0 to numBytesToRead.
-                            int n = fileStream.Read(StudentImage, numBytesRead, numBytesToRead);
+                    // Break when the end of the file is reached.
+                    if (n == 0)
+                        break;
 
-                            // Break when the end of the file is reached.
-                            if (n == 0)
-                                break;
-
-                            numBytesRead += n;
-                            numBytesToRead -= n;
-                        }
-                    }
-                } 
+                    numBytesRead += n;
+                    numBytesToRead -= n;
+                }
             }
-            catch (IOException e)
-            {
-                returnMessage = e.Message;
-            }
-            catch (Exception e)
-            {
-                returnMessage = e.Message;
-            }
-            return returnMessage;
         }
 
         // Override ToString to provide the student name as a single string
-        public override string ToString ()
+        public override string ToString()
         {
             return $"{FirstName} {SurName}";
         }

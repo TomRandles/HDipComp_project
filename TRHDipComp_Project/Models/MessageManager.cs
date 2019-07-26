@@ -44,16 +44,28 @@ namespace TRHDipComp_Project.Models
                                          string plainTextContent,
                                          string htmlContent)
         {
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
+            
+            if (String.IsNullOrEmpty(apiKey))
+            {
+                throw new Exception("Error, cannot send email. SENDGRID_API_KEY environment variable is not set.");
+            }
             var client = new SendGridClient(apiKey);
 
             var from = new EmailAddress(sourceEmailAddress, sourceEmailAddress);
             var to = new EmailAddress(targetEmailAddress, targetEmailAddress);
 
-            htmlContent = "<p>HTML Content</p>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            // As a workaround to a SendGrid trial account email issue, I've put the email body content in the html tag                                    
+            htmlContent = $"<p>{plainTextContent}</p>";
+
+            var msg = MailHelper.CreateSingleEmail(from, 
+                                                   to, 
+                                                   subject, 
+                                                   plainTextContent, 
+                                                   htmlContent);
             
-            var response = await client.SendEmailAsync(msg);
+            Response response = await client.SendEmailAsync(msg);
+            
         }
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TRHDipComp_Project.Models;
+using System.Diagnostics;
 
 namespace TRHDipComp_Project.Pages
 {
@@ -40,7 +40,7 @@ namespace TRHDipComp_Project.Pages
             // GetRandomID can only be called in the Registration process; 
             // did not belong in the Student constructor
             Student.StudentID = Student.GetRandomID();
-        }      
+        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -58,7 +58,36 @@ namespace TRHDipComp_Project.Pages
                 if (Upload != null)
                 {
                     string file = Path.Combine(_environment.ContentRootPath, "uploads", Upload.FileName);
-                    Student.ReadStudentImage(file);
+                    if (!System.IO.File.Exists(file))
+                    {
+                        // Generate an error message
+                        ErrorMessage = $"Error: file: {file} does not exist";
+                        Trace.TraceError(ErrorMessage);
+                        return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                    }
+
+                    try
+                    {
+                        Student.ReadStudentImage(file);
+                    }
+                    catch (IOException e)
+                    {
+                        ErrorMessage = "File IO error: ";
+                        if (e.Message != null)
+                            ErrorMessage += e.Message;
+                        if (e.InnerException.Message != null)
+                            ErrorMessage += e.InnerException.Message;
+                        return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorMessage = "General error: ";
+                        if (e.Message != null)
+                            ErrorMessage += e.Message;
+                        if (e.InnerException.Message != null)
+                            ErrorMessage += e.InnerException.Message;
+                        return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                    }
                 }
 
                 try

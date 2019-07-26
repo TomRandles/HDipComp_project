@@ -15,9 +15,7 @@ namespace TRHDipComp_Project.Pages
 
         private readonly CollegeDbContext _db;
 
-        private string modID = "";
-
-        public string Message { get; set; } = "";
+        private string moduleID = "";
 
         [BindProperty]
         public IList<Assessment> AssessmentList { get; private set; }
@@ -36,25 +34,18 @@ namespace TRHDipComp_Project.Pages
 
             if (RouteData.Values["id"] != null)
             {
-                modID = RouteData.Values["id"].ToString();
+                moduleID = RouteData.Values["id"].ToString();
             }
 
-            // @*Get assessments for this module return Page();return Page();return Page();
+            // Get assessments for this module 
             if (AssessmentList.Count() != 0)
             {
-                var assessmentsForThisModule = AssessmentList.Where(
-                                               a => a.ModuleID == modID)
-                                                     .Select(a => a);
-                
-                foreach (var assess in assessmentsForThisModule)
-                {
-                    SelectedAssessmentList.Add(assess);
-                }
+                SelectedAssessmentList = AssessmentList.Where(a => a.ModuleID == moduleID)
+                                                       .Select(a => a)
+                                                       .ToList();
             }
 
-            
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(SelectedAssessmentList);
-            // return new JsonResult() { Data = json, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             return new JsonResult(json);
         }
     }

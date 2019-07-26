@@ -15,15 +15,10 @@
 </div>
 <br />
 
-
-
-@if (RouteData.Values["id"] != null)
+@if (!String.IsNullOrEmpty(RouteData.Values["id"].ToString()))
 {
     <h4> Error message for entity @RouteData.Values["id"]</h4>
 }
-else
-{
-    <h2>MyErrorPage, no entity ID routed</h2>
-}
+
 <br />
 <h4>@Model.ErrorMessage</h4>
