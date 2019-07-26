@@ -55,7 +55,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db update concurrency error: ";
+                ErrorMessage = "UpdateAssessmentDetails: db update concurrency error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -64,7 +64,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db update error: ";
+                ErrorMessage = "UpdateAssessmentDetails: db update error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -73,7 +73,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (Exception e )
             {
-                ErrorMessage = "General error: ";
+                ErrorMessage = "UpdateAssessmentDetails: general error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)

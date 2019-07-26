@@ -76,7 +76,7 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db Update Concurrency error: ";
+                    ErrorMessage = "Register student: db update concurrency error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
@@ -85,16 +85,25 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db Update error: ";
+                    ErrorMessage = "Register student: db update error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
                     return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
                 }
+                catch (InvalidOperationException e)
+                {
+                    ErrorMessage = "RegisterStudent: invalid operation: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if ((e.InnerException != null) && ((e.InnerException.Message != null)))
+                        ErrorMessage += e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                }
                 catch (Exception e)
                 {
-                    ErrorMessage = "General error: ";
+                    ErrorMessage = "Register student: general error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)

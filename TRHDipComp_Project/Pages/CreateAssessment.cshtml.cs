@@ -39,8 +39,7 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                // Message += " ModelState is Valid";
-
+                // ModelState is Valid
                 try
                 {
                     // Save new Assessment
@@ -49,7 +48,7 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db update concurrency error: ";
+                    ErrorMessage = "CreateAssessment: db update concurrency error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
@@ -59,7 +58,7 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db update error: ";            
+                    ErrorMessage = "CreateAssessment: db update error: ";            
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
@@ -69,7 +68,7 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (Exception e)
                 {
-                    ErrorMessage = "General error: ";
+                    ErrorMessage = "CreateAssessment: general error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
@@ -82,7 +81,7 @@ namespace TRHDipComp_Project.Pages
             }
             else
             {
-                // Message += " ModelState is InValid " + ModelState.ToString();
+                // ModelState is InValid
                 return Page();
             }
         }

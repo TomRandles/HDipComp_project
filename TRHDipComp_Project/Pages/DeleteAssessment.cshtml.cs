@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,7 +9,7 @@ namespace TRHDipComp_Project.Pages
 {
     public class DeleteAssessmentModel : PageModel
     {
-        private CollegeDbContext _db;
+        private readonly CollegeDbContext _db;
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -51,7 +49,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db Update Concurrency error: ";
+                ErrorMessage = "DeleteAssessment: db update concurrency error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -60,7 +58,16 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db update error: ";
+                ErrorMessage = "DeleteAssessment: db update error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = assessID });
+            }
+            catch (InvalidOperationException e)
+            {
+                ErrorMessage = "DeleteAssessment: db update error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -69,7 +76,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (Exception e)
             { 
-                ErrorMessage = "General error: ";
+                ErrorMessage = "DeleteAssessment: general error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)

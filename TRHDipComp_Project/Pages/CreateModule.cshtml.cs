@@ -40,7 +40,7 @@ namespace TRHDipComp_Project.Pages
         {
             if (ModelState.IsValid)
             {
-                // Message += " ModelState is Valid";
+                // ModelState is Valid
 
                 // Save new programmeModule object in DB
                 ProgrammeModule.ModuleID = Module.ModuleID;
@@ -56,7 +56,7 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    ErrorMessage = "Db update concurrency error: ";
+                    ErrorMessage = "CreateModule: db update concurrency error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
@@ -65,7 +65,16 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (DbUpdateException e)
                 {
-                    ErrorMessage = "Db update error: ";
+                    ErrorMessage = "CreateModule: db update error: ";
+                    if (e.Message != null)
+                        ErrorMessage += e.Message;
+                    if (e.InnerException.Message != null)
+                        ErrorMessage += e.InnerException.Message;
+                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                }
+                catch (InvalidOperationException e)
+                {
+                    ErrorMessage = "CreateModule: invalid operation error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
@@ -74,7 +83,7 @@ namespace TRHDipComp_Project.Pages
                 }
                 catch (Exception e)
                 {
-                    ErrorMessage = "General error: ";
+                    ErrorMessage = "CreateModule: General error: ";
                     if (e.Message != null)
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)

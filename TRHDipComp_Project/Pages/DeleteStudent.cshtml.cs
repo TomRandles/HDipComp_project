@@ -11,7 +11,7 @@ namespace TRHDipComp_Project.Pages
 {
     public class DeleteStudentModel : PageModel
     {
-        private CollegeDbContext _db;
+        private readonly CollegeDbContext _db;
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -49,7 +49,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db Update Concurrency error: ";
+                ErrorMessage = "DeleteStudent: db update concurrency error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -58,16 +58,26 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db update error: ";
+                ErrorMessage = "DeleteStudent: db update error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
             }
+            catch (InvalidOperationException e)
+            {
+                ErrorMessage = "DeleteStudent: invalid operation error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+            }
+
             catch (Exception e)
             {
-                ErrorMessage = "General error: ";
+                ErrorMessage = "DeleteStudent: general error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)

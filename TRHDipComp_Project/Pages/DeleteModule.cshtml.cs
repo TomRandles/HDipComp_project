@@ -9,7 +9,7 @@ namespace TRHDipComp_Project.Pages
 {
     public class DeleteModuleModel : PageModel
     {
-        private CollegeDbContext _db;
+        private readonly CollegeDbContext _db;
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -47,7 +47,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db Update Concurrency error: ";
+                ErrorMessage = "DeleteModule: db update concurrency error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -56,7 +56,16 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db update error: ";
+                ErrorMessage = "DeleteModule: db update error: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if (e.InnerException.Message != null)
+                    ErrorMessage += e.InnerException.Message;
+                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+            }
+            catch (InvalidOperationException e)
+            {
+                ErrorMessage = "DeleteModule: invalid operation error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -65,7 +74,7 @@ namespace TRHDipComp_Project.Pages
             }
             catch (Exception e)
             {
-                ErrorMessage = "General error: ";
+                ErrorMessage = "DeleteModule: general error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)

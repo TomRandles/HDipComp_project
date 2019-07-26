@@ -28,7 +28,7 @@ namespace TRHDipComp_Project.Pages
         public string MessageResults { get; set; }
 
         // Message manager object to handle both SMS and email functions 
-        private MessageManager msgMgr;
+        private readonly MessageManager msgMgr;
 
         // Filtered programmmes
         [BindProperty]
@@ -68,9 +68,9 @@ namespace TRHDipComp_Project.Pages
         [Display(Name = "Send Email message")]
         public bool SendEmailMessage { get; set; } = false;
 
-        private string accountSid;
-        private string authToken; 
-        private string myTwilioPhoneNumber;
+        private readonly string accountSid;
+        private readonly string authToken; 
+        private readonly string myTwilioPhoneNumber;
 
         public SendStudentMessageModel(CollegeDbContext db, IConfiguration configuration)
         {

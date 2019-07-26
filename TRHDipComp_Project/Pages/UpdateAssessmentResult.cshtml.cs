@@ -84,16 +84,14 @@ namespace TRHDipComp_Project.Pages
                 return Page();
             }
 
-            // Save modified programmeAssessmentResult object in DB
-            _db.Attach(AssessmentResult).State = EntityState.Modified;
-
             try
             {
-                await _db.SaveChangesAsync();
+                // Save modified programmeAssessmentResult object in DB
+                _db.Attach(AssessmentResult).State = EntityState.Modified; await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                ErrorMessage = "Db update concurrency error: ";
+                ErrorMessage = "UpdateAssessmentResult: db update concurrency error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
@@ -102,16 +100,26 @@ namespace TRHDipComp_Project.Pages
             }
             catch (DbUpdateException e)
             {
-                ErrorMessage = "Db update error: ";
+                ErrorMessage = "UpdateAssessmentResult: db update error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
                 return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
             }
+            catch (InvalidOperationException e)
+            {
+                ErrorMessage = "UpdateStudentDetails: invalid operation: ";
+                if (e.Message != null)
+                    ErrorMessage += e.Message;
+                if ((e.InnerException != null) && ((e.InnerException.Message != null)))
+                    ErrorMessage += e.InnerException.Message;
+
+                return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+            }
             catch (Exception e)
             {
-                ErrorMessage = "General error: ";
+                ErrorMessage = "UpdateAssessmentResult: general error: ";
                 if (e.Message != null)
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
