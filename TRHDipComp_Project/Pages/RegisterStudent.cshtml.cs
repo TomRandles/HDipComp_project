@@ -10,13 +10,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TRHDipComp_Project.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace TRHDipComp_Project.Pages
 {
     public class RegisterStudentModel : PageModel
     {
         private readonly CollegeDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
+        private IdentityResult result;
+        
         [TempData]
         public string ErrorMessage { get; set; } = "";
 
@@ -30,9 +35,10 @@ namespace TRHDipComp_Project.Pages
         [BindProperty]
         public IList<Programme> ProgrammeList { get; private set; }
 
-        public RegisterStudentModel(CollegeDbContext db)
+        public RegisterStudentModel(CollegeDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
 
             // GetRandomID can only be called in the Registration process; 
             // did not belong in the Student constructor
@@ -68,7 +74,30 @@ namespace TRHDipComp_Project.Pages
                     }
                 }
 
-                // Save new student entity
+                // Create and save student authentication
+                IdentityUser user = new IdentityUser
+                {
+                    Email = Student.EmailAddress,
+                    UserName = $"{Student.FirstName}{Student.SurName}",
+                    SecurityStamp = Guid.NewGuid().ToString()
+                };
+
+                //  Create a user
+                result = await _userManager.CreateAsync(user, Student.Password);
+                if (result.Succeeded)
+                {
+                    // Add new student to the Student role
+                    await _userManager.AddToRoleAsync(user, "Student");
+                }
+                else
+                {
+                    ErrorMessage = $"Register student: failed to create authentication for {Student.ToString()} " +
+                                   $"{result.Errors.ToString()}";
+                      
+                    return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                }
+
+            // Save new student entity
                 try
                 {
                     _db.Students.Add(Student);

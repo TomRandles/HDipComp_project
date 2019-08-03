@@ -6,7 +6,7 @@ var request;
 var gettingData = false;
 var myLatlng;
 var mapOptions;
-var openWeatherMapKey = "1dfc616b32f88edc2de2243c4631d723";
+var openWeatherMapKey;
 
 function initMap() {
 
@@ -17,7 +17,7 @@ function initMap() {
     var latitude = coordinates.latitude;
     var longitude = coordinates.longitude;
     console.log("Coordinates: " + latitude + " " + longitude);
-    /* myLatlng = new google.maps.LatLng(53.27, -9.05); */
+    
     myLatlng = new google.maps.LatLng(latitude, longitude);
     mapOptions = {
         zoom: 10,
@@ -167,7 +167,6 @@ var proccessResults = function () {
         return;
     }
 
-    console.log("proccessResults: " + results);
     // Check if the resultant object is null; can happen if the response string is empty.
     console.log("processResults: check for null object and empty typeof undefined  string");
 

@@ -36,6 +36,7 @@ namespace TRHDipComp_Project.Models
                 body: SMSMessage,
                 to: new Twilio.Types.PhoneNumber(targetPhoneNumber)
             );
+            
         }
 
         public async Task SendEmailMessage(string sourceEmailAddress,

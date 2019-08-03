@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -29,7 +31,7 @@ namespace TRHDipComp_Project.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            // Configure ProgrammeModule composite key
+            // Configure ProgrammeModule composite primary key
             modelBuilder.Entity<ProgrammeModule>().HasKey(t => new { t.ProgrammeID, t.ModuleID });
 
             // Extend models to include a LastUpdated date shadow property
@@ -45,12 +47,14 @@ namespace TRHDipComp_Project.Models
                 .Property<DateTime>("LastUpdated");
             modelBuilder.Entity<AssessmentResult>()
                 .Property<DateTime>("LastUpdated");
+
+
         }
 
         // Set values via the ChangeTracker API through its Entries() method. 
         // Update "LastUpdated" property value for all entities by overriding the SaveChangesAsync method
 
-        public  override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             ChangeTracker.DetectChanges();
 

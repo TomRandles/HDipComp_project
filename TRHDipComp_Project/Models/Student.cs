@@ -28,6 +28,16 @@ namespace TRHDipComp_Project.Models
         [RegularExpression(@"[\w\'\-\s\,\.]{2,20}")]
         public string SurName { get; set; } = "";
 
+
+        [Required(ErrorMessage = ("Password name required"))]
+        [Display(Name = "Password:")]
+        [StringLength(20, ErrorMessage = "Min 8, max 20 characters")]
+        [RegularExpression(@"[\w\d\$\&\-£]{8,20}")]
+        public string Password { get; set; } = "";
+
+
+
+
         [Required(ErrorMessage = ("Address 1 is required"))]
         [Display(Name = "Address 1:")]
         [StringLength(30, ErrorMessage = "Max 30 characters")]

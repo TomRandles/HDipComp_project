@@ -71,6 +71,7 @@ namespace TRHDipComp_Project.Pages
         private readonly string accountSid;
         private readonly string authToken; 
         private readonly string myTwilioPhoneNumber;
+        private readonly string mySourceEmailAddress;
 
         public SendStudentMessageModel(CollegeDbContext db, IConfiguration configuration)
         {
@@ -80,6 +81,7 @@ namespace TRHDipComp_Project.Pages
             accountSid = _configuration["AppSettings:TwilioAccountSID"];
             authToken = _configuration["AppSettings:TwilioAuthToken"];
             myTwilioPhoneNumber = _configuration["AppSettings:MyTwilioPhoneNumber"];
+            mySourceEmailAddress = _configuration["AppSettings:SENDGRID_Default_Source_Email_Address"];
 
             msgMgr = new MessageManager(accountSid,
                                         authToken);
@@ -159,7 +161,6 @@ namespace TRHDipComp_Project.Pages
                             if ((e.InnerException != null) && (e.InnerException.Message != null))
                                 MessageResults += e.InnerException.Message;
                             MessageResults += Environment.NewLine;
-
                         }
                     }
                     if (SendEmailMessage)
@@ -168,7 +169,7 @@ namespace TRHDipComp_Project.Pages
                         {
                             // No HTML content sent for now
                             string htmlContent = "";
-                            msgMgr.SendEmailMessage("randles.tom@gmail.com",
+                            msgMgr.SendEmailMessage(mySourceEmailAddress,
                                                     student.EmailAddress,
                                                     Subject,
                                                     Message,
