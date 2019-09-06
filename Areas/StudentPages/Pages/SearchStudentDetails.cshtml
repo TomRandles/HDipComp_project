@@ -1,0 +1,84 @@
+﻿@page
+@model TRHDipComp_Project.Areas.StudentPages.Pages.SearchStudentDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Search student details";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Search Student Details</h2>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+<div class="container">
+    <div class="col-md-4"></div>
+    <form>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <label><strong>Student surname (whole or part)</strong></label>
+                <input type="text" asp-for="StudentSearchString">
+                <input type="submit" value="Search" />
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br />
+        <br />
+    </form>
+    <div class="col-md-4"></div>
+</div>
+<br />
+<br />
+
+<div class="container">
+    <br />
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+            <thead>
+                <tr>
+                    <th>Student name</th>
+                    <th>Image (optional)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if ((Model.StudentsFound != null) && (Model.StudentsFound.Count() != 0))
+                    {
+                        foreach (var stud in Model.StudentsFound)
+                        {
+                            <tr>
+                                <td><a asp-page="/ShowStudentDetails" asp-area="StudentPages" asp-route-id="@stud.StudentID">@stud.ToString()</a></td>
+                                <td>
+                                    @{
+                                        if (@stud.StudentImage != null)
+                                        {
+                                            var base64 = Convert.ToBase64String(@stud.StudentImage);
+                                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                                            <img src=@imgSrc style="max-width:50px; max-height:50px;" />
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<br />
+
+<a asp-page="/Index">Home</a>

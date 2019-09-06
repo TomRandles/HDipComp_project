@@ -1,0 +1,279 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.StudentPages.Pages.UpdateStudentDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "UpdateStudentDetails";
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Update Student Details</h2>
+        <h4 class="text-center">@Model.Student.ToString()</h4>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
+
+<div class="container">
+    <form method="post" class="form-horizontal" enctype="multipart/form-data">
+
+        <div class="row">
+            <br />
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Upload class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="file" asp-for=Upload class="form-control" readonly>
+                    <span asp-validation-for=Upload></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <br />
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.StudentID class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.StudentID class="form-control" readonly>
+                    <span asp-validation-for=Student.StudentID></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.FirstName class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.FirstName class="form-control">
+                    <span asp-validation-for=Student.FirstName></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.SurName class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.SurName class="form-control">
+                    <span asp-validation-for=Student.SurName></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.AddressOne class="control-label font-weight-bold"></label>
+
+                <input type="text" asp-for=Student.AddressOne class="form-control">
+                <span asp-validation-for=Student.AddressOne></span>
+
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.AddressTwo class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.AddressTwo class="form-control">
+                    <span asp-validation-for=Student.AddressTwo></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+            <br />
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.Town class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.Town class="form-control">
+                    <span asp-validation-for=Student.Town></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.County class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.County class="form-control">
+                    <span asp-validation-for=Student.County></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.MobilePhoneNumber class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.MobilePhoneNumber class="form-control">
+                    <span asp-validation-for=Student.MobilePhoneNumber></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.EmergencyMobilePhoneNumber class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.EmergencyMobilePhoneNumber class="form-control">
+                    <span asp-validation-for=Student.EmergencyMobilePhoneNumber></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.EmailAddress class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.EmailAddress class="form-control">
+                    <span asp-validation-for=Student.EmailAddress></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.DateOfBirth class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="date" asp-for=Student.DateOfBirth class="form-control">
+                    <span asp-validation-for=Student.DateOfBirth></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.StudentPPS class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.StudentPPS class="form-control">
+                    <span asp-validation-for=Student.StudentPPS></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Student.ProgrammeFeePaid class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Student.ProgrammeFeePaid class="form-control">
+                    <span asp-validation-for=Student.ProgrammeFeePaid></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label asp-for=Student.GenderType class="control-label font-weight-bold pull-right"></label>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="radio">
+                        <label asp-for=Student.GenderType class="control-label font-weight-bold">
+                            <input type="radio" asp-for=Student.GenderType value="Male" />
+                            <span asp-validation-for=Student.GenderType></span>Male
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label asp-for=Student.GenderType class="control-label font-weight-bold">
+                            <input type="radio" asp-for=Student.GenderType id="Female" value="Female" />
+                            <span asp-validation-for=Student.GenderType></span>Female
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label asp-for=Student.FullOrPartTime class="control-label font-weight-bold pull-right"></label>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="radio">
+                        <label asp-for=Student.FullOrPartTime class="control-label font-weight-bold">
+                            <input type="radio" asp-for=Student.FullOrPartTime value="Fulltime" />
+                            <span asp-validation-for=Student.FullOrPartTime></span>Full time
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label asp-for=Student.FullOrPartTime class="control-label font-weight-bold">
+                            <input type="radio" asp-for=Student.FullOrPartTime value="Parttime" />
+                            <span asp-validation-for=Student.FullOrPartTime></span>Part time
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            @* Dropdown for existing programmes that the student may select.*@
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label class="control-label">Programme options:</label>
+                <div>
+                    <select asp-for=Student.ProgrammeID>
+                        @{
+                            if (@Model.ProgrammeList != null)
+                            {
+                                foreach (var prog in Model.ProgrammeList)
+                                {
+                                    <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <br />
+    </form>
+</div>

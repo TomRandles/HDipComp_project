@@ -1,0 +1,75 @@
+﻿@page  "{id}"
+@model TRHDipComp_Project.Areas.TeacherPages.Pages.ShowTeacherDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Show Teacher Details";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Show Teacher Details</h2>
+            <h4 class="text-center">@Model.Teacher.ToString()</h4>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @{
+                    if (Model.Teacher.TeacherImage != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Teacher.TeacherImage);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                        <img src=@imgSrc style="max-width:100px; max-height:100px;" />
+                    }
+                }
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="container">
+    <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+        <thead>
+            <tr>
+                <th>Teacher ID</th>
+                <th>Teacher name</th>
+                <th>Address</th>
+                <th>Mobile phone</th>
+                <th>Email</th>
+                <th>PPS</th>
+                <th>Gender</th>
+                <th>Fulltime/parttime</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Teacher.TeacherID</td>
+                <td>@Model.Teacher.ToString()</td>
+                <td>@Model.Teacher.AddressOne <br /> @Model.Teacher.AddressTwo <br /> @Model.Teacher.Town <br /> @Model.Teacher.County </td>
+                <td>@Model.Teacher.MobilePhoneNumber</td>
+                <td>@Model.Teacher.EmailAddress</td>
+                <td>@Model.Teacher.TeacherPPS</td>
+                <td>@Model.Teacher.GenderType</td>
+                <td>@Model.Teacher.FullOrPartTime</td>
+
+                <td><a asp-page="/UpdateTeacherDetails" asp-area="TeacherPages" asp-route-id="@Model.Teacher.TeacherID">Update Teacher</a></td>
+                <td><a asp-page="/DeleteTeacher" asp-area="TeacherPages" asp-route-id="@Model.Teacher.TeacherID">Delete Teacher</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br />
+
+<a asp-page="/Index">Home</a>

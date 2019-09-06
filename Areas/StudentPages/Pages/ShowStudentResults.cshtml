@@ -1,0 +1,85 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.StudentPages.Pages.ShowStudentResultsModel
+@{
+    ViewData["Title"] = "ShowStudentResults";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Show Student Results</h2>
+            <br />
+            <h4 class="text-center">@Model.StudentName</h4>
+            <h4 class="text-center">@Model.ProgrammeName</h4>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+@{
+    if (@Model.Student.StudentImage != null)
+    {
+        var base64 = Convert.ToBase64String(@Model.Student.StudentImage);
+        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+        <img src=@imgSrc style="max-width:200px; max-height:200px;" />
+    }
+}
+<br />
+
+@*Show student name and programme of study
+
+    Get list of Assessment results for this student
+
+*@
+<div class="container">
+    <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Assessment</th>
+                <th>Assessment date</th>
+                <th>Student feedback</th>
+                <th>Mark</th>
+                <th>Maximum mark</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                foreach (var assessmentResult in @Model.StudentAssessmentResultsList)
+                {
+                    // Get the module name
+                    var moduleName = @Model.ModuleList.Where(s => s.ModuleID == assessmentResult.ModuleID)
+                                                      .Select(s => s)
+                                                      .FirstOrDefault().ModuleName;
+
+
+                    // Only one assessment matches the current assessment result
+                    var assessment = @Model.AssessmentsList.Where(a => a.AssessmentID == assessmentResult.AssessmentID)
+                                                           .Select(m => m)
+                                                           .FirstOrDefault();
+
+                    string assessmentName = assessment.AssessmentName;
+
+                    int totalMark = assessment.AssessmentTotalMark;
+
+                    <tr>
+                        <td>@moduleName</td>
+                        <td>@assessmentName</td>
+                        <td>@assessmentResult.AssessmentDate.ToShortDateString()</td>
+                        <td>@assessmentResult.AssessmentResultDescription</td>
+                        <td align="center">@assessmentResult.AssessmentResultMark</td>
+                        <td align="center">@totalMark</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<br />

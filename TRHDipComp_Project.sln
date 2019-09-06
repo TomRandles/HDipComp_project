@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29025.244
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRHDipComp_Project", "TRHDipComp_Project\TRHDipComp_Project.csproj", "{D607A0FC-0BA3-477E-8491-D5B54F628FBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TRHDipComp_Project", "TRHDipComp_Project.csproj", "{415B5FD6-EF2E-43F1-B83B-92E5FAF068ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D607A0FC-0BA3-477E-8491-D5B54F628FBC}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{D607A0FC-0BA3-477E-8491-D5B54F628FBC}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{D607A0FC-0BA3-477E-8491-D5B54F628FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D607A0FC-0BA3-477E-8491-D5B54F628FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{415B5FD6-EF2E-43F1-B83B-92E5FAF068ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{415B5FD6-EF2E-43F1-B83B-92E5FAF068ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{415B5FD6-EF2E-43F1-B83B-92E5FAF068ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{415B5FD6-EF2E-43F1-B83B-92E5FAF068ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DF866723-C4B7-4CD4-A65D-597EA5CF556B}
+		SolutionGuid = {68158EBD-9763-4521-8C7C-18E9E81216EB}
 	EndGlobalSection
 EndGlobal

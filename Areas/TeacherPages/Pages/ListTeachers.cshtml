@@ -1,0 +1,59 @@
+﻿@page
+@model TRHDipComp_Project.Areas.TeacherPages.Pages.ListTeachersModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "List Teachers";
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="text-center">Current Teachers at ITG</h2>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<br />
+
+<div class="container">
+    <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+        <thead>
+            <tr>
+                <th>Teacher ID</th>
+                <th>Teacher name</th>
+                <th>Teacher details</th>
+                <th>Teacher image</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                foreach (var teacher in Model.TeacherList)
+                {
+                        <tr>
+                            <td>@teacher.TeacherID </td>
+
+                            <td>@teacher.FirstName @teacher.SurName </td>
+                            <td><a asp-page="/ShowTeacherDetails"  asp-area="TeacherPages" asp-route-id="@teacher.TeacherID">@teacher.ToString()</a></td>
+                            
+                            <td>
+                                @{
+                                    if (teacher.TeacherImage != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(teacher.TeacherImage);
+                                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                                        <img src=@imgSrc style="max-width:50px; max-height:50px;" />
+                                    }
+                                }
+
+                            </td>
+                        </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-page="/Index">Home</a>

@@ -1,0 +1,57 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.ProgrammePages.Pages.ShowProgrammeDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Show Programme Details";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2 class="text-center">Show Programme Details</h2>
+            <h4 class="text-center">@Model.Programme.ProgrammeName</h4>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+<br />
+
+@{
+    <div class="container">
+        <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+            <thead>
+                <tr>
+                    <th>Programme ID</th>
+                    <th>Programme Name</th>
+                    <th>Programme Description</th>
+                    <th>Programme QQI Level</th>
+                    <th>Programme Credits</th>
+                    <th>Programme Cost</th>
+                    <th>Update Programme</th>
+                    <th>Delete Programme</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.Programme.ProgrammeID</td>
+                    <td>@Model.Programme.ProgrammeName</td>
+                    <td>@Model.Programme.ProgrammeDescription</td>
+                    <td>@Model.Programme.ProgrammeQQILevel</td>
+                    <td>@Model.Programme.ProgrammeCredits</td>
+                    <td>@Model.Programme.ProgrammeCost</td>
+                    <td><a asp-page="/UpdateProgrammeDetails" asp-area="ProgrammePages" asp-route-id="@Model.Programme.ProgrammeID">Edit Programme</a></td>
+                    <td><a asp-page="/DeleteProgramme" asp-area="ProgrammePages" asp-route-id="@Model.Programme.ProgrammeID">Delete Programme</a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+<br />
+
+<a asp-page="/Index">Home</a>

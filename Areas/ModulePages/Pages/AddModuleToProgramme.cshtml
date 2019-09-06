@@ -1,0 +1,117 @@
+﻿@page
+@model TRHDipComp_Project.Areas.ModulePages.Pages.AddModuleToProgrammeModel
+@{
+}
+
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Add Module To ProgrammeModel";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Add Module To Programme</h2>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+
+<div class="container">
+    <form method="post" class="form-horizontal">
+        <br />
+
+        @*Add module to an existing programme*@
+        @* Dropdown for existing programmes that the student may select.*@
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=ProgrammeModule.ProgrammeID class="control-label font-weight-bold">Programme options:</label>
+                <select class="form-control" asp-for=ProgrammeModule.ProgrammeID>
+
+                    @{
+                        if (Model.ProgrammeList != null)
+                        {
+                            foreach (var prog in Model.ProgrammeList)
+                            {
+                                <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+
+        @*Add module to an existing programme*@
+        @* Dropdown for existing programmes that the student may select.*@
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=ProgrammeModule.ModuleID class="control-label font-weight-bold">Module to add to programme:</label>
+                <select class="form-control" asp-for=ProgrammeModule.ModuleID>
+
+                    @{
+                        if (Model.ModuleList != null)
+                        {
+                            foreach (var mod in Model.ModuleList)
+                            {
+                                <option value=@mod.ModuleID>@mod.ModuleName</option>
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+
+        @*Add a teacher to teach this module in this programme*@
+        @* Dropdown for existing teachers that the Admin  may select.*@
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=ProgrammeModule.TeacherID class="control-label font-weight-bold">Teacher options:</label>
+                <select class="form-control" asp-for=ProgrammeModule.TeacherID>
+
+                    @{
+                        if ((Model.Teachers != null) && (Model.Teachers.Count != 0))
+                        {
+                            foreach (var teacher in Model.Teachers)
+                            {
+                                <option value=@teacher.TeacherID>@teacher.Title @teacher.FirstName @teacher.SurName</option>
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+    </form>
+</div>

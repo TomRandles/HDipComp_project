@@ -1,0 +1,73 @@
+﻿@page
+@model TRHDipComp_Project.Areas.ProgrammePages.Pages.SearchProgrammeDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Search Programmes";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2 class="text-center">Current Programmes</h2>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+<br />
+
+<div class="container">
+    <div class="col-md-4"></div>
+    <form>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <label>Programme (whole or part)</label>
+                <input type="text" asp-for="ProgrammeSearchString">
+                <input type="submit" value="Search" />
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br />
+        <br />
+    </form>
+    <div class="col-md-4"></div>
+</div>
+
+
+@{
+    if ((Model.ProgrammesFound != null) && (Model.ProgrammesFound.Count != 0))
+    {
+        <div class="container">
+            <br />
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+
+                <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+                    <thead>
+                        <tr>
+                            <th>Programme</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var prog in Model.ProgrammesFound)
+                            {
+                                <tr>
+                                    <td><a asp-page="/ShowProgrammeDetails" asp-area="ProgrammePages" asp-route-id="@prog.ProgrammeID">@prog.ProgrammeName</a></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    }
+}
+<br />
+<a asp-page="/Index">Home</a>

@@ -1,0 +1,119 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.AssessmentResultPages.Pages.UpdateAssessmentResultModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+ 
+@{
+    ViewData["Title"] = "UpdateAssessmentResult";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Update Assessment Result</h2>
+            <h4 class="text-center"><strong>Student name: </strong>@Model.StudentName</h4>
+            <h4 class="text-center"><strong>Programme: </strong>@Model.ProgrammeName</h4>
+            <br />
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+<div class="container">
+    <form method="post" class="form-horizontal">
+
+        <br />
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.StudentID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.StudentID name=AssessmentResult.StudentID class="form-control" readonly>
+                <span asp-validation-for=AssessmentResult.StudentID></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.AssessmentResultID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.AssessmentResultID class="form-control" readonly>
+                <span asp-validation-for=AssessmentResult.AssessmentResultID></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.ProgrammeID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.ProgrammeID name=AssessmentResult.ProgrammeID class="form-control" readonly>
+                <span asp-validation-for=AssessmentResult.ProgrammeID></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.AssessmentDate class="control-label font-weight-bold"></label>
+                <input type="date" asp-for=AssessmentResult.AssessmentDate name=AssessmentResult.AssessmentDate class="form-control" readonly>
+                <span asp-validation-for=AssessmentResult.AssessmentDate></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.ModuleID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.ModuleID class="form-control" readonly />
+                <span asp-validation-for=AssessmentResult.ModuleID></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.AssessmentID class="control-label font-weight-bold">Select module assessment</label>
+                <input type="text" asp-for=AssessmentResult.AssessmentID class="form-control" readonly />
+                <span asp-validation-for=AssessmentResult.AssessmentID></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-6">
+                <label asp-for=AssessmentResult.AssessmentResultDescription class="control-label font-weight-bold"></label>
+                <textarea type="text" asp-for=AssessmentResult.AssessmentResultDescription class="form-control" rows="2"></textarea>
+                <span asp-validation-for=AssessmentResult.AssessmentResultDescription></span>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-3">
+                <label asp-for=AssessmentResult.AssessmentResultMark class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
+                <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <br />
+    </form>
+</div>

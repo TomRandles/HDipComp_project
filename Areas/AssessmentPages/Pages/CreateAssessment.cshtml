@@ -1,0 +1,121 @@
+﻿@page
+@model TRHDipComp_Project.Areas.AssessmentPages.Pages.CreateAssessmentModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Create Assessment";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Create Assessment</h2>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+<div class="container">
+    <form method="post" class="form-horizontal">
+        <br />
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Assessment.AssessmentID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=Assessment.AssessmentID class="form-control">
+                <span asp-validation-for=Assessment.AssessmentID></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Assessment.AssessmentName class="control-label"></label>
+                <input type="text" asp-for=Assessment.AssessmentName class="form-control">
+                <span asp-validation-for=Assessment.AssessmentName></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Assessment.AssessmentDescription class="control-label font-weight-bold"></label>
+                <textarea type="text" asp-for=Assessment.AssessmentDescription class="form-control" rows="2"></textarea>
+                <span asp-validation-for=Assessment.AssessmentDescription></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Assessment.AssessmentTotalMark class="control-label font-weight-bold"></label>
+                <input type="number" asp-for=Assessment.AssessmentTotalMark class="form-control">
+                <span asp-validation-for=Assessment.AssessmentTotalMark></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-4"></div>
+            <div class="col-md-2">
+                <label asp-for=Assessment.AssessmentType class="control-label font-weight-bold pull-right"></label>
+            </div>
+            <div class="col-md-2">
+                <div class="radio">
+                    <label asp-for=Assessment.AssessmentType class="control-label font-weight-bold">
+                        <input type="radio" asp-for=Assessment.AssessmentType value="Project" />
+                        <span asp-validation-for=Assessment.AssessmentType></span>Project
+                    </label>
+                </div>
+                <div class="radio">
+                    <label asp-for=Assessment.AssessmentType class="control-label font-weight-bold">
+                        <input type="radio" asp-for=Assessment.AssessmentType value="Exam" />
+                        <span asp-validation-for=Assessment.AssessmentType></span>Exam
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        @*Add Assessment to an existing Module
+            Dropdown for existing modules that the Assessment may select.*@
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label class="control-label font-weight-bold">Module options:</label>
+                <select class="form-control" asp-for=Assessment.ModuleID>
+
+                    @{
+                        if (Model.ModuleListOptions != null)
+                        {
+                            foreach (var mod in Model.ModuleListOptions)
+                            {
+                                <option value=@mod.ModuleID>@mod.ModuleName</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+    </form>
+</div>

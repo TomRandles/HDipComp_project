@@ -1,0 +1,50 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.AssessmentPages.Pages.ShowAssessmentDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Show Assessment Details";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2 class="text-center">Show Assessment Details</h2>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+<br />
+
+@{
+    <div class="container">
+        <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+            <thead>
+                <tr>
+                    <th>Assessment ID</th>
+                    <th>Assessment Name</th>
+                    <th>Assessment Description</th>
+                    <th>Assessment Total Marks</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Assessment.AssessmentID</td>
+                    <td>@Model.Assessment.AssessmentName</td>
+                    <td>@Model.Assessment.AssessmentDescription</td>
+                    <td align="center">@Model.Assessment.AssessmentTotalMark</td>
+                    <td><a asp-page="/UpdateAssessmentDetails" asp-area="AssessmentPages" asp-route-id="@Model.Assessment.AssessmentID">Edit Assessment</a></td>
+                    <td><a asp-page="/DeleteAssessment" asp-area="AssessmentPages" asp-route-id="@Model.Assessment.AssessmentID">Delete Assessment</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<br />
+
+<a asp-page="/Index">Home</a>
+

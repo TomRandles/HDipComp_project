@@ -1,0 +1,122 @@
+﻿@page
+
+@model TRHDipComp_Project.Areas.ProgrammePages.Pages.ListProgrammeModulesModel
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "List Programme Modules";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="text-center">Programmes, Modules & Assessments</h2>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="container">
+    <div class="col-md-4"></div>
+    <form>
+        <br />
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <label><strong>Programme name:</strong></label>
+                <input type="text" asp-for="ProgrammeSearchString">
+                <input type="submit" value="Search" />
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br />
+    </form>
+    <div class="col-md-4"></div>
+</div>
+
+<br />
+
+
+@{
+
+    if ((Model.ProgrammesFound != null) && (Model.ProgrammesFound.Count) != 0)
+    {
+        <div class="container">
+            <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+                <thead>
+                    <tr>
+                        <th>Programme name</th>
+                        <th>Module name</th>
+                        <th>Assessment name</th>
+                        <th>Assessment maximum marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var prog in Model.ProgrammesFound)
+                        {
+                            if ((Model.ModulesInProgramme != null) && (Model.ModulesInProgramme.Count) != 0)
+                            {
+                                if (Model.ModulesInProgramme.ContainsValue(prog.ProgrammeID))
+                                {
+                                    var modsInCurrentProg = Model.ProgrammeModuleList.Where(s => s.ProgrammeID == prog.ProgrammeID)
+                                    .Select(s => s.ModuleID);
+                                    foreach (var modID in modsInCurrentProg)
+                                    {
+
+                                        var mods = Model.ModuleList.Where(s => s.ModuleID == @modID)
+                                        .Select(s => s);
+
+                                        foreach (var mod in mods)
+                                        {
+
+                                            if (Model.ModulesInProgramme.ContainsKey(prog.ProgrammeID + mod.ModuleID))
+                                            {
+                                                if (Model.AssessmentList.Count() != 0)
+                                                {
+                                                    var assessmentsForThisModule = Model.AssessmentList.Where(
+                                                    a => a.ModuleID == @mod.ModuleID)
+                                                    .Select(a => a);
+
+                                                    if (assessmentsForThisModule.Count() != 0)
+                                                    {
+                                                        foreach (var assess in assessmentsForThisModule)
+                                                        {
+                                                            <tr>
+                                                                <td>@prog.ProgrammeName</td>
+                                                                <td>@mod.ModuleName</td>
+                                                                <td>@assess.AssessmentName</td>
+                                                                <td class="text-center">@assess.AssessmentTotalMark </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>@prog.ProgrammeName</td>
+                                                            <td>@mod.ModuleName</td>
+                                                            <td> No assessments assigned</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+<br />
+<br />
+
+<a asp-page="/Index">Home</a>

@@ -1,0 +1,45 @@
+﻿@page "{id}"
+
+@model TRHDipComp_Project.Areas.ModulePages.Pages.DeleteModuleModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Delete Module";
+}
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center"> Delete Module @Model.Module.ModuleName</h2>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <input type="hidden" asp-for=Module.ModuleID>
+                <button type="submit" class="btn btn-primary" OnClick="UserDeleteConfirmation()">Delete Module @Model.Module.ModuleName</button>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br />
+        <br />
+    </form>
+</div>
+
+<script type="text/javascript">
+    function UserDeleteConfirmation() {
+        return confirm("Confirm delete");
+    }
+</script>
+

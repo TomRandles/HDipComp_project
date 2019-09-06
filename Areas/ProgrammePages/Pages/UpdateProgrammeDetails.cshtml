@@ -1,0 +1,95 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.ProgrammePages.Pages.UpdateProgrammeDetailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Update Programme Details";
+}
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2 class="text-center">Update Programme Details</h2>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+<br />
+
+<div class="container">
+    <form method="post" class="form-horizontal">
+        <br />
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Programme.ProgrammeID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=Programme.ProgrammeID class="form-control">
+                <span asp-validation-for=Programme.ProgrammeID></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Programme.ProgrammeName class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=Programme.ProgrammeName class="form-control">
+                <span asp-validation-for=Programme.ProgrammeName></span>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Programme.ProgrammeDescription class="control-label font-weight-bold"></label>
+                <textarea type="text" asp-for=Programme.ProgrammeDescription class="form-control" rows="4"></textarea>
+                <span asp-validation-for=Programme.ProgrammeDescription></span>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Programme.ProgrammeQQILevel class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=Programme.ProgrammeQQILevel class="form-control">
+                <span asp-validation-for=Programme.ProgrammeQQILevel></span>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Programme.ProgrammeCredits class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=Programme.ProgrammeCredits class="form-control">
+                <span asp-validation-for=Programme.ProgrammeCredits></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=Programme.ProgrammeCost class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=Programme.ProgrammeCost class="form-control">
+                <span asp-validation-for=Programme.ProgrammeCost></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+    </form>
+</div>
+

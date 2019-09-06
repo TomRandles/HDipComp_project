@@ -1,0 +1,65 @@
+﻿@page  "{id}"
+@model TRHDipComp_Project.Areas.StudentPages.Pages.DeleteStudentModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Delete Student";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Delete Student @Model.Student.ToString()</h2>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @{
+                    if (Model.Student.StudentImage != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Student.StudentImage);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                        <img src=@imgSrc style="max-width:100px; max-height:100px;" />
+                    }
+                }
+
+
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="container">
+    <div class="col-md-4"></div>
+
+    <form method="post">
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <input type="hidden" asp-for=Student.StudentID>
+                <button type="submit" class="btn btn-primary" OnClick="UserDeleteConfirmation()"><strong>Delete Student</strong> <br />Delete Student @Model.Student.ToString()</button>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br />
+        <br />
+    </form>
+    <div class="col-md-4"></div>
+</div>
+
+
+<script>
+    function UserDeleteConfirmation() {
+        return confirm("Confirm delete");
+    }
+</script>
+

@@ -1,0 +1,68 @@
+﻿@page  "{id}"
+@model TRHDipComp_Project.Areas.TeacherPages.Pages.DeleteTeacherModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Delete Teacher";
+}
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Delete Teacher @Model.Teacher.ToString()</h2>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                @{
+                    if (Model.Teacher.TeacherImage != null)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Teacher.TeacherImage);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+
+                        <img src=@imgSrc style="max-width:100px; max-height:100px;" />
+                    }
+                }
+
+
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="container">
+    <div class="col-md-4"></div>
+
+    <form method="post">
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <input type="hidden" asp-for=Teacher.TeacherID>
+                <button type="submit" class="btn btn-primary" OnClick="UserDeleteConfirmation()"><strong>Delete Teacher</strong> <br />Delete Teacher @Model.Teacher.ToString()</button>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br />
+        <br />
+    </form>
+    <div class="col-md-4"></div>
+</div>
+
+<script>
+    function UserDeleteConfirmation() {
+        var x = confirm("Are you sure you want to delete?");
+        if (x)
+            return true;
+        else
+            return false;
+    }
+</script>

@@ -1,0 +1,185 @@
+﻿@page "{id}"
+@model TRHDipComp_Project.Areas.AssessmentResultPages.Pages.SubmitAssessmentResultModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Submit Assessment Result";
+}
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Submit Assessment Result</h2>
+            <h4 class="text-center"><strong>Student name: </strong>@Model.StudentName</h4>
+            <h4 class="text-center"><strong>Programme: </strong>@Model.ProgrammeName</h4>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+@*
+    Order of submission
+    1. If student ID was passed in via routing
+    or
+    Select student from a dropdown menu of existing students
+
+
+    Get programme of study for student
+
+    Get the module list for this programme
+
+    For each module - get a dropdown list of all of the assessments
+
+    For each assessment - enter the assessment results
+
+*@
+
+<div class="container">
+    <form method="post" class="form-horizontal">
+        <br />
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=AssessmentResult.StudentID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.StudentID name=AssessmentResult.StudentID class="form-control" readonly>
+                <span asp-validation-for=AssessmentResult.StudentID></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=AssessmentResult.ProgrammeID class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.ProgrammeID name=AssessmentResult.ProgrammeID class="form-control" readonly>
+                <span asp-validation-for=AssessmentResult.ProgrammeID></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=AssessmentResult.AssessmentDate class="control-label font-weight-bold"></label>
+                <input type="date" asp-for=AssessmentResult.AssessmentDate class="form-control">
+                <span asp-validation-for=AssessmentResult.AssessmentDate></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=AssessmentResult.ModuleID class="control-label font-weight-bold">Select a module:</label>
+                <select class="form-control" id="SelectModule" asp-for=AssessmentResult.ModuleID onclick="showAssessmentsforModule(value);">
+                    @{
+
+                        if (Model.SelectedModuleList != null)
+                        {
+                            foreach (var mod in Model.SelectedModuleList)
+                            {
+                                <option value=@mod.ModuleID>@mod.ModuleName</option>
+                            }
+                        }
+                    }
+                </select>
+                <span asp-validation-for=AssessmentResult.ModuleID></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=AssessmentResult.AssessmentID class="control-label font-weight-bold">Select module assessment</label>
+                <select class="form-control" asp-for=AssessmentResult.AssessmentID>
+                    <option id="assessID1">Assessment one</option>
+                    <option id="assessID2">Assessment two</option>
+                </select>
+                <span asp-validation-for=AssessmentResult.AssessmentID></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-6">
+                <label asp-for=AssessmentResult.AssessmentResultDescription class="control-label font-weight-bold"></label>
+                <textarea type="text" asp-for=AssessmentResult.AssessmentResultDescription class="form-control" rows="2"></textarea>
+                <span asp-validation-for=AssessmentResult.AssessmentResultDescription></span>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label asp-for=AssessmentResult.AssessmentResultMark class="control-label font-weight-bold"></label>
+                <input type="text" asp-for=AssessmentResult.AssessmentResultMark class="form-control">
+                <span asp-validation-for=AssessmentResult.AssessmentResultMark></span>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <br />
+    </form>
+</div>
+
+
+<script type="text/javascript">
+
+    function showAssessmentsforModule(myModID) {
+
+        console.log("showAssessmentsforModule module ID: " + myModID);
+
+        var xhttp;
+        if ((myModID == "") || (myModID == null)) {
+            document.getElementById("optionID").innerHTML = "showAssessmentsforModule:ModID empty";
+            console.log("showAssessmentsforModule: ModID empty");
+            return;
+        }
+
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            console.log("onreadystatechange")
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("Good result - ready state: " + this.readyState);
+                console.log("Results: " + this.responseText);
+                var results = JSON.parse(this.responseText);
+                console.log("Parsed results: " + results);
+
+                var results2 = JSON.parse(results);
+
+                console.log("Parsed results - assessment ID: " + results2[0].AssessmentID);
+                console.log("Parsed results - assessment Name: " + results2[0].AssessmentName);
+
+                // First assessment
+                document.getElementById("assessID1").innerHTML = results2[0].AssessmentName + ", maximum mark: " + results2[0].AssessmentTotalMark;
+                document.getElementById("assessID1").setAttribute("value", results2[0].AssessmentID);
+
+                // Second assessment
+                document.getElementById("assessID2").innerHTML = results2[1].AssessmentName + ", maximum mark: " + results2[1].AssessmentTotalMark;
+                document.getElementById("assessID2").setAttribute("value", results2[1].AssessmentID);
+
+            }
+            else {
+                console.log("result - ready state: " + this.readyState);
+            }
+        }
+
+        xhttp.open("GET", "/GetAssessmentsPerModule/" + myModID, true);
+        xhttp.send();
+    }
+
+</script>
