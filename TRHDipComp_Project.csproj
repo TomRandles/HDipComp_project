@@ -13,9 +13,4 @@
     <PackageReference Include="Twilio" Version="5.31.4" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>
