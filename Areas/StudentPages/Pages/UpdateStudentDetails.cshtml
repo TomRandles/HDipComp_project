@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-4"></div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-3"></div>
             <div class="form-group col-md-5">
@@ -196,52 +196,56 @@
 
         <div class="row">
             <div class="col-md-3"></div>
+
             <div class="form-group">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label asp-for=Student.GenderType class="control-label font-weight-bold pull-right"></label>
                 </div>
-                <div class="form-group col-md-4">
-                    <div class="radio">
-                        <label asp-for=Student.GenderType class="control-label font-weight-bold">
-                            <input type="radio" asp-for=Student.GenderType value="Male" />
-                            <span asp-validation-for=Student.GenderType></span>Male
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Student.GenderType" value="Male">
+                        <label class="form-check-label">
+                            Male
+                        </label>
+
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Student.GenderType" value="Female">
+                        <label class="form-check-label">
+                            Female
                         </label>
                     </div>
-                    <div class="radio">
-                        <label asp-for=Student.GenderType class="control-label font-weight-bold">
-                            <input type="radio" asp-for=Student.GenderType id="Female" value="Female" />
-                            <span asp-validation-for=Student.GenderType></span>Female
-                        </label>
-                    </div>
+                    <span asp-validation-for=Student.GenderType></span>
                 </div>
-                <div class="col-md-3"></div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3"></div>
-            <div class="form-group">
-                <div class="col-md-2">
+            <div class="col-md-4">
+                <div class="form-group">
                     <label asp-for=Student.FullOrPartTime class="control-label font-weight-bold pull-right"></label>
-                </div>
-                <div class="form-group col-md-4">
-                    <div class="radio">
-                        <label asp-for=Student.FullOrPartTime class="control-label font-weight-bold">
-                            <input type="radio" asp-for=Student.FullOrPartTime value="Fulltime" />
-                            <span asp-validation-for=Student.FullOrPartTime></span>Full time
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Student.FullOrPartTime" value="Fulltime">
+                        <label class="form-check-label">
+                            Fulltime
                         </label>
-                    </div>
-                    <div class="radio">
-                        <label asp-for=Student.FullOrPartTime class="control-label font-weight-bold">
-                            <input type="radio" asp-for=Student.FullOrPartTime value="Parttime" />
-                            <span asp-validation-for=Student.FullOrPartTime></span>Part time
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
-        </div>
 
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Student.FullOrPartTime" value="Parttime">
+                        <label class="form-check-label">
+                            Parttime
+                        </label>
+                    </div>
+                    <span asp-validation-for=Student.FullOrPartTime></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        
         <div class="row">
 
             @* Dropdown for existing programmes that the student may select.*@

@@ -27,16 +27,15 @@
         <br />
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-3">
-                <label><strong>Programme name:</strong></label>
+            <label><strong>Programme name:</strong></label>
+            <div class="col-md-9">
                 <input type="text" asp-for="ProgrammeSearchString">
                 <input type="submit" value="Search" />
-            </div>
-            <div class="col-md-1"></div>
+            </div>            
+            <div class="col-md-3"></div>
         </div>
         <br />
     </form>
-    <div class="col-md-4"></div>
 </div>
 
 <br />
@@ -53,6 +52,7 @@
                         <th>Programme name</th>
                         <th>Module name</th>
                         <th>Assessment name</th>
+                        <th>Assessment type</th>
                         <th>Assessment maximum marks</th>
                     </tr>
                 </thead>
@@ -87,12 +87,13 @@
                                                     {
                                                         foreach (var assess in assessmentsForThisModule)
                                                         {
-                                                            <tr>
-                                                                <td>@prog.ProgrammeName</td>
-                                                                <td>@mod.ModuleName</td>
-                                                                <td>@assess.AssessmentName</td>
-                                                                <td class="text-center">@assess.AssessmentTotalMark </td>
-                                                            </tr>
+                                        <tr>
+                                            <td>@prog.ProgrammeName</td>
+                                            <td>@mod.ModuleName</td>
+                                            <td><a asp-page="/ShowAssessmentDetails" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">@assess.AssessmentName</a></td>
+                                            <td>@assess.AssessmentType</td>
+                                            <td class="text-center">@assess.AssessmentTotalMark </td>
+                                        </tr>
                                                         }
                                                     }
                                                     else
@@ -100,7 +101,8 @@
                                                         <tr>
                                                             <td>@prog.ProgrammeName</td>
                                                             <td>@mod.ModuleName</td>
-                                                            <td> No assessments assigned</td>
+                                                            <td>No assessments assigned</td>
+                                                            <td>No assessments assigned</td>
                                                         </tr>
                                                     }
                                                 }
