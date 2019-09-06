@@ -122,3 +122,7 @@ form {
     margin: 0 auto;
 }
 
+header, footer {
+    background-color:lightskyblue;
+}
+
