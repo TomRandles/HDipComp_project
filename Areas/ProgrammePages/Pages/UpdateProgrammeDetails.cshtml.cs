@@ -58,7 +58,7 @@ namespace TRHDipComp_Project.Areas.ProgrammePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                return RedirectToPage("/MyErrorPage", new { area="ErrorPages", id = Programme.ProgrammeID });
             }
             catch (DbUpdateException e)
             {
@@ -67,7 +67,7 @@ namespace TRHDipComp_Project.Areas.ProgrammePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Programme.ProgrammeID });
             }
             catch (InvalidOperationException e)
             {
@@ -77,7 +77,7 @@ namespace TRHDipComp_Project.Areas.ProgrammePages.Pages
                 if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                     ErrorMessage += e.InnerException.Message;
 
-                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Programme.ProgrammeID });
             }
             catch (Exception e)
             {
@@ -86,7 +86,7 @@ namespace TRHDipComp_Project.Areas.ProgrammePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Programme.ProgrammeID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Programme.ProgrammeID });
             }
 
             return RedirectToPage("/ShowProgrammeDetails", new { area = "ProgrammePages", id = Programme.ProgrammeID });

@@ -4,236 +4,241 @@
 @{
     ViewData["Title"] = "Register Teacher";
 }
-
-
-<div class="card">
-    <div class="card-header bg-info">
-        <h2 class="text-center" style="color:white">Register Teacher</h2>
-    </div>
-    <div class="card-body">
-
-        <form method="post" class="form-horizontal" enctype="multipart/form-data">
-
-            <br />
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Upload class="control-label"></label>
-                    <div>
-                        <input type="file" asp-for=Upload class="form-control" readonly>
-                        <span asp-validation-for=Upload></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.TeacherID class="control-label font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.TeacherID class="form-control" readonly>
-                        <span asp-validation-for=Teacher.TeacherID></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.Title class="control-label font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.Title class="form-control">
-                        <span asp-validation-for=Teacher.Title></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.FirstName class="control-label font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.FirstName class="form-control">
-                        <span asp-validation-for=Teacher.FirstName></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.SurName class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.SurName class="form-control">
-                        <span asp-validation-for=Teacher.SurName></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.AddressOne class="control-label font-weight-bold"></label>
-
-                    <input type="text" asp-for=Teacher.AddressOne class="form-control">
-                    <span asp-validation-for=Teacher.AddressOne></span>
-
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.AddressTwo class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.AddressTwo class="form-control">
-                        <span asp-validation-for=Teacher.AddressTwo></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-                <br />
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.Town class="control-label font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.Town class="form-control">
-                        <span asp-validation-for=Teacher.Town></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.County class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.County class="form-control">
-                        <span asp-validation-for=Teacher.County></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.MobilePhoneNumber class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.MobilePhoneNumber class="form-control">
-                        <span asp-validation-for=Teacher.MobilePhoneNumber></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.EmergencyMobilePhoneNumber class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.EmergencyMobilePhoneNumber class="form-control">
-                        <span asp-validation-for=Teacher.EmergencyMobilePhoneNumber></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.EmailAddress class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.EmailAddress class="form-control">
-                        <span asp-validation-for=Teacher.EmailAddress></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group col-md-5">
-                    <label asp-for=Teacher.TeacherPPS class="control-label  font-weight-bold"></label>
-                    <div>
-                        <input type="text" asp-for=Teacher.TeacherPPS class="form-control">
-                        <span asp-validation-for=Teacher.TeacherPPS></span>
-                    </div>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-            <br />
-
-            <div class="row">
-                <div class="col-md-3"></div>
-
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <label asp-for=Teacher.GenderType class="control-label font-weight-bold pull-right"></label>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" asp-for="Teacher.GenderType" value="Male">
-                            <label class="form-check-label">
-                                Male
-                            </label>
-
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" asp-for="Teacher.GenderType" value="Female">
-                            <label class="form-check-label">
-                                Female
-                            </label>
-                        </div>
-                        <span asp-validation-for=Teacher.GenderType class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <label asp-for=Teacher.FullOrPartTime class="control-label font-weight-bold pull-right"></label>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" asp-for="Teacher.FullOrPartTime" value="Fulltime">
-                            <label class="form-check-label">
-                                Fulltime
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" asp-for="Teacher.FullOrPartTime" value="Parttime">
-                            <label class="form-check-label">
-                                Parttime
-                            </label>
-                        </div>
-                        <span asp-validation-for=Teacher.GenderType class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            <br />
-
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary">Enter details</button>
-                </div>
-                <div class="col-md-3"></div>
-            </div>
-            <br />
-        </form>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Register Teacher</h2>
+        </div>
+        <div class="col-md-4"></div>
     </div>
 </div>
+<br />
+<div class="container">
+    <form method="post" class="form-horizontal" enctype="multipart/form-data">
+        <br />
+        <div class="row">
+            <br />
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Upload class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="file" asp-for=Upload class="form-control" readonly>
+                    <span asp-validation-for=Upload></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.TeacherID class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.TeacherID class="form-control" readonly>
+                    <span asp-validation-for=Teacher.TeacherID></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.Title class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.Title class="form-control">
+                    <span asp-validation-for=Teacher.Title></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.FirstName class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.FirstName class="form-control">
+                    <span asp-validation-for=Teacher.FirstName></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.SurName class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.SurName class="form-control">
+                    <span asp-validation-for=Teacher.SurName></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.AddressOne class="control-label font-weight-bold"></label>
+
+                <input type="text" asp-for=Teacher.AddressOne class="form-control">
+                <span asp-validation-for=Teacher.AddressOne></span>
+
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.AddressTwo class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.AddressTwo class="form-control">
+                    <span asp-validation-for=Teacher.AddressTwo></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+            <br />
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.Town class="control-label font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.Town class="form-control">
+                    <span asp-validation-for=Teacher.Town></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.County class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.County class="form-control">
+                    <span asp-validation-for=Teacher.County></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.MobilePhoneNumber class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.MobilePhoneNumber class="form-control">
+                    <span asp-validation-for=Teacher.MobilePhoneNumber></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.EmergencyMobilePhoneNumber class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.EmergencyMobilePhoneNumber class="form-control">
+                    <span asp-validation-for=Teacher.EmergencyMobilePhoneNumber></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.EmailAddress class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.EmailAddress class="form-control">
+                    <span asp-validation-for=Teacher.EmailAddress></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label asp-for=Teacher.TeacherPPS class="control-label  font-weight-bold"></label>
+                <div>
+                    <input type="text" asp-for=Teacher.TeacherPPS class="form-control">
+                    <span asp-validation-for=Teacher.TeacherPPS></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+
+            <div class="form-group">
+                <div class="col-md-4">
+                    <label asp-for=Teacher.GenderType class="control-label font-weight-bold pull-right"></label>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Teacher.GenderType" value="Male">
+                        <label class="form-check-label">
+                            Male
+                        </label>
+
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Teacher.GenderType" value="Female">
+                        <label class="form-check-label">
+                            Female
+                        </label>
+                    </div>
+                    <span asp-validation-for=Teacher.GenderType class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label asp-for=Teacher.FullOrPartTime class="control-label font-weight-bold pull-right"></label>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Teacher.FullOrPartTime" value="Fulltime">
+                        <label class="form-check-label">
+                            Fulltime
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Teacher.FullOrPartTime" value="Parttime">
+                        <label class="form-check-label">
+                            Parttime
+                        </label>
+                    </div>
+                    <span asp-validation-for=Teacher.GenderType class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Enter details</button>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <br />
+    </form>
+</div>
+

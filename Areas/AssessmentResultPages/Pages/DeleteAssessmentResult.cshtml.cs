@@ -62,7 +62,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = assessResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = assessResultID });
             }
             catch (DbUpdateException e)
             {
@@ -71,7 +71,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = assessResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = assessResultID });
             }
             catch (InvalidOperationException e)
             {
@@ -80,7 +80,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = assessResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = assessResultID });
             }
             catch (Exception e)
             {
@@ -89,10 +89,8 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-
-                return RedirectToPage("MyErrorPage", new { id = assessResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = assessResultID });        
             }
-
             return RedirectToPage("/ListAssessmentResults", new { area = "AssessmentResultPages" });
         }
     }

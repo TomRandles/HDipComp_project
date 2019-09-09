@@ -17,61 +17,62 @@ namespace TRHDipComp_Project.Models
         public string TeacherID { get; set; }
 
         [Display(Name = "Title:")]
-        [RegularExpression(@"[\w\'\-\s\,\.]{1,10}", ErrorMessage = "Between 1 and 10 characters")]
+        [RegularExpression(@"[\w\'\-\s\,\.]{1,10}", ErrorMessage = "Between 1 and 10 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string Title { get; set; } = "";
 
         [Required(ErrorMessage = ("First name required"))]
         [Display(Name = "Teacher first name:")]
-        [RegularExpression(@"[\w\'\-\s\,\.]{2,20}", ErrorMessage = "Between 2 and 20 characters")]
+        [RegularExpression(@"[\w\'\-\s\,\.]{2,20}", ErrorMessage = "Between 2 and 20 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string FirstName { get; set; } = "";
 
         [Required(ErrorMessage = ("Surname name required"))]
         [Display(Name = "Teacher surname:")]
-        [RegularExpression(@"[\w\'\-\s\,\.]{2,20}", ErrorMessage = "Between 2 and 20 characters")]
+        [RegularExpression(@"[\w\'\-\s\,\.]{2,20}", ErrorMessage = "Between 2 and 20 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string SurName { get; set; } = "";
 
-        [Required(ErrorMessage = ("Address 1 is required"))]
+        [Required(ErrorMessage = ("Address 1 is required. "))]
         [Display(Name = "Address 1:")]
-        [RegularExpression(@"[\s\w\-\,\.]{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters")]
+        [RegularExpression(@"[\s\w\-\,\.\']{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string AddressOne { get; set; } = "";
 
         [Required(ErrorMessage = ("Address 2 is required"))]
         [Display(Name = "Address 2:")]
-        [RegularExpression(@"[\s\w\-\,\.]{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters")]
+        [RegularExpression(@"[\s\w\-\,\.\']{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string AddressTwo { get; set; } = "";
 
         [Required(ErrorMessage = "Town is required.")]
         [Display(Name = "Town:")]
-        [RegularExpression(@"[\s\w\-\,\.\']{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters")]
+        [RegularExpression(@"[\s\w\-\,\.\']{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string Town { get; set; } = "";
 
-        [Required(ErrorMessage = ("County is required"))]
+        [Required(ErrorMessage = ("County is required."))]
         [Display(Name = "County:")]
-        [RegularExpression(@"[\s\w\-\,\.]{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters")]
+        [RegularExpression(@"[\s\w\-\,\.]{3,30}", ErrorMessage = "Minimum 3, maximum 30 characters. Hyphen, comma, period, apostrophe allowed.")]
         public string County { get; set; } = "";
 
         [Required(ErrorMessage = ("Mobile number is required."))]
         [Display(Name = "Mobile number:")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"[\+]{1}[1-9]{1,3}[0-9]{9}", ErrorMessage = "[+][country code][area code][number] 12-14 numeric characters; no spaces or hyphens")]
+        [RegularExpression(@"[\+]{1}[1-9]{1,3}[0-9]{9}", ErrorMessage = "[+][country code][area code][number] 10-12 numeric characters; no spaces or hyphens")]
         public string MobilePhoneNumber { get; set; } = "";
 
-        [Required(ErrorMessage = ("Email address is required. Format name@emailaddress.com "))]
+        [Required(ErrorMessage = ("Email address is required."))]
         [Display(Name = "Email:")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Format is name@emailaddress.com")]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; } = "";
 
         [Required(ErrorMessage = "Emergency number is required.")]
         [Display(Name = "Emergency contact number:")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"[\+]{1}[1-9]{1,3}[0-9]{9}", ErrorMessage = "[+][country code][area code][number] 12-14 numeric characters; no spaces or hyphens")]
+        [RegularExpression(@"[\+]{1}[0-9]{1,3}[0-9]{9}", ErrorMessage = "[+][country code][area code][number] 12-14 numeric characters; no spaces or hyphens")]
         public string EmergencyMobilePhoneNumber { get; set; } = "";
 
         // PPS is 8 numeric characters
         [Required(ErrorMessage = ("PPS is 7 numbers and 1 or 2 characters"))]
         [Display(Name = "Teacher PPS number:")]
         [StringLength(10)]
-        [RegularExpression(@"[0-9]{7}[A-Z]{1,2}", ErrorMessage = ("PPS is 7 numbers and 1 or 2 characters"))]
+        [RegularExpression(@"[0-9]{7}[a-zA-Z]{1,2}", ErrorMessage = ("PPS is 7 numbers and 1 or 2 characters"))]
         public string TeacherPPS { get; set; } = "";
 
         public enum GenderTypeE

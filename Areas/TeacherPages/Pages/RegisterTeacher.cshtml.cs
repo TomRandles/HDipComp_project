@@ -74,7 +74,7 @@ namespace TRHDipComp_Project.Areas.TeacherPages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("Error", new { id = Teacher.TeacherID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Teacher.TeacherID });
                 }
                 catch (DbUpdateException e)
                 {
@@ -83,7 +83,7 @@ namespace TRHDipComp_Project.Areas.TeacherPages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("Error", new { id = Teacher.TeacherID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Teacher.TeacherID });
                 }
                 catch (InvalidOperationException e)
                 {
@@ -92,7 +92,7 @@ namespace TRHDipComp_Project.Areas.TeacherPages.Pages
                         ErrorMessage += e.Message;
                     if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("Error", new { id = Teacher.TeacherID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Teacher.TeacherID });
                 }
                 catch (Exception e)
                 {
@@ -101,14 +101,11 @@ namespace TRHDipComp_Project.Areas.TeacherPages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-
-                    return RedirectToPage("Error", new { id = Teacher.TeacherID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Teacher.TeacherID });
                 }
 
-          
                 return RedirectToPage("/ShowTeacherDetails", new { area = "TeacherPages", id = Teacher.TeacherID });
-                    
-                }
+            }
             else
             {
                 // ModelState is InValid

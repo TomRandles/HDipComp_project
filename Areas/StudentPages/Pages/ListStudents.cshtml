@@ -21,77 +21,93 @@
 <br />
 
 <div class="container">
-    <div class="col-md-2"></div>
-    <form>
-        <br />
+    <form class="form-horizontal">
         <br />
         <div class="row">
-            <div class="col-md-1"></div>
+            <br />
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label class="control-label font-weight-bold">Programme name (whole or part):</label>
+                <div>
+                    <input type="text" asp-for="ProgrammeSearchString" class="form-control" />
+                    <span asp-validation-for=ProgrammeSearchString></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
             <div class="col-md-6">
-                <label><strong>Programme (whole or part)</strong></label>
-                <input type="text" asp-for="ProgrammeSearchString">
                 <input type="submit" value="Search" />
             </div>
-            <div class="col-md-1"></div>
+            <div class="col-md-3"></div>
         </div>
         <br />
-        <br />
     </form>
-    <div class="col-md-2"></div>
 </div>
 <br />
 
-<div class="container">
-    <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
-        <thead>
-            <tr>
-                <th>Student ID</th>
-                <th>Programme</th>
-                <th>Student name</th>
-                <th>Submit assessment result</th>
-                <th>Assessment results</th>
-                <th>Student image</th>
-            </tr>
-        </thead>
-        <tbody>
+@{
 
-            @{
-                if ((Model.SelectedStudentList != null) && (Model.SelectedStudentList.Count() != 0))
-                {
-                    foreach (var stud in Model.SelectedStudentList)
-                    {
-                        if ((Model.ProgrammesFound != null) && (Model.ProgrammesFound.Count() != 0))
+    if ((Model.ProgrammesFound != null) && (Model.ProgrammesFound.Count) != 0)
+    {
+        <div class="container">
+            <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Programme</th>
+                        <th>Student name</th>
+                        <th>Submit assessment result</th>
+                        <th>Assessment results</th>
+                        <th>Student image</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        if ((Model.SelectedStudentList != null) && (Model.SelectedStudentList.Count() != 0))
                         {
-                            string progName = Model.ProgrammesFound.Where(p => p.ProgrammeID == stud.ProgrammeID)
-                                                                   .Select(p => p)
-                                                                   .First().ProgrammeName;
-                            <tr>
-                                <td>@stud.StudentID </td>
-                                <td>@progName</td>
-                                <td><a asp-page="/ShowStudentDetails" asp-area="StudentPages" asp-route-id="@stud.StudentID">@stud.ToString()</a></td>
-                                <td><a asp-page="/SubmitAssessmentResult" asp-area="AssessmentResultPages" asp-route-id="@stud.StudentID">Submit result for @stud.FirstName</a></td>
-                                <td><a asp-page="/ShowStudentResults" asp-area="StudentPages" asp-route-id="@stud.StudentID">@stud.FirstName's results</a></td>
+                            foreach (var stud in Model.SelectedStudentList)
+                            {
+                                if ((Model.ProgrammesFound != null) && (Model.ProgrammesFound.Count() != 0))
+                                {
+                                    string progName = Model.ProgrammesFound.Where(p => p.ProgrammeID == stud.ProgrammeID)
+                                                                           .Select(p => p)
+                                                                           .First().ProgrammeName;
+                                    <tr>
+                                        <td>@stud.StudentID </td>
+                                        <td>@progName</td>
+                                        <td><a asp-page="/ShowStudentDetails" asp-area="StudentPages" asp-route-id="@stud.StudentID">@stud.ToString()</a></td>
+                                        <td><a asp-page="/SubmitAssessmentResult" asp-area="AssessmentResultPages" asp-route-id="@stud.StudentID">Submit result for @stud.FirstName</a></td>
+                                        <td><a asp-page="/ShowStudentResults" asp-area="StudentPages" asp-route-id="@stud.StudentID">@stud.FirstName's results</a></td>
 
-                                <td>
-                                    @{
-                                        if (@stud.StudentImage != null)
-                                        {
-                                            var base64 = Convert.ToBase64String(@stud.StudentImage);
-                                            var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                                        <td>
+                                            @{
+                                                if (@stud.StudentImage != null)
+                                                {
+                                                    var base64 = Convert.ToBase64String(@stud.StudentImage);
+                                                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
 
-                                            <img src=@imgSrc style="max-width:50px; max-height:50px;" />
-                                        }
-                                    }
+                                                    <img src=@imgSrc style="max-width:50px; max-height:50px;" />
+                                                }
+                                            }
 
-                                </td>
-                            </tr>
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         }
                     }
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h5>No programmes were found which match: <strong><quote>@Model.ProgrammeSearchString</quote></strong></h5>
+    }
+}
 <br />
 
 <a asp-page="/Index">Home</a>

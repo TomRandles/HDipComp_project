@@ -20,6 +20,7 @@ namespace TRHDipComp_Project.Models
         [Required(ErrorMessage = "Assessment name is required")]
         [Display(Name = "Assessment name")]
         [StringLength(30, ErrorMessage = "No more than 30 characters")]
+        [RegularExpression(@"[\w\s\.\,\-]{3,30}", ErrorMessage = "Requires between 3 and 30 characters. Space, periods, hyphens allowed.")]
         public string AssessmentName { get; set; } = "";
 
         // Assessment description - optional
@@ -30,7 +31,8 @@ namespace TRHDipComp_Project.Models
         // Total marks 
         [Required(ErrorMessage = ("Maximum mark is required"))]
         [Display(Name = "Assessment maximum mark")]
-        [RegularExpression(@"\d{1,3}")]
+        [Range(0, 300, ErrorMessage ="Maximum mark should be between 0 and 300.")]
+        [RegularExpression(@"\d{1,3}", ErrorMessage = "Maximum mark should be whole number between 0 and 300.")]
         public int AssessmentTotalMark { get; set; }
 
         public enum AssessmentTypeE

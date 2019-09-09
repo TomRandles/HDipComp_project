@@ -11,15 +11,16 @@ namespace TRHDipComp_Project.Models
         [Key]
         [Required(ErrorMessage = "Programme ID required")] 
         [Display(Name = "Programme ID")]
-        [StringLength(6, ErrorMessage = "Must be 6 characters")]
-        [RegularExpression(@"\w{6}", ErrorMessage = "Must be 6 characters")]
+        [StringLength(6, ErrorMessage = "Must be 6 alphanumeric characters")]
+        [RegularExpression(@"\w{6}", ErrorMessage = "Must be 6 alphanumeric characters")]
         [ConcurrencyCheck]
         public string ProgrammeID { get; set; }
 
         // Programme name
         [Required(ErrorMessage = "Programme name required")]
         [Display(Name = "Programme name")]
-        [RegularExpression(@"[\w\s\.\-]{6,30}", ErrorMessage = "Name is 6 to 30 characters")]
+        [StringLength(30, ErrorMessage="Cannot exceed 30 characters.")]
+        [RegularExpression(@"[\w\s\.\-]{6,30}", ErrorMessage = "Name is 6 to 30 characters. Space, periods, hyphens allowed.")]
 
         public string ProgrammeName { get; set; } = "";
 
@@ -45,7 +46,7 @@ namespace TRHDipComp_Project.Models
         [Display(Name = "Programme cost")]
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18,2)")]
-        [RegularExpression(@"\d{0,5}\.{0,1}\d{0,2}", ErrorMessage = "Must be a monetary value between 0.00 and 99999.99")]
+        [RegularExpression(@"\d{0,5}\.{0,1}\d{0,2}", ErrorMessage = "Incorrect entry. Must be a monetary value between 0.00 and 99999.99. Only 2 decimal places.")]
         public decimal ProgrammeCost { get; set; } = 0;
 
         public virtual ICollection<Student> Students { get; set; }

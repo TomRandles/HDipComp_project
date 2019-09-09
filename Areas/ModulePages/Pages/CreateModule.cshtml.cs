@@ -61,7 +61,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
 
                 try
                 {
-                    // Save new programme module combo
+                    // Save new programme-module combo
                     _db.ProgrammeModules.Add(ProgrammeModule);
 
                     // Save new Module
@@ -75,7 +75,8 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
+
                 }
                 catch (DbUpdateException e)
                 {
@@ -84,7 +85,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
                 }
                 catch (InvalidOperationException e)
                 {
@@ -93,7 +94,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
                 }
                 catch (Exception e)
                 {
@@ -102,8 +103,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-
-                    return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
                 }
 
                 return RedirectToPage("/ShowModuleDetails", new { area = "ModulePages", id = Module.ModuleID });

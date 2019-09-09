@@ -12,75 +12,88 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <h3 class="text-center">List Assessment Results</h3>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2 class="text-center">List Assessment Results</h2>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-3"></div>
     </div>
 </div>
 
 <br />
 
+
 <div class="container">
-    <form>
-        <label class="control-label">Select Programme</label>
+    <form class="form-horizontal">
+        <br />
         <div class="row">
-            <select asp-for=ProgrammeID onchange="this.form.submit();">
-                <option value="All" selected>All</option>
-                @foreach (var prog in Model.ProgrammesList)
-                {
-                    <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>
-                }
-            </select>
+            <br />
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label class="control-label font-weight-bold">Select Programme:</label>
+                <select asp-for=ProgrammeID onchange="this.form.submit();">
+                    <option value="All" selected>All</option>
+                    @foreach (var prog in Model.ProgrammesList)
+                    {
+                        <option value=@prog.ProgrammeID>@prog.ProgrammeName</option>
+                    }
+                </select>
+                <span asp-validation-for=@Model.ProgrammesList></span>
+            </div>
+            <div class="col-md-4"></div>
         </div>
+        <br />
     </form>
 </div>
 
 <br />
-<br />
 
-<table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
-    <thead>
-        <tr>
-            <th>Programme</th>
-            <th>Module</th>
-            <th>Assessment</th>
-            <th>Assessment Date</th>
-            <th>Student name</th>
-            <th>Results</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @{
-            foreach (var assessResult in Model.AssessmentResultsFound)
-            {
-                string progName = Model.ProgrammesFound.Where(p => p.ProgrammeID == assessResult.ProgrammeID)
-                                                       .Select(p => p)
-                                                       .FirstOrDefault().ProgrammeName;
-
-                string modName = Model.ModulesList.Where(m => m.ModuleID == assessResult.ModuleID)
-                                                       .Select(m => m)
-                                                       .FirstOrDefault().ModuleName;
-
-                string assessmentName = Model.AssessmentsList.Where(a => a.AssessmentID == assessResult.AssessmentID)
-                                                       .Select(a => a)
-                                                       .FirstOrDefault().AssessmentName;
-
-                string studentName = Model.StudentsList.Where(s => s.StudentID == assessResult.StudentID)
-                                                       .Select(s => s)
-                                                       .FirstOrDefault().ToString();
-
+@{
+    if ((Model.AssessmentResultsFound != null) && (Model.AssessmentResultsFound.Count != 0))
+    {
+        <table class="table table-sm table-bordered table-hover table-condensed table-functions-grad">
+            <thead>
                 <tr>
-                    <td>@progName</td>
-                    <td>@modName</td>
-                    <td>@assessmentName</td>
-                    <td>@assessResult.AssessmentDate.ToShortDateString()</td>
-                    <td>@studentName</td>
-                    <td><a asp-page="/ShowAssessmentResult" asp-area="AssessmentResultPages" asp-route-id="@assessResult.AssessmentResultID">Results</a></td>
+                    <th>Programme</th>
+                    <th>Module</th>
+                    <th>Assessment</th>
+                    <th>Assessment Date</th>
+                    <th>Student name</th>
+                    <th>Results</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+
+                @{
+                    foreach (var assessResult in Model.AssessmentResultsFound)
+                    {
+                        string progName = Model.ProgrammesFound.Where(p => p.ProgrammeID == assessResult.ProgrammeID)
+                                                               .Select(p => p)
+                                                               .FirstOrDefault().ProgrammeName;
+
+                        string modName = Model.ModulesList.Where(m => m.ModuleID == assessResult.ModuleID)
+                                                               .Select(m => m)
+                                                               .FirstOrDefault().ModuleName;
+
+                        string assessmentName = Model.AssessmentsList.Where(a => a.AssessmentID == assessResult.AssessmentID)
+                                                               .Select(a => a)
+                                                               .FirstOrDefault().AssessmentName;
+
+                        string studentName = Model.StudentsList.Where(s => s.StudentID == assessResult.StudentID)
+                                                               .Select(s => s)
+                                                               .FirstOrDefault().ToString();
+
+                        <tr>
+                            <td>@progName</td>
+                            <td>@modName</td>
+                            <td>@assessmentName</td>
+                            <td>@assessResult.AssessmentDate.ToShortDateString()</td>
+                            <td>@studentName</td>
+                            <td><a asp-page="/ShowAssessmentResult" asp-area="AssessmentResultPages" asp-route-id="@assessResult.AssessmentResultID">Results</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}

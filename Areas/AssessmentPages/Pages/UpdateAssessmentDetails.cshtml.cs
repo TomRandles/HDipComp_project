@@ -64,7 +64,9 @@ namespace TRHDipComp_Project.Areas.AssessmentPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Assessment.AssessmentID });
+
             }
             catch (DbUpdateException e)
             {
@@ -73,7 +75,7 @@ namespace TRHDipComp_Project.Areas.AssessmentPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });                
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Assessment.AssessmentID });
             }
             catch (Exception e )
             {
@@ -82,7 +84,7 @@ namespace TRHDipComp_Project.Areas.AssessmentPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Assessment.AssessmentID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Assessment.AssessmentID });
             }
 
             return RedirectToPage("/ShowAssessmentDetails", new { area = "AssessmentPages", id = Assessment.AssessmentID });

@@ -41,12 +41,11 @@ namespace TRHDipComp_Project
 
             // Local DB option - CollegeDBContext
             // services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
-            //        Configuration.GetConnectionString("CollegeTestDBContext")));
+            //    Configuration.GetConnectionString("CollegeTestDBContext")));
 
             // Azure SQL Server service - HDipCompTRproject_DB
             services.AddDbContext<CollegeDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("HDipCompTRproject_DB")));
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

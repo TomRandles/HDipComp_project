@@ -20,7 +20,7 @@
 <br />
 
 <div class="container">
-    <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+    <table class="table table-sm table-bordered table-striped table-condensed table-functions-grad">
         <thead>
             <tr>
                 <th>Module ID</th>
@@ -54,41 +54,53 @@
         </tbody>
     </table>
     <br />
-    <br />
-    <h3>Module assessment details</h3>
-    <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
-        <thead>
-            <tr>
-                <th>Assessment ID</th>
-                <th>Assessment Name</th>
-                <th>Assessment Description</th>
-                <th>Assessment type</th>
-                <th>Assessment Total Marks</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                var assessmentsForThisModule = Model.AssessmentList.Where(
-                                                  a => a.ModuleID == Model.Module.ModuleID)
-                                                        .Select(a => a);
 
-                foreach (var assess in assessmentsForThisModule)
-                {
+    @{
+        var assessmentsForThisModule = Model.AssessmentList.Where(a => a.ModuleID == Model.Module.ModuleID)
+                                                           .Select(a => a)
+                                                           .ToList();
+
+        if ((assessmentsForThisModule != null) && (assessmentsForThisModule.Count != 0))
+        {
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h3  class="text-center">Module assessment details</h3>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+
+            <table class="table table-sm table-bordered table-striped table-condensed table-functions-grad">
+                <thead>
                     <tr>
-                        <td>@assess.AssessmentID</td>
-                        <td>@assess.AssessmentName</td>
-                        <td>@assess.AssessmentDescription</td>
-                        <td>@assess.AssessmentType</td>
-                        <td>@assess.AssessmentTotalMark</td>
-                        <td><a asp-page="/UpdateAssessmentDetails" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">Edit Assessment</a></td>
-                        <td><a asp-page="/DeleteAssessment" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">Delete Assessment</a></td>
+                        <th>Assessment ID</th>
+                        <th>Assessment Name</th>
+                        <th>Assessment Description</th>
+                        <th>Assessment type</th>
+                        <th>Assessment Total Marks</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var assess in assessmentsForThisModule)
+                        {
+                            <tr>
+                                <td>@assess.AssessmentID</td>
+                                <td>@assess.AssessmentName</td>
+                                <td>@assess.AssessmentDescription</td>
+                                <td>@assess.AssessmentType</td>
+                                <td>@assess.AssessmentTotalMark</td>
+                                <td><a asp-page="/UpdateAssessmentDetails" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">Edit Assessment</a></td>
+                                <td><a asp-page="/DeleteAssessment" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">Delete Assessment</a></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    }
 </div>
 
 <br />

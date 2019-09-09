@@ -58,7 +58,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
             }
             catch (DbUpdateException e)
             {
@@ -67,7 +67,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
             }
             catch (InvalidOperationException e)
             {
@@ -76,7 +76,7 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
             }
             catch (Exception e)
             {
@@ -85,12 +85,9 @@ namespace TRHDipComp_Project.Areas.ModulePages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-
-                return RedirectToPage("MyErrorPage", new { id = Module.ModuleID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Module.ModuleID });
             }
-
-            return RedirectToPage("/ShowProgrammeModules", new { area = "ProgrammePages" });
-
+            return RedirectToPage("/ListProgrammeModules", new { area = "ProgrammePages" });
         }
         #endregion
     }

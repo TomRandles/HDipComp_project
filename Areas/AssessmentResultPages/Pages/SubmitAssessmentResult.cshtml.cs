@@ -110,14 +110,14 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     {
                         //Error - no programme assigned to this student
                         ErrorMessage = $"Error: there is no programme assigned to this student: {AssessmentResult.StudentID}";
-                        return RedirectToPage("Error", new { id = AssessmentResult.AssessmentResultID });
+                        return RedirectToPage("/MyErrorPage", new { area="ErrorPages", id = AssessmentResult.AssessmentResultID });
                     }
                 }
                 else
                 {
                     //Error - Prog Mods is null
                     ErrorMessage = "Error: the Programme - Modules table is empty; cannot process assessment submission";
-                    return RedirectToPage("Error", new { id = AssessmentResult.AssessmentResultID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
                 }
             }
             else
@@ -151,8 +151,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-
-                    return RedirectToPage("MyErrorMessage", new { id = AssessmentResult.AssessmentResultID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
                 }
                 catch (DbUpdateException e)
                 {
@@ -161,8 +160,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                         ErrorMessage += e.Message;
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
-
-                    return RedirectToPage("MyErrorMessage", new { id = AssessmentResult.AssessmentResultID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
                 }
                 catch (InvalidOperationException e)
                 {
@@ -171,7 +169,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                         ErrorMessage += e.Message;
                     if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                         ErrorMessage += e.InnerException.Message;
-                    return RedirectToPage("MyErrorMessage", new { id = AssessmentResult.AssessmentResultID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
                 }
                 catch (Exception e)
                 {
@@ -181,7 +179,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     if (e.InnerException.Message != null)
                         ErrorMessage += e.InnerException.Message;
 
-                    return RedirectToPage("MyErrorMessage", new { id = AssessmentResult.AssessmentResultID });
+                    return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
                 }
 
                 return RedirectToPage("/ShowAssessmentResult", new { area = "AssessmentResultPages", id = AssessmentResult.AssessmentResultID });

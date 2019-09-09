@@ -9,6 +9,7 @@ namespace TRHDipComp_Project.Models
         #region properties
         // Module ID - Primary Key
         [Key]
+        [Required(ErrorMessage = "Module ID is required")]
         [Display(Name = "Module ID")]
         [StringLength(6, ErrorMessage = "Must be 6 characters")]
         [RegularExpression(@"\w{6}", ErrorMessage = "Must be 6 characters")]
@@ -18,7 +19,7 @@ namespace TRHDipComp_Project.Models
         // Module name
         [Required]
         [Display(Name = "Module name")]
-        [RegularExpression(@"[\w\s\.\,\-]{3,30}", ErrorMessage = "Requires between 3 and 30 characters")]
+        [RegularExpression(@"[\w\s\.\,\-]{3,30}", ErrorMessage = "Requires between 3 and 30 characters. Space, periods, hyphens allowed.")]
         public string ModuleName { get; set; } = "";
 
         // Module description

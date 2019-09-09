@@ -89,8 +89,7 @@ namespace TRHDipComp_Project.Areas.StudentPages.Pages
                     ErrorMessage += e.Message;
                 if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                     ErrorMessage += e.InnerException.Message;
-
-                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Student.StudentID });
             }
             catch (DbUpdateException e)
             {
@@ -99,8 +98,7 @@ namespace TRHDipComp_Project.Areas.StudentPages.Pages
                     ErrorMessage += e.Message;
                 if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                     ErrorMessage += e.InnerException.Message;
-
-                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Student.StudentID });
             }
             catch (InvalidOperationException e)
             {
@@ -109,7 +107,7 @@ namespace TRHDipComp_Project.Areas.StudentPages.Pages
                     ErrorMessage += e.Message;
                 if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Student.StudentID });
             }
             catch (Exception e)
             {
@@ -119,7 +117,7 @@ namespace TRHDipComp_Project.Areas.StudentPages.Pages
                 if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                     ErrorMessage += e.InnerException.Message;
 
-                return RedirectToPage("MyErrorPage", new { id = Student.StudentID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = Student.StudentID });
             }
 
             return RedirectToPage("/ShowStudentDetails", new { area = "StudentPages", id = Student.StudentID });

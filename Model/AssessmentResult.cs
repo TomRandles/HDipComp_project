@@ -11,7 +11,7 @@ namespace TRHDipComp_Project.Models
         // Assessment Result ID - Primary Key
         [Key]
         [Display(Name = "Assessment Result ID")]
-        [RegularExpression(@"[\-\w\.]{10,50}", ErrorMessage = "Between 10 and 50 characters")]
+        [RegularExpression(@"[\-\w\.]{10,50}", ErrorMessage = "Between 10 and 50 characters. Underscore, hypens, periods allowed.")]
         [ConcurrencyCheck]
         public string AssessmentResultID { get; set; }
 
@@ -23,10 +23,10 @@ namespace TRHDipComp_Project.Models
 
         // Result mark 
         [Display(Name = "Assessment result")]
-        [RegularExpression(@"^\d{1,3}\.{0,1}\d{0,2}$", ErrorMessage = "Requires a numeric value with max two decimal places")]
+        [RegularExpression(@"^\d{1,3}\.{0,1}\d{0,2}$", ErrorMessage = "Requires a numeric value with a max of two decimal places.")]
         // Custom validation rulw for AssessmentResult
         [AssessmentResultMark]
-        [Range(0, 100)]
+        [Range(0, 100, ErrorMessage ="Assessment result should be between 0 and 100")]
         public double AssessmentResultMark { get; set; } = 0;
 
         //Foreign Key - Student

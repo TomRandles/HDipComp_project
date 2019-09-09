@@ -18,7 +18,8 @@ namespace TRHDipComp_Project.Areas.ProgrammePages.Pages
         private readonly CollegeDbContext _db;
 
         [BindProperty(SupportsGet = true)]
-        [RegularExpression(@"[\w\.\'\.\s]{1,20}")]
+        [RegularExpression(@"[\w\.\'\.\s\,]{1,30}", ErrorMessage ="Alphanumeric characters. Space, hyphens, periods, commas, apostrophes accepted.")]
+        [StringLength(30)]
         public string ProgrammeSearchString { get; set; } = "";
 
         [BindProperty]
@@ -35,6 +36,9 @@ namespace TRHDipComp_Project.Areas.ProgrammePages.Pages
 
         [BindProperty]
         public IList<Assessment> AssessmentList { get; private set; }
+
+        [BindProperty]
+        public IList<Assessment> AssessmentsPerModule { get; set; }
 
         [BindProperty]
         public Dictionary<string, string> ModulesInProgramme { get; private set; } = new Dictionary<string, string>();

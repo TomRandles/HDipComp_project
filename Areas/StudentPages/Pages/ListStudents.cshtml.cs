@@ -18,8 +18,10 @@ namespace TRHDipComp_Project.Areas.StudentPages.Pages
 
         // SupportsGet = true. Necessary to pass a value to the server via OnGet. Is a security 
         // compromise
+        // Programme name
         [BindProperty(SupportsGet = true)]
-        [RegularExpression(@"[\w\.\'\.\s]{1,20}")]
+        [StringLength(30, ErrorMessage = "Cannot exceed 30 characters.")]
+        [RegularExpression(@"[\w\s\.\-]{6,30}", ErrorMessage = "Name is 6 to 30 characters. Space, periods, hyphens allowed.")]
         public string ProgrammeSearchString { get; set; } = "";
 
         [BindProperty]

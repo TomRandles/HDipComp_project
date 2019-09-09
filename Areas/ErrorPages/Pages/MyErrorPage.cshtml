@@ -1,0 +1,44 @@
+﻿@page "{id?}"
+@model TRHDipComp_Project.Areas.ErrorPages.Pages.MyErrorPageModel
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h2 class="text-center">Error page</h2>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<br />
+
+@{
+
+    if (!String.IsNullOrEmpty(RouteData.Values["id"].ToString()))
+    {
+        <h4> Error message for entity @RouteData.Values["id"]</h4>
+    }
+    else
+    {
+        <h4> Error message </h4>
+    }
+
+    if (!String.IsNullOrEmpty(@Model.ErrorMessage))
+    {
+        <h4>@Model.ErrorMessage </h4>
+    }
+    else
+    {
+        <h4>No error message present </h4>
+    }
+}
+<br />
+
+

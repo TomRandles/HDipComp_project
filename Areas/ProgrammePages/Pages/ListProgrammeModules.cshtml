@@ -22,16 +22,25 @@
 <br />
 
 <div class="container">
-    <div class="col-md-4"></div>
-    <form>
+    <form class="form-horizontal">
         <br />
         <div class="row">
-            <div class="col-md-1"></div>
-            <label><strong>Programme name:</strong></label>
-            <div class="col-md-9">
-                <input type="text" asp-for="ProgrammeSearchString">
+            <br />
+            <div class="col-md-3"></div>
+            <div class="form-group col-md-5">
+                <label class="control-label font-weight-bold">Programme name (whole or part):</label>
+                <div>
+                    <input type="text" asp-for="ProgrammeSearchString" class="form-control" />
+                    <span asp-validation-for=ProgrammeSearchString></span>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
                 <input type="submit" value="Search" />
-            </div>            
+            </div>
             <div class="col-md-3"></div>
         </div>
         <br />
@@ -46,7 +55,7 @@
     if ((Model.ProgrammesFound != null) && (Model.ProgrammesFound.Count) != 0)
     {
         <div class="container">
-            <table class="table table-sm table-bordered table-hover table-striped table-condensed table-functions-grad">
+            <table class="table table-sm table-bordered table-hover table-condensed table-functions-grad">
                 <thead>
                     <tr>
                         <th>Programme name</th>
@@ -74,37 +83,36 @@
 
                                         foreach (var mod in mods)
                                         {
-
                                             if (Model.ModulesInProgramme.ContainsKey(prog.ProgrammeID + mod.ModuleID))
                                             {
-                                                if (Model.AssessmentList.Count() != 0)
+                                                if ((Model.AssessmentList != null) && (Model.AssessmentList.Count() != 0))
                                                 {
-                                                    var assessmentsForThisModule = Model.AssessmentList.Where(
+                                                    Model.AssessmentsPerModule = Model.AssessmentList.Where(
                                                     a => a.ModuleID == @mod.ModuleID)
-                                                    .Select(a => a);
-
-                                                    if (assessmentsForThisModule.Count() != 0)
-                                                    {
-                                                        foreach (var assess in assessmentsForThisModule)
-                                                        {
-                                        <tr>
-                                            <td>@prog.ProgrammeName</td>
-                                            <td>@mod.ModuleName</td>
-                                            <td><a asp-page="/ShowAssessmentDetails" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">@assess.AssessmentName</a></td>
-                                            <td>@assess.AssessmentType</td>
-                                            <td class="text-center">@assess.AssessmentTotalMark </td>
-                                        </tr>
-                                                        }
-                                                    }
-                                                    else
+                                                    .Select(a => a).ToList();
+                                                }
+                                                if ((Model.AssessmentsPerModule != null) && (Model.AssessmentsPerModule.Count() != 0))
+                                                {
+                                                    foreach (var assess in Model.AssessmentsPerModule)
                                                     {
                                                         <tr>
                                                             <td>@prog.ProgrammeName</td>
-                                                            <td>@mod.ModuleName</td>
-                                                            <td>No assessments assigned</td>
-                                                            <td>No assessments assigned</td>
+                                                            <td><a asp-page="/ShowModuleDetails" asp-area="ModulePages" asp-route-id="@mod.ModuleID">@mod.ModuleName</a></td>
+                                                            <td><a asp-page="/ShowAssessmentDetails" asp-area="AssessmentPages" asp-route-id="@assess.AssessmentID">@assess.AssessmentName</a></td>
+                                                            <td>@assess.AssessmentType</td>
+                                                            <td class="text-center">@assess.AssessmentTotalMark </td>
                                                         </tr>
                                                     }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td>@prog.ProgrammeName</td>
+                                                        <td><a asp-page="/ShowModuleDetails" asp-area="ModulePages" asp-route-id="@mod.ModuleID">@mod.ModuleName</a></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
                                                 }
                                             }
                                         }
@@ -116,6 +124,10 @@
                 </tbody>
             </table>
         </div>
+    }
+    else
+    {
+        <h5>No programmes were found which match: <strong><quote>@Model.ProgrammeSearchString</quote></strong></h5>
     }
 }
 <br />

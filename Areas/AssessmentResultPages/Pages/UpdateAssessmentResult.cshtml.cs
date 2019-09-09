@@ -103,7 +103,8 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
+
             }
             catch (DbUpdateException e)
             {
@@ -112,7 +113,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
             }
             catch (InvalidOperationException e)
             {
@@ -121,8 +122,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if ((e.InnerException != null) && ((e.InnerException.Message != null)))
                     ErrorMessage += e.InnerException.Message;
-
-                return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
             }
             catch (Exception e)
             {
@@ -131,7 +131,7 @@ namespace TRHDipComp_Project.Areas.AssessmentResultPages.Pages
                     ErrorMessage += e.Message;
                 if (e.InnerException.Message != null)
                     ErrorMessage += e.InnerException.Message;
-                return RedirectToPage("MyErrorPage", new { id = AssessmentResult.AssessmentResultID });
+                return RedirectToPage("/MyErrorPage", new { area = "ErrorPages", id = AssessmentResult.AssessmentResultID });
             }
 
             return RedirectToPage("/ShowAssessmentResult", new { area = "AssessmentResultPages", id = AssessmentResult.AssessmentResultID });
