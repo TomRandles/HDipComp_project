@@ -16,14 +16,12 @@ namespace TRHDipComp_Project.Models
         // Programme ID - Primary Key 1
 
         [ForeignKey("Programme")]
-        [Required (ErrorMessage="Programme ID is required.")]
         [ConcurrencyCheck]
         [RegularExpression(@"\w{6}", ErrorMessage = "Must be 6 alphanumeric characters")]
         public string ProgrammeID { get; set; }
 
         // Module ID - Primary Key 2
         [ForeignKey("Module")]
-        [Required(ErrorMessage = "Module ID is required.")]
         [ConcurrencyCheck] 
         [RegularExpression(@"\w{6}", ErrorMessage = "Must be 6 alphanumeric characters")]
         public string ModuleID { get; set; }

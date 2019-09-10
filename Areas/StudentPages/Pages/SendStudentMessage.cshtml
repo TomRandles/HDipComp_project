@@ -110,7 +110,7 @@
                                     <td class="text-center"><input type="checkbox" name="SelectedStudentIDsInProgramme" value="@Model.StudentsInProgramme[i].StudentID" class="center-block" /></td>
                                     <td class="text-center">@Model.StudentsInProgramme[i].StudentID </td>
                                     <td>@progName</td>
-                                    <td><a asp-page="StudentPages/ShowStudentDetails" asp-route-id="@Model.StudentsInProgramme[i].StudentID">@Model.StudentsInProgramme[i].FirstName @Model.StudentsInProgramme[i].SurName</a></td>
+                                    <td><a asp-page="/ShowStudentDetails" asp-area="StudentPages" asp-route-id="@Model.StudentsInProgramme[i].StudentID">@Model.StudentsInProgramme[i].FirstName @Model.StudentsInProgramme[i].SurName</a></td>
                                 </tr>
                             }
                         }

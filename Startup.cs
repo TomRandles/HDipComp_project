@@ -60,15 +60,16 @@ namespace TRHDipComp_Project
             }
             else
             {
-                app.UseExceptionHandler("/MyErrorPage");
+             
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
+                // Send HTTP Strict Transport Security Protocol (HSTS) headers to clients.
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseExceptionHandler("/MyErrorPage");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-
+            // HTTPS Redirection Middleware (UseHttpsRedirection) to redirect HTTP requests to HTTPS.
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
